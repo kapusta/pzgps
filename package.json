@@ -1,0 +1,17 @@
+{
+  "name": "gps",
+  "version": "1.0.0",
+  "description": "read gps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gps"
+  ],
+  "author": "dkk",
+  "license": "MIT",
+  "dependencies": {
+    "node-gpsd": "^0.2.4"
+  }
+}
