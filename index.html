@@ -39,14 +39,21 @@
 <li>Have a #pizero with a GPIO header soldered onto it.</li>
 <li>Have an <a href="https://www.adafruit.com/product/746">Adafruit Ultimate GPS Breakout</a>
 </li>
-<li>Have <a href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian Jezze</a> installed.</li>
+<li>Have <a href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian Jessie</a> installed.</li>
 <li>Have <a href="https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions">nodejs installed</a>.</li>
 </ul>
 
-<p>After you get the GPIO headers installed on the #pizero and get the pins installed on the GPS unit, connect the wires using <a href="https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb">the Adafruit guide</a>.</p>
+<h2>
+<a id="useful-guides" class="anchor" href="#useful-guides" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Useful Guides</h2>
+
+<ul>
+<li><a href="https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb">Connecting the Pi to the Adafruit Ultimate GPS Breakout</a></li>
+<li>
+<a href="https://www.youtube.com/watch?v=J6g53Hm0rq4">Compiling nodejs on your pi</a>.</li>
+</ul>
 
 <h2>
-<a id="various-useful-commands" class="anchor" href="#various-useful-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>various useful commands</h2>
+<a id="various-useful-commands" class="anchor" href="#various-useful-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Various Useful Commands</h2>
 
 <ul>
 <li>Kill gpsd - <code>sudo killall gpsd</code>
@@ -55,14 +62,14 @@
 </li>
 <li>Terminal UI for gps data - <code>cgps -s</code>
 </li>
-<li>See data from the device - <code>cat /dev/ttyAMA0</code>
+<li>See raw data from the device - <code>cat /dev/ttyAMA0</code>
 </li>
 </ul>
 
 <h2>
-<a id="start-gpsd-in-verbosedebug-mode" class="anchor" href="#start-gpsd-in-verbosedebug-mode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>start <code>gpsd</code> in verbose/debug mode</h2>
+<a id="start-gpsd-in-verbosedebug-mode" class="anchor" href="#start-gpsd-in-verbosedebug-mode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Start gpsd in verbose/debug mode</h2>
 
-<p>Log into the #pizero and install <code>gpsd</code></p>
+<p>Log into your pi and install <code>gpsd</code></p>
 
 <pre><code>sudo apt-get install gpsd gpsd-clients python-gps
 </code></pre>
@@ -80,7 +87,7 @@
 <p>You can confirm data is coming to your #pizero with <code>cat /dev/ttyAMA0</code> which should show a stream of data. If you see data coming thru but the commands to start <code>gpsd</code> failed with an error about not being able to connect, then you might have to disable terminal over serial.</p>
 
 <h2>
-<a id="disable-terminal-over-serial" class="anchor" href="#disable-terminal-over-serial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Disable terminal over serial</h2>
+<a id="how-disable-terminal-over-serial" class="anchor" href="#how-disable-terminal-over-serial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How disable terminal over serial</h2>
 
 <p>These didn't work, not sure why...</p>
 
@@ -88,13 +95,22 @@
 sudo systemctl disable serial-getty@ttyAMA0.service
 </code></pre>
 
-<p>What did work, was turning off serial using <code>sudo raspi-config</code>, go to <code>Advanced Options</code> then <code>serial</code> and turn it off, then reboot.</p>
+<p>What did work was...</p>
 
-<p>The Adafruit guide says you can do this from <code>/etc/inittab</code> but that file doesn't exist in Raspbian Jesse (it did in Wheezy). Raspbian Jesse has moved everything to services and there is no <code>/etc/inittab</code> file at all.</p>
+<ul>
+<li><code>sudo raspi-config</code></li>
+<li>go to <code>Advanced Options</code>
+</li>
+<li>then <code>serial</code> and turn it off</li>
+<li>reboot</li>
+</ul>
+
+<p>The Adafruit guide mentioned above says you can do this from <code>/etc/inittab</code> but that file doesn't exist in Raspbian Jessie (it did in Wheezy).</p>
+
+<p>Raspbian Jessie has moved everything to services and there is no <code>/etc/inittab</code> file at all, so it's probabl;y best just to use the config command.</p>
 
 <h2>
-<a id="configure-gpsd" class="anchor" href="#configure-gpsd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure <code>gpsd</code>
-</h2>
+<a id="configure-gpsd" class="anchor" href="#configure-gpsd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure gpsd</h2>
 
 <p>To have <code>gpsd</code> start up correctly, edit <code>/etc/default/gpsd</code></p>
 
@@ -120,10 +136,14 @@ GPSD_SOCKET="/var/run/gpsd.sock"
 
 <p>Then try <code>cgps -s</code> and you should now see real data appearing.</p>
 
-<h1>
-<a id="gps-data-via-nodejs" class="anchor" href="#gps-data-via-nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GPS data via nodejs</h1>
+<h2>
+<a id="gps-data-via-nodejs" class="anchor" href="#gps-data-via-nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GPS data via nodejs</h2>
 
-<p>Now that data is coming from the gps unit, thru <code>gpsd</code>, we can read that data from node with the help of <a href="https://github.com/eelcocramer/node-gpsd">node-gpsd</a>. This will handle the starting and stopping of <code>gpsd</code> for us and provide the data as JSON.</p>
+<p>Now that data is coming from the gps unit, thru <code>gpsd</code>, we can read that data from node with the help of <a href="https://github.com/eelcocramer/node-gpsd">node-gpsd</a>.</p>
+
+<p>This will handle the starting and stopping of <code>gpsd</code> for us and provide the data as JSON.</p>
+
+<p>Have a look at the example.js file in this repo and try <code>node example.js</code> in your terminal. If everything is set up correctly, you should see a bunch of TPV events streaming by. Now you have something you can write an application around.</p>
       </section>
     </div>
     <footer>
