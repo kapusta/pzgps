@@ -1,5 +1,11 @@
 # gps over serial on your raspberry pi
 
+## Hello
+
+* If this info turns out to be useful to you, [let me know](https://twitter.com/dankapusta)!
+* I'm very open to changes/fixes/additions, please feel free to submit pull requests.
+
+
 ## Assumptions
 
 You...
