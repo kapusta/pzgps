@@ -12,6 +12,6 @@
   "author": "dkk",
   "license": "MIT",
   "dependencies": {
-    "node-gpsd": "^0.2.4"
+    "node-gpsd": "^0.2.6"
   }
 }
