@@ -100,4 +100,4 @@ Now that data is coming from the gps unit, thru `gpsd`, we can read that data fr
 
 This will handle the starting and stopping of `gpsd` for us and provide the data as JSON.
 
-Have a look at the example.js file in this repo and try `node example.js` in your terminal. If everything is set up correctly, you should see a bunch of TPV events streaming by. Now you have something you can write an application around.
+Have a look at the index.js file in this repo and try `node index.js` in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.
