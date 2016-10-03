@@ -1,4 +1,13 @@
 var gpsd = require('node-gpsd');
+var argv = require('yargs').argv;
+var server = require('ws').Server
+var wss = new server({ port: (argv.port) ? argv.port : '9000' });
+
+const location = {
+  current: {},
+  last: {}
+};
+
 
 // var daemon = new gpsd.Daemon({
 //     program: 'gpsd',
@@ -17,10 +26,28 @@ var gpsd = require('node-gpsd');
 // });
 //
 
+wss.on('connection', (socket) => {
 
-var handleTpv = function(tpvData) {
-  console.log(tpvData);
-  // TODO: store the data somewhere
+  console.log('new websocket connection, (', wss.clients.length, ' total)');
+
+  socket.on('message', (data, flags) => {
+    // TODO: get the message data and send data back based on the message received
+    console.log('new message from client', data);
+    socket.send(JSON.stringify(location));
+  });
+
+  socket.on('close', () => {
+    console.log('websocket connection closed, (', wss.clients.length, ' remain)');
+  });
+
+});
+
+
+
+var handleTpv = (tpvData) => {
+  location.last = (location.current) ? location.current : null;
+  location.current = tpvData;
+  console.log(location);
 };
 
 var handleError = function(err, msg) {
@@ -36,7 +63,7 @@ var handleInfo = function(data) {
 };
 
 var connected = function() {
-  console.log('connected');
+  console.log('connected to gps');
 };
 
 var device = function(data) {
