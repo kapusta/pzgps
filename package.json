@@ -1,6 +1,6 @@
 {
   "name": "gps",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "read gps",
   "main": "index.js",
   "scripts": {
