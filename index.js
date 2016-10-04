@@ -50,23 +50,23 @@ var handleTpv = (tpvData) => {
   console.log(location);
 };
 
-var handleError = function(err, msg) {
+var handleError = (err, msg) => {
   console.log('error -', err, msg);
 };
 
-var handleWarn = function(err) {
+var handleWarn = (err) => {
   console.log('warn -', err);
 };
 
-var handleInfo = function(data) {
+var handleInfo = (data) => {
   console.log('info -', data);
 };
 
-var connected = function() {
+var connected = () => {
   console.log('connected to gps');
 };
 
-var device = function(data) {
+var device = (data) => {
   console.log('device -', data);
 };
 
