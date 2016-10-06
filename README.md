@@ -1,7 +1,10 @@
-# gps over serial on your raspberry [#pizero](https://www.raspberrypi.org/products/pi-zero/)
+# pzgps
+The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
-## Hello
-The goal of this project is to collect data from the a GPS unit and dump it into a database to be queried out later (or perhaps to stream it live via Bluetooth). We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data.
+We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data and [ws](https://www.npmjs.com/package/ws) to stream that data out.
+
+
+## Pull Requests Accepted
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 * I'm very open to changes/fixes/additions, please feel free to submit pull requests.
 
@@ -14,8 +17,9 @@ You...
 * Have [Raspbian Jessie](https://www.raspberrypi.org/downloads/raspbian/) installed.
 * Have [Connected your Adafruit GPS Breakout](https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb)
 
+
 ## Installing NodeJS
-The version of NodeJS you get via `apt-get install nodejs` results in an out of date version without some important security patches.
+The version of NodeJS you get via `apt-get install nodejs` is out of date (so you'd be missing some important security patches).
 
 If you want to compile node from scratch on your [#pizero](https://www.raspberrypi.org/products/pi-zero/) and wait all night for it to complete, then [check out this guide](https://www.youtube.com/watch?v=J6g53Hm0rq4).
 
@@ -99,6 +103,12 @@ Then try `cgps -s` and you should now see real data. If the GPS Breakout can't s
 
 Now that data is coming from the gps unit, thru `gpsd`, we can read that data from node with the help of [node-gpsd](https://github.com/eelcocramer/node-gpsd).
 
-This will handle the starting and stopping of `gpsd` for us and provide the data as JSON.
+Run `npm install` to install the dependencies, including [node-gpsd](https://github.com/eelcocramer/node-gpsd)
 
-Have a look at the index.js file in this repo and try `node index.js` in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.
+This will handle the streaming of data from `gpsd` for us and provide the data as JSON (it can also start and stop the daemon, you should read the docs).
+
+Have a look at the `index.js` in this repo and run `npm start` in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.
+
+# Using up the WebSocket
+
+The `index.js` file requires `ws` and sets up a very basic server (on port 9000 be default).
