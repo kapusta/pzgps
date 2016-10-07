@@ -1,0 +1,18 @@
+{
+  "indent": 2,
+  "white": false,
+  "curly": true,
+  "devel": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": false,
+  "noarg": true,
+  "sub": true,
+  "strict": true,
+  "undef": true,
+  "boss": true,
+  "eqnull": true,
+  "browser": true,
+  "laxcomma": true
+}
