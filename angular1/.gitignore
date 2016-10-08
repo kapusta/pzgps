@@ -1,3 +1,5 @@
 /node_modules
 /www
 /src/tmp
+/npm-debug.log
+
