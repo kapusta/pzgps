@@ -7,7 +7,7 @@
     "url": "http://about.me/dankapusta"
   },
   "scripts": {
-    "start": "cd www && live-server --entry-file=index.html"
+    "start": "cd www && live-server --entry-file=index.html --port=9001"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

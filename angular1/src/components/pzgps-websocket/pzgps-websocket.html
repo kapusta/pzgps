@@ -1,7 +1,8 @@
 <div>
   <div class="col-sm-6">
     <div class="well">
-      {{ctrl.gpsData}}
+      <ul>
+        <li ng-repeat="(k,v) in ctrl.gpsData track by k">{{k}} - {{v}}</li>
     </div>
   </div>
 </div>

@@ -30,13 +30,19 @@ wss.on('connection', (socket) => {
 
   console.log('new websocket connection, (', wss.clients.length, ' total)');
 
+  // send out the location data on an interval
+  var intervalId = setInterval(function() {
+    socket.send(JSON.stringify(location.current));
+  }, 2000);
+
   socket.on('message', (data, flags) => {
     // TODO: get the message data and send data back based on the message received
     console.log('new message from client', data);
-    socket.send(JSON.stringify(location));
+    //socket.send(JSON.stringify(location));
   });
 
   socket.on('close', () => {
+    clearInterval(intervalId);
     console.log('websocket connection closed, (', wss.clients.length, ' remain)');
   });
 
@@ -47,7 +53,7 @@ wss.on('connection', (socket) => {
 var handleTpv = (tpvData) => {
   location.last = (location.current) ? location.current : null;
   location.current = tpvData;
-  console.log(location);
+  //console.log(location);
 };
 
 var handleError = (err, msg) => {
