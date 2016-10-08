@@ -15,6 +15,7 @@
       var ctrl = this;
 
       var connectSocket = function(url) {
+        $log.log('trying to connect to', url);
         var socket = $websocket(url);
         socket.onMessage(function(message) {
           var gpsData = JSON.parse(message.data);
@@ -24,7 +25,7 @@
       };
 
       ctrl.$onInit = function() {
-        connectSocket('ws://circ.local:9001');
+        connectSocket('ws://circ.local:9000');
       };
 
 
