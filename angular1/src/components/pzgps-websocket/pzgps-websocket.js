@@ -24,7 +24,7 @@
       };
 
       ctrl.$onInit = function() {
-        //connectSocket('localhost://pathhere');
+        connectSocket('ws://circ.local:9001');
       };
 
 
