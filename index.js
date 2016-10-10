@@ -36,8 +36,8 @@ wss.on('connection', (socket) => {
   }, 2000);
 
   socket.on('message', (data, flags) => {
-    // TODO: get the message data and send data back based on the message received
-    console.log('new message from client', data);
+    var parsedData = JSON.parse(data);
+    console.log('new message from client', parsedData);
     //socket.send(JSON.stringify(location));
   });
 
