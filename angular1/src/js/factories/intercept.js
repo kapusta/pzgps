@@ -1,5 +1,5 @@
 // Adapted from: https://gist.github.com/gnomeontherun/5678505
-(function(angular, document){
+(function(angular){
   'use strict';
 
   angular.module('pzgps').factory('intercept', ['$q', '$rootScope', '$log', function($q, $rootScope, $log) {
@@ -42,4 +42,4 @@
 
   }]);
 
-}(window.angular, document));
+}(window.angular));
