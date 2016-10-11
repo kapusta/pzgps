@@ -1,7 +1,13 @@
-// Adapted from: https://gist.github.com/gnomeontherun/5678505
 (function(angular){
   'use strict';
 
+  /**
+    @name intercept
+    @memberof pzgps
+    @ngdoc factory
+    @description intercepts inbound and outbound http connections
+    @see https://gist.github.com/gnomeontherun/5678505
+  */
   angular.module('pzgps').factory('intercept', ['$q', '$rootScope', '$log', function($q, $rootScope, $log) {
     $log.log("intercept factory is running");
 
