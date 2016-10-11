@@ -13,11 +13,11 @@
     controller: function($log, $scope, sckt) {
       $log.log('pzgpsWebsocket component is running');
       var ctrl = this;
-
+      var socketAddress = 'ws://circ.local:9000';
 
       ctrl.$onInit = function() {
 
-        ctrl.socket = sckt.connect('ws://circ.local:9000').socket;
+        ctrl.socket = sckt.connect(socketAddress).socket;
 
         ctrl.socket.onMessage(function(message) {
           ctrl.gpsData = JSON.parse(message.data);
@@ -26,29 +26,8 @@
       };
 
       $scope.$on('$destroy', function(evt) {
-        sckt.disconnect('ws://circ.local:9000');
+        sckt.disconnect(socketAddress);
       });
-
-      // ctrl.sendMessage = function() {
-      //   ctrl.socket.send({
-      //     'action': 'stop'
-      //   });
-      // };
-
-      // var connectSocket = function(url) {
-      //   $log.log('trying to connect to', url);
-      //   var socket = $websocket(url);
-      //   socket.onMessage(function(message) {
-      //     var gpsData = JSON.parse(message.data);
-      //     $log.info('message!', gpsData);
-      //     ctrl.gpsData = gpsData;
-      //   });
-      // };
-      //
-      // ctrl.$onInit = function() {
-      //   connectSocket('ws://circ.local:9000');
-      // };
-
 
     }
   });
