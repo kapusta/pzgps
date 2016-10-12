@@ -1,7 +1,7 @@
 # pzgps
 The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
-We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data and [ws](https://www.npmjs.com/package/ws) to stream that data out.
+We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [angular-websocket](https://github.com/AngularClass/angular-websocket).
 
 ## Pull Requests Accepted
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
