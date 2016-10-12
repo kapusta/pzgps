@@ -10,7 +10,7 @@
   angular.module('pzgps').component('pzgpsMapquest', {
     templateUrl: '/components/pzgps-websocket/pzgps-websocket.html',
     controllerAs: 'ctrl',
-    controller: function($log, sckt) {
+    controller: function($log, sckt, urls) {
       $log.log('pzgpsMapquest component is running');
 
       var ctrl = this;
@@ -18,12 +18,11 @@
       ctrl.mqKey = ''; // need to figure out a way to get this in here appropriately
 
       ctrl.$onInit = function() {
-        ctrl.socket = sckt.connectTo('ws://circ.local:9000').socket;
+        ctrl.socket = sckt.connectTo(urls.gps).socket;
         ctrl.socket.onMessage(function(message) {
           ctrl.gpsData = JSON.parse(message.data);
         });
       };
-
 
     }
   });
