@@ -8,6 +8,12 @@ const location = {
   last: {}
 };
 
+const dmon = daemon.init({
+  'port': (argv.daemonPort) ? argv.daemonPort : 2947
+});
+dmon.start();
+const listener = daemon.listen({});
+
 
 wss.on('connection', (socket) => {
 
@@ -24,6 +30,7 @@ wss.on('connection', (socket) => {
 
     // if the data contains an action, try to do that action
     if (parsedData.action) {
+      console.log('trying', parsedData.action);
       try {
         daemon[parsedData.action].call(this, dmon);
       }
@@ -41,11 +48,6 @@ wss.on('connection', (socket) => {
 });
 
 
-
-const dmon = daemon.init({
-  'port': (argv.daemonPort) ? argv.daemonPort : 2947
-});
-const listener = daemon.listen({});
 
 listener.on('connected', (data) => console.log('listener is conected', data));
 listener.on('DEVICE', (data) => console.log('device', data));
