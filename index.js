@@ -28,7 +28,7 @@ wss.on('connection', (socket) => {
         daemon[parsedData.action].call(this, dmon);
       }
       catch (e) {
-        $log.error(e);
+        console.error(e);
       }
     }
   });
