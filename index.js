@@ -1,5 +1,5 @@
 var argv = require('yargs').argv;
-var daemon = require('./daemon.js');
+var daemon = require('./lib/daemon.js');
 var server = require('ws').Server
 var wss = new server({ port: (argv.port) ? argv.port : '9000' });
 
@@ -21,7 +21,16 @@ wss.on('connection', (socket) => {
   socket.on('message', (data, flags) => {
     var parsedData = JSON.parse(data);
     console.log('new message from client', parsedData);
-    // TODO: small schema of verbs mapped to methods to start/stop the daemon
+
+    // if the data contains an action, try to do that action
+    if (parsedData.action) {
+      try {
+        daemon[parsedData.action].call(this, dmon);
+      }
+      catch (e) {
+        $log.error(e);
+      }
+    }
   });
 
   socket.on('close', () => {
