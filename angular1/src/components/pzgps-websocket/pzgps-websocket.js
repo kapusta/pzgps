@@ -10,23 +10,25 @@
   angular.module('pzgps').component('pzgpsWebsocket', {
     templateUrl: '/components/pzgps-websocket/pzgps-websocket.html',
     controllerAs: 'ctrl',
-    controller: function($log, $scope, sckt) {
+    controller: function($log, $scope, sckt, urls) {
       $log.log('pzgpsWebsocket component is running');
       var ctrl = this;
-      var socketAddress = 'ws://circ.local:9000';
 
       ctrl.$onInit = function() {
-
-        ctrl.socket = sckt.connect(socketAddress).socket;
-
+        ctrl.socket = sckt.connect(urls.gps).socket;
         ctrl.socket.onMessage(function(message) {
           ctrl.gpsData = JSON.parse(message.data);
         });
+      };
 
+      ctrl.stopDaemon = function(evt) {
+        ctrl.socket.send({
+          'action': 'stopDaemon'
+        });
       };
 
       $scope.$on('$destroy', function(evt) {
-        sckt.disconnect(socketAddress);
+        sckt.disconnect(urls.gps);
       });
 
     }
