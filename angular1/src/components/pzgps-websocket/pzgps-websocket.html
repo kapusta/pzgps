@@ -1,6 +1,7 @@
 <div>
   <div class="col-sm-6">
     <div class="well">
+      <span ng-if="!ctrl.gpsData">No data (the GPS daemon running?)</span>
       <ul>
         <li ng-repeat="(k,v) in ctrl.gpsData track by k">{{k}} - {{v}}</li>
       </ul>
@@ -14,6 +15,6 @@
       bs-button
     >Stop Daemon</button>
     -->
-    
+
   </div>
 </div>
