@@ -1,6 +1,12 @@
 (function(angular){
   'use strict';
 
+  /**
+    @name sckt
+    @memberof pzgps
+    @ngdoc factory
+    @description uses the $websocket service to provide reuseable sockets to components
+  */
   angular.module('pzgps').factory('sckt', function($q, $rootScope, $log, $websocket) {
     $log.log("sckt factory is running");
 

@@ -1,5 +1,5 @@
-var gpsd = require('node-gpsd');
 var argv = require('yargs').argv;
+var daemon = require('./daemon.js');
 var server = require('ws').Server
 var wss = new server({ port: (argv.port) ? argv.port : '9000' });
 
@@ -8,23 +8,6 @@ const location = {
   last: {}
 };
 
-
-// var daemon = new gpsd.Daemon({
-//     program: 'gpsd',
-//     device: '/dev/ttyAMA0',
-//     port: 2947,
-//     pid: '/tmp/gpsd.pid',
-//     logger: {
-//         info: function() {},
-//         warn: console.warn,
-//         error: console.error
-//     }
-// });
-//
-// daemon.start(function(arg) {
-//   console.log('Started', arg);
-// });
-//
 
 wss.on('connection', (socket) => {
 
@@ -38,7 +21,7 @@ wss.on('connection', (socket) => {
   socket.on('message', (data, flags) => {
     var parsedData = JSON.parse(data);
     console.log('new message from client', parsedData);
-    //socket.send(JSON.stringify(location));
+    // TODO: small schema of verbs mapped to methods to start/stop the daemon
   });
 
   socket.on('close', () => {
@@ -50,50 +33,17 @@ wss.on('connection', (socket) => {
 
 
 
-var handleTpv = (tpvData) => {
+const dmon = daemon.init({
+  'port': (argv.daemonPort) ? argv.daemonPort : 2947
+});
+const listener = daemon.listen({});
+
+listener.on('connected', (data) => console.log('listener is conected', data));
+listener.on('DEVICE', (data) => console.log('device', data));
+listener.on('TPV', (tpvData) => {
   location.last = (location.current) ? location.current : null;
   location.current = tpvData;
-  //console.log(location);
-};
-
-var handleError = (err, msg) => {
-  console.log('error -', err, msg);
-};
-
-var handleWarn = (err) => {
-  console.log('warn -', err);
-};
-
-var handleInfo = (data) => {
-  console.log('info -', data);
-};
-
-var connected = () => {
-  console.log('connected to gps');
-};
-
-var device = (data) => {
-  console.log('device -', data);
-};
-
-
-var listener = new gpsd.Listener({
-  port: 2947,
-  hostname: 'localhost',
-  parse: true,
-  logger:  {
-    info: handleInfo,
-    warn: handleWarn,
-    error: handleError
-  },
 });
-
-
-listener.on('TPV', handleTpv);
-listener.on('error', handleError);
-listener.on('connected', connected);
-listener.on('INFO', handleInfo);
-listener.on('DEVICE', device);
 
 listener.connect();
 listener.watch();
