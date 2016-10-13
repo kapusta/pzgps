@@ -3,9 +3,12 @@ var daemon = require('./lib/daemon.js');
 var server = require('ws').Server
 var wss = new server({ port: (argv.port) ? argv.port : '9000' });
 
+if (argv.mq) {
+  var mqkey = require('./lib/mqkey.js').consumerKey;
+}
+
 const location = {
   current: {},
-  last: {}
 };
 
 const dmon = daemon.init({
@@ -52,7 +55,6 @@ wss.on('connection', (socket) => {
 listener.on('connected', (data) => console.log('listener is conected', data));
 listener.on('DEVICE', (data) => console.log('device', data));
 listener.on('TPV', (tpvData) => {
-  location.last = (location.current) ? location.current : null;
   location.current = tpvData;
 });
 
