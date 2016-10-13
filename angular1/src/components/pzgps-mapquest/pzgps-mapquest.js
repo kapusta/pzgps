@@ -17,6 +17,12 @@
       ctrl.gpsData = {};
       ctrl.mqKey = ''; // need to figure out a way to get this in here appropriately
 
+      ctrl.getConsumerKey = function() {
+        ctrl.socket.send({
+          'get': 'getConsumerKey'
+        });
+      };
+
       ctrl.$onInit = function() {
         ctrl.socket = sckt.connectTo(urls.gps).socket;
         ctrl.socket.onMessage(function(message) {
