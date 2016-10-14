@@ -1,7 +1,7 @@
 <div>
   <div class="col-sm-6">
     <div class="well">
-      <span ng-if="!ctrl.gpsData">No data (the GPS daemon running?)</span>
+      <span ng-if="!ctrl.gpsData">Looking for data...</span>
       <ul>
         <li ng-repeat="(k,v) in ctrl.gpsData track by k">{{k}} - {{v}}</li>
       </ul>
