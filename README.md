@@ -115,10 +115,24 @@ This will handle the streaming of data from `gpsd` for us and provide the data a
 
 Have a look at the `index.js` in this repo and run `npm start` in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.
 
-# Using the WebSocket from a Front End
+## Auto Start the WebSocket at System Boot
+
+After getting everything set up, you might want to have the WebSocket server [auto-start when your pizero boots up](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md).
+* Look in the `package.json` file for the `scripts` section
+* note the value for the `start` command
+* Add that command to `rc.local` with the correct path to the `index.js` file
+
+Your entry in `rc.local` will look something like this...
+
+    /usr/local/bin/node /home/pi/Projects/pzgps/index.js --port 9000 &
+
+Change the port number as needed.
+
+
+## Using the WebSocket from a Front End
 
 Install `live-server` globally first (it's a webserver) by running `npm install live-server -g` in your terminal.
 
-In the `angular1` directory, install the deps by running `npm install` then `npm start` to start the webserver. Using your web browser, navigate to your pizero's IP address on port 9001 (the default).
+In the `angular1` directory, install the deps by running `npm install` then run `npm start` to start the webserver. Using your web browser, navigate to your pizero's IP address on port 9001 (the default).
 
 Assuming the millions of things above went right, you'll see some GPS data in your web browser.
