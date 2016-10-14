@@ -29,18 +29,18 @@ wss.on('connection', (socket) => {
 
   socket.on('message', (data, flags) => {
     var parsedData = JSON.parse(data);
-    console.log('new message from client', parsedData);
+    //console.log('new message from client', parsedData);
 
-    // if the data contains an action, try to do that action
-    if (parsedData.action) {
-      console.log('trying', parsedData.action);
-      try {
-        daemon[parsedData.action].call(this, dmon);
-      }
-      catch (e) {
-        console.error(e);
-      }
-    }
+    // if the data contains an action, try to do that action (this needs more thought)
+    // if (parsedData.action) {
+    //   console.log('trying', parsedData.action);
+    //   try {
+    //     daemon[parsedData.action].call(this, dmon);
+    //   }
+    //   catch (e) {
+    //     console.error(e);
+    //   }
+    // }
   });
 
   socket.on('close', () => {
@@ -52,7 +52,7 @@ wss.on('connection', (socket) => {
 
 
 
-listener.on('connected', (data) => console.log('listener is conected', data));
+listener.on('connected', () => console.log('listener is conected'));
 listener.on('DEVICE', (data) => console.log('device', data));
 listener.on('TPV', (tpvData) => {
   location.current = tpvData;
