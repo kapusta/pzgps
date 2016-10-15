@@ -1,6 +1,6 @@
 {
   "port": 9001,
-  "files": ["./src/**/*.{html,htm,css,js}"],
+  "files": ["./www/**/*.{html,htm,css,js}"],
   "server": {
     "baseDir": "./www"
   }
