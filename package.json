@@ -1,6 +1,6 @@
 {
   "name": "@dankapusta/pzgps",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Read data from a GPS Breakout on a Raspberry Pi Zero and provide it on a WebSocket",
   "main": "index.js",
   "scripts": {
