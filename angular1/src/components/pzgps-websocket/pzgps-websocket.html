@@ -1,6 +1,7 @@
 <div>
   <div class="col-sm-6">
     <div class="well">
+      <h3 style="margin-top: 0px;">Raw GPS Data</h3>
       <span ng-if="!ctrl.gpsData">Looking for data...</span>
       <ul>
         <li ng-repeat="(k,v) in ctrl.gpsData track by k">{{k}} - {{v}}</li>
