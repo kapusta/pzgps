@@ -4,7 +4,7 @@
   "description": "Read data from a GPS Breakout on a Raspberry Pi Zero and provide it on a WebSocket",
   "main": "index.js",
   "scripts": {
-    "test": "xo --ignore angular1/**",
+    "test": "xo",
     "start": "node index.js --port 9000"
   },
   "keywords": [
@@ -13,7 +13,8 @@
   "author": "dankapusta",
   "license": "Apache-2.0",
   "xo":  {
-    "space": true
+    "space": true,
+    "ignores": ["angular1/**"]
   },
   "dependencies": {
     "node-gpsd": "^0.2.6",
