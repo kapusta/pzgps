@@ -15,9 +15,9 @@
         return '<pzgps-about></pzgps-about>';
       }
     })
-    .when(baseUrl + 'websocket', {
+    .when(baseUrl + ':component', {
       template: function(params){
-        return '<pzgps-websocket></pzgps-websocket>';
+        return '<pzgps-'+params.component+'></pzgps-'+params.component+'>';
       }
     })
     .otherwise({redirectTo: baseUrl});

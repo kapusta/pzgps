@@ -4,17 +4,24 @@
   "description": "Read data from a GPS Breakout on a Raspberry Pi Zero and provide it on a WebSocket",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js --port 9000"
+    "test": "xo",
+    "start": "node index.js --port 9000 --mq"
   },
   "keywords": [
     "gps"
   ],
   "author": "dankapusta",
-  "license": "MIT",
+  "license": "Apache-2.0",
+  "xo":  {
+    "space": true,
+    "ignores": ["angular1/**"]
+  },
   "dependencies": {
     "node-gpsd": "^0.2.6",
     "ws": "^1.1.1",
     "yargs": "^6.0.0"
+  },
+  "devDependencies": {
+    "xo": "^0.17.0"
   }
 }
