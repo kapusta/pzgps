@@ -26,11 +26,13 @@
       ctrl.$onInit = function() {
         ctrl.socket = sckt.connect(urls.gps).socket;
         ctrl.socket.onMessage(function(message) {
-          if (message.data && message.data.consumerKey) {
-            ctrl.consumerKey = JSON.parse(message.data.consumerKey);
+          var parsedData = JSON.parse(message.data);
+
+          if (parsedData.consumerKey) {
+            ctrl.consumerKey = parsedData.consumerKey;
           }
-          if (message.data && message.data.lat) {
-            ctrl.gpsData = message.data;
+          if (parsedData.lat) {
+            ctrl.gpsData = parsedData;
           }
         });
 
