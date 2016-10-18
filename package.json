@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "xo",
-    "start": "node index.js --port 9000"
+    "start": "node index.js --port 9000 --mq"
   },
   "keywords": [
     "gps"
