@@ -1,9 +1,10 @@
 <div>
   <div class="col-sm-6">
     <div class="well">
-      <span ng-if="!ctrl.consumerKey">Connecting/Loading</span>
+      <h3 style="margin-top: 0px;">MapQuest Map</h3>
+      <span ng-if="!ctrl.consumerKey">Loading...</span>
       <img
-      ng-if="ctrl.gpsData && ctrl.consumerKey" src="https://www.mapquestapi.com/staticmap/v4/getmap?key={{ctrl.consumerKey}}&center={{ctrl.gpsData.lat}},{{ctrl.gpsData.lon}}&zoom=10&size=640,480&type=map&imagetype=png&pois=">
+      ng-if="ctrl.gpsData && ctrl.consumerKey" src="https://www.mapquestapi.com/staticmap/v4/getmap?key={{ctrl.consumerKey}}&center={{ctrl.gpsData.lat}},{{ctrl.gpsData.lon}}&zoom=10&size=640,480&type=map&imagetype=png&pois=blue,{{ctrl.gpsData.lat}},{{ctrl.gpsData.lon}}">
     </div>
   </div>
 </div>
