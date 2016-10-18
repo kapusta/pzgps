@@ -1,6 +1,6 @@
 {
   "name": "@dankapusta/pzgps",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "Read data from a GPS Breakout on a Raspberry Pi Zero and provide it on a WebSocket",
   "main": "index.js",
   "scripts": {
@@ -12,9 +12,11 @@
   ],
   "author": "dankapusta",
   "license": "Apache-2.0",
-  "xo":  {
+  "xo": {
     "space": true,
-    "ignores": ["angular1/**"]
+    "ignores": [
+      "angular1/**"
+    ]
   },
   "dependencies": {
     "node-gpsd": "^0.2.6",
