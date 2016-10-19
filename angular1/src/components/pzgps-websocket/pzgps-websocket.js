@@ -21,15 +21,9 @@
         });
       };
 
-      ctrl.stopDaemon = function(evt) {
-        ctrl.socket.send({
-          'action': 'stopDaemon'
-        });
-      };
-
-      $scope.$on('$destroy', function(evt) {
-        sckt.disconnect(urls.gps);
-      });
+      // $scope.$on('$destroy', function(evt) {
+      //   sckt.disconnect(urls.gps);
+      // });
 
     }
   });
