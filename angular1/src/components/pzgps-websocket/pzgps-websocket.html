@@ -1,11 +1,24 @@
 <div>
   <div class="col-sm-6">
     <div class="well">
-      <h3 style="margin-top: 0px;">Raw GPS Data</h3>
       <span ng-if="!ctrl.gpsData">Looking for data...</span>
-      <ul>
-        <li ng-repeat="(k,v) in ctrl.gpsData track by k">{{k}} - {{v}}</li>
-      </ul>
+
+      <div ng-if="ctrl.gpsData">
+        <h3 style="margin-top: 0px;">Location Details</h3>
+        <span class="keyname">Latitude</span> {{ctrl.gpsData.lat}}
+        <br>
+        <span class="keyname">Longitude</span> {{ctrl.gpsData.lon}}
+        <br>
+        <span class="keyname">Altitude</span> {{ctrl.gpsData.alt}}
+        <br>
+
+        <h3>Raw Data</h3>
+        <ul>
+          <li ng-repeat="(k,v) in ctrl.gpsData track by k">{{k}} - {{v}}</li>
+        </ul>
+
+      </div>
+
     </div>
 
     <!-- uncomment when daemon halting works
