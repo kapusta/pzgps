@@ -14,7 +14,7 @@
       $log.log('pzgpsMapquest component is running');
 
       var ctrl = this;
-      ctrl.gpsData = {};
+      ctrl.gpsData = null;
       ctrl.consumerKey = '';
 
       ctrl.getConsumerKey = function() {
