@@ -1,11 +1,11 @@
 {
   "name": "@dankapusta/pzgps",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Read data from a GPS Breakout on a Raspberry Pi Zero and provide it on a WebSocket",
   "main": "index.js",
   "scripts": {
     "test": "xo",
-    "start": "node index.js --port 9000 --mq"
+    "start": "node index.js --port 9000"
   },
   "keywords": [
     "gps"
