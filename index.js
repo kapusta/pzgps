@@ -3,6 +3,7 @@ var Server = require('ws').Server;
 var daemon = require('./lib/daemon.js');
 
 const mqkey = {
+  path: './lib/mqkey.js',
   consumerKey: ''
 };
 
@@ -11,7 +12,11 @@ const location = {
 };
 
 if (argv.mq) {
-  mqkey.consumerKey = require('./lib/mqkey.js').consumerKey;
+  try {
+    mqkey.consumerKey = require(mqkey.path).consumerKey;
+  } catch (err) {
+    console.warn('Tried to import mqkey at path', mqkey.path, err);
+  }
 }
 
 var wss = new Server({
