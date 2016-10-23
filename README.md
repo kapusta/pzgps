@@ -150,6 +150,6 @@ One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/st
       'consumerKey': 'PASTE YOUR CONSUMER KEY HERE'
     };
 
-On the command line you can now start the server using the `--mq` flag. An NPM command is provided in `package.json` that will start with the MapQuest module included (eg, `node index.js --port 9000 --mq`).
+On the command line you can now start the server using the `--mq` flag. An NPM command is provided in `package.json` that will start with the MapQuest module included (eg, `npm run withMapquest` will execute `node index.js --port 9000 --mq`).
 
 Assuming all of the above is in place, the MapQuest component in the UI will receive the key over the WebSocket and use it to formulate the URL to get the static map. Because the client is receiving updates from the server continually, the map will update if the coordinates change.
