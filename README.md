@@ -136,3 +136,20 @@ Install `live-server` globally first (it's a webserver) by running `npm install 
 In the `angular1` directory, install the deps by running `npm install` then run `npm start` to start the webserver. Using your web browser, navigate to your pizero's IP address on port 9001 (the default).
 
 Assuming the millions of things above went right, you'll see some GPS data in your web browser.
+
+## Enabling a MapQuest staticmap
+
+One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module that includes that key.
+
+* [Register for a developer account for free](https://developer.mapquest.com/).
+* Go to your new profile, and click the "Create a New Key" button.
+* You can always find your Consumer Key on the "Keys &amp; Reporting" page after creating one.
+* Make a file in the `lib` directory named `mqkey.js` and format it like the example below.
+
+    module.exports = {
+      'consumerKey': 'PASTE YOUR CONSUMER KEY HERE'
+    };
+
+On the command line you can now start the server using the `--mq` flag. An NPM command is provided in `package.json` that will start with the MapQuest module included (eg, `node index.js --port 9000 --mq`).
+
+Assuming all of the above is in place, the MapQuest component in the UI will receive the key over the WebSocket and use it to formulate the URL to get the static map. Because the client is receiving updates from the server continually, the map will update if the coordinates change.
