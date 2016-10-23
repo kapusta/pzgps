@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "xo",
-    "start": "node index.js --port 9000"
+    "start": "node index.js --port 9000",
+    "withMapquest": "node index.js --port 9000 --mq"
   },
   "keywords": [
     "gps"
@@ -15,8 +16,12 @@
   "xo": {
     "space": true,
     "ignores": [
-      "angular1/**"
-    ]
+      "angular1/**",
+      "reactjs/**"
+    ],
+    "rules": {
+      "import/no-dynamic-require": 1
+    }
   },
   "dependencies": {
     "node-gpsd": "^0.2.6",
