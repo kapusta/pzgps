@@ -59,7 +59,7 @@ module.exports = {
 			allChunks: true
 		}),
 		new HtmlWebpackPlugin({
-			template: './src/template.html',
+			template: './src/index.html',
 			title: 'pzgps-reactjs'
 		}),
 		new webpack.optimize.DedupePlugin()

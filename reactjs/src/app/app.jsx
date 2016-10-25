@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import styles from './index.scss';
+// maybe set up the WebSocket here?
 
 class App extends React.Component {
   render() {

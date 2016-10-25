@@ -28,7 +28,7 @@ class Navbar extends React.Component {
       )
     });
     return (
-      <div>
+      <div className={navbarStyles.navbar}>
         {btns}
       </div>
     )
