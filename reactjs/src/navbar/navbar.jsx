@@ -8,31 +8,31 @@ const buttonStyles = {
   margin: '10px 10px 10px 0px'
 };
 
-const buttons = [{
-  id: 1,
-  text: 'About'
-}, {
-  id: 2,
-  text: 'GPS Data'
-}, {
-  id: 3,
-  text: 'MapQuest'
-}];
-
-
 class Navbar extends React.Component {
-  render() {
-    var btns = buttons.map(function(b) {
-      return (
-        <Navbutton key={b.id}>{b.text}</Navbutton>
-      )
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      componentName: 'About'
+    };
+  }
+
+  handleClick = n => {
+    this.setState({
+      componentName: n
     });
+  }
+
+  render() {
     return (
       <div className={navbarStyles.navbar}>
-        {btns}
+        <Navbutton handleClick={this.handleClick} section="About">About</Navbutton>
+        <Navbutton handleClick={this.handleClick} section="GpsData">GPS Data</Navbutton>
+        <Navbutton handleClick={this.handleClick} section="MapQuest">MapQuest</Navbutton>
       </div>
     )
   }
+
 }
 
 export default Navbar;
