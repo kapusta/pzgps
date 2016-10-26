@@ -3,15 +3,21 @@ import React from 'react';
 import styles from '../index.scss';
 import buttonStyles from './navbutton.scss';
 
-//let classNames = 'btn btn-primary ' + buttonStyles.button;
-
 class Navbutton extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  handleClick = e => {
+    console.log(e);
+    console.log(this.props.section);
+    this.props.handleClick(this.props.section);
+  }
 
   render() {
     return (
-      //<button className={classNames}>{this.props.children}</button>
-      <button className={`btn btn-primary ${buttonStyles.button}`}>{this.props.children}</button>
+      <button className={`btn btn-primary ${buttonStyles.button}`} onClick={this.handleClick}>{this.props.children}</button>
     )
   }
 }
