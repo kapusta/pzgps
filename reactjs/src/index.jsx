@@ -7,7 +7,9 @@ import Navbar from './navbar/navbar.jsx';
 render(
   <App>
     <Navbar/>
-    <About/>
+    <div id="contentGoesHere">
+      <About/>
+    </div>
   </App>,
   document.querySelector("#app")
 );
