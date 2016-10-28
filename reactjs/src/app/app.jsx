@@ -5,6 +5,13 @@ import ContentBox from '../ContentBox/ContentBox.jsx';
 
 // maybe set up the WebSocket here?
 
+var socket = new WebSocket('ws://circ.local:9000');
+
+socket.onmessage = e => {
+  let data = JSON.parse(e.data);
+  console.log(data);
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
