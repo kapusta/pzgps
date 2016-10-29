@@ -12,6 +12,12 @@ socket.onmessage = e => {
   console.log(data);
 }
 
+socket.onopen = e => {
+  socket.send(JSON.stringify({
+    'action': 'getConsumerKey'
+  }));
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +25,11 @@ class App extends React.Component {
       componentName: 'About'
     };
   }
+
+  componentWillUnmount() {
+    socket.close();
+  }
+
   // method is passed down to app -> navbar -> navbutton
   handleClick = n => {
     this.setState({
