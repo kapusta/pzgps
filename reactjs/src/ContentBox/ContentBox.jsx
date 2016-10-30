@@ -23,7 +23,7 @@ class ContentBox extends React.Component {
     var Content = contentComponents[this.props.content];
     return (
       <div>
-        <Content>{this.props.children}</Content>
+        <Content gpsData={this.props.gpsData}>{this.props.children}</Content>
       </div>
     )
   }
