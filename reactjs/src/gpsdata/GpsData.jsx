@@ -11,9 +11,13 @@ class GpsData extends React.Component {
       <div>
         <div className="card card-block">
           <h3 className="card-title">GPS Data</h3>
-          <p>
-            Eventually GPS data will appear here
-          </p>
+          <div>
+            {Object.keys(this.props.gpsData).map(function(val, idx, arr) {
+              return (
+                <li key={val}>{val} - {this.props.gpsData[val]}</li>
+              )
+            }.bind(this))}
+          </div>
         </div>
       </div>
     )
