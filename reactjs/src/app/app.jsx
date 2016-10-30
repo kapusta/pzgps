@@ -7,11 +7,6 @@ import ContentBox from '../ContentBox/ContentBox.jsx';
 
 var socket = new WebSocket('ws://circ.local:9000');
 
-socket.onmessage = e => {
-  let data = JSON.parse(e.data);
-  console.log(data);
-}
-
 socket.onopen = e => {
   socket.send(JSON.stringify({
     'action': 'getConsumerKey'
@@ -22,8 +17,25 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      componentName: 'About'
+      componentName: 'About',
+      gpsData: {},
+      consumerKey: ''
     };
+  }
+
+  componentDidMount() {
+    socket.onmessage = e => {
+      let data = JSON.parse(e.data);
+      if (data.consumerKey) {
+        this.setState({
+          consumerKey: data
+        });
+      } else {
+        this.setState({
+          gpsData: data
+        });
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -36,11 +48,12 @@ class App extends React.Component {
       componentName: n
     });
   }
+
   render() {
     return (
       <div>
         <Navbar handleClick={this.handleClick}/>
-        <ContentBox content={this.state.componentName} />
+        <ContentBox gpsData={this.state.gpsData} content={this.state.componentName} />
       </div>
     )
   }
