@@ -12,6 +12,12 @@ class GpsData extends React.Component {
       <div>
         <div className="card card-block">
           <h3 className="card-title">GPS Data</h3>
+
+          <span className={styles.keyname}>Latitude</span> {this.props.gpsData.lat}<br/>
+          <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
+          <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
+
+          <h3 className={styles.header}>Raw Data</h3>
           <div>
             {Object.keys(this.props.gpsData).map(function(val, idx, arr) {
               return (
