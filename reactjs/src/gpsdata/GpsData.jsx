@@ -1,6 +1,7 @@
+import React from 'react';
+import shortid from 'shortid';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './gpsdata.scss';
-import React from 'react';
 
 class GpsData extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class GpsData extends React.Component {
           <div>
             {Object.keys(this.props.gpsData).map(function(val, idx, arr) {
               return (
-                <li key={val}>{val} - {this.props.gpsData[val]}</li>
+                <li key={shortid.generate()}>{val} - {this.props.gpsData[val]}</li>
               )
             }.bind(this))}
           </div>
