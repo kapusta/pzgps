@@ -1,5 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './mapquest.scss';
 
 class MapQuest extends React.Component {
