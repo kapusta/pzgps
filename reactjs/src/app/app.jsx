@@ -18,7 +18,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       componentName: 'About',
-      gpsData: {},
+      gpsData: false,
       consumerKey: ''
     };
   }
@@ -52,7 +52,9 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar handleClick={this.handleClick}/>
+        <Navbar handleClick={this.handleClick}
+          consumerKey={this.state.consumerKey ? true : false}
+          gpsData={this.state.gpsData ? true : false} />
         <ContentBox gpsData={this.state.gpsData} consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null} content={this.state.componentName} />
       </div>
     )
