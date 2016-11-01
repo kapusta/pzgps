@@ -20,14 +20,21 @@ class ContentBox extends React.Component {
 
   render() {
     // must be capitalized, contains a reference to a Component
-    var Content = contentComponents[this.props.content];
-    return (
-      <div>
-        <Content gpsData={this.props.gpsData}>{this.props.children}</Content>
-      </div>
-    )
+    let Content = contentComponents[this.props.content];
+    if (this.props.content === 'MapQuest') {
+      return (
+        <div>
+          <Content {...this.props}>{this.props.children}</Content>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Content gpsData={this.props.gpsData}>{this.props.children}</Content>
+        </div>
+      )
+    }
   }
-
 }
 
 export default ContentBox;
