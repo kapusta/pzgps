@@ -28,7 +28,7 @@ class App extends React.Component {
       let data = JSON.parse(e.data);
       if (data.consumerKey) {
         this.setState({
-          consumerKey: data
+          consumerKey: data.consumerKey
         });
       } else {
         this.setState({
@@ -53,7 +53,7 @@ class App extends React.Component {
     return (
       <div>
         <Navbar handleClick={this.handleClick}/>
-        <ContentBox gpsData={this.state.gpsData} content={this.state.componentName} />
+        <ContentBox gpsData={this.state.gpsData} consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null} content={this.state.componentName} />
       </div>
     )
   }
