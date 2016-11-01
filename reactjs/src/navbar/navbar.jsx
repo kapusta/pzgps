@@ -14,15 +14,15 @@ class Navbar extends React.Component {
     super(props);
   }
   render() {
-    return (
-      <div>
-        <div className={navbarStyles.navbar}>
-          <Navbutton handleClick={this.props.handleClick} section="About">About</Navbutton>
-          <Navbutton handleClick={this.props.handleClick} section="GpsData">GPS Data</Navbutton>
-          <Navbutton handleClick={this.props.handleClick} section="MapQuest">MapQuest</Navbutton>
+      return (
+        <div>
+          <div className={navbarStyles.navbar}>
+            <Navbutton handleClick={this.props.handleClick} section="About">About</Navbutton>
+            {this.props.gpsData ? <Navbutton handleClick={this.props.handleClick} section="GpsData">GPS Data</Navbutton> : ''}
+            {(this.props.gpsData && this.props.consumerKey) ? <Navbutton handleClick={this.props.handleClick} section="MapQuest">MapQuest</Navbutton> : ''}
+          </div>
         </div>
-      </div>
-    )
+      )
   }
 }
 
