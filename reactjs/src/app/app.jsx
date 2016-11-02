@@ -1,17 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
+import sckt from '../../lib/sckt.js';
 import Navbar from '../navbar/navbar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
 
 // maybe set up the WebSocket here?
-
-var socket = new WebSocket('ws://circ.local:9000');
-
-socket.onopen = e => {
-  socket.send(JSON.stringify({
-    'action': 'getConsumerKey'
-  }));
-}
+const serverUrl = 'ws://circ.local:9000';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,18 +18,37 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    socket.onmessage = e => {
-      let data = JSON.parse(e.data);
-      if (data.consumerKey) {
-        this.setState({
-          consumerKey: data.consumerKey
-        });
-      } else {
-        this.setState({
-          gpsData: data
-        });
-      }
-    }
+
+    sckt.connect(serverUrl).then(socket => {
+
+      socket.send(JSON.stringify({
+        'action': 'getConsumerKey'
+      }));
+
+      socket.onclose = e => {
+        // https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent
+        console.error('The WebSocket connection closed', e);
+        console.log('Trying to reconnect.');
+        window.setTimeout(() => {
+          sckt.connect(serverUrl);
+        }, 5000);
+      };
+
+      socket.onmessage = e => {
+        let data = JSON.parse(e.data);
+        if (data.consumerKey) {
+          this.setState({
+            consumerKey: data.consumerKey
+          });
+        } else {
+          this.setState({
+            gpsData: data
+          });
+        }
+      };
+
+    });
+
   }
 
   componentWillUnmount() {
