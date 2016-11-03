@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import { render } from 'react-dom';
-import styles from '../index.scss';
+//import { render } from 'react-dom';
+//import styles from '../index.scss';
 import navbarStyles from './navbar.scss';
 import Navbutton from '../navbutton/navbutton.jsx';
 
