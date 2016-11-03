@@ -4,7 +4,6 @@ import sckt from '../../lib/sckt.js';
 import Navbar from '../navbar/navbar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
 
-// maybe set up the WebSocket here?
 const serverUrl = 'ws://circ.local:9000';
 
 class App extends React.Component {
@@ -12,14 +11,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       componentName: 'About',
-      gpsData: false,
-      consumerKey: ''
+      gpsData: {},
+      consumerKey: '',
+      socket: {}
     };
   }
 
   componentDidMount() {
 
     sckt.connect(serverUrl).then(socket => {
+
+      this.setState({
+        socket: socket
+      });
 
       socket.send(JSON.stringify({
         'action': 'getConsumerKey'
@@ -52,7 +56,7 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.close();
+    this.state.socket.close();
   }
 
   // method is passed down to app -> navbar -> navbutton
@@ -65,13 +69,24 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar handleClick={this.handleClick}
+        <Navbar
+          handleClick={this.handleClick}
           consumerKey={this.state.consumerKey ? true : false}
-          gpsData={this.state.gpsData ? true : false} />
-        <ContentBox gpsData={this.state.gpsData} consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null} content={this.state.componentName} />
+          gpsData={Object.keys(this.state.gpsData).length ? true : false}
+        />
+
+        <ContentBox
+          gpsData={this.state.gpsData}
+          consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null}
+          content={this.state.componentName}
+        />
       </div>
     )
   }
+}
+
+App.PropTypes = {
+  componentName: React.PropTypes.string
 }
 
 export default App;
