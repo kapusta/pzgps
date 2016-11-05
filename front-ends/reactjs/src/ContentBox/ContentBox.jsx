@@ -37,4 +37,9 @@ class ContentBox extends React.Component {
   }
 }
 
+ContentBox.propTypes = {
+  content: React.PropTypes.string,
+  gpsData: React.PropTypes.object
+};
+
 export default ContentBox;

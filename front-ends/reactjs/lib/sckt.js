@@ -2,7 +2,7 @@ const connect = serverUrl => {
   return new Promise((resolve, reject) => {
     var socket = new WebSocket(serverUrl);
     socket.onopen = e => {
-      console.log('Connected.');
+      console.log('Connected.', e);
       return resolve(socket);
     };
     socket.onerror = e => {

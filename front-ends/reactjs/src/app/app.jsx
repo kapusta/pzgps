@@ -71,9 +71,9 @@ class App extends React.Component {
   }
 
   // method is passed down to app -> navbar -> navbutton
-  handleClick = n => {
+  handleClick(name) {
     this.setState({
-      componentName: n
+      componentName: name
     });
   }
 
@@ -96,8 +96,8 @@ class App extends React.Component {
   }
 }
 
-App.PropTypes = {
+App.propTypes = {
   componentName: React.PropTypes.string
-}
+};
 
 export default App;

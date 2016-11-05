@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import styles from '../index.scss';
 import buttonStyles from './navbutton.scss';
 
 class Navbutton extends React.Component {
   constructor(props) {
     super(props);
   }
-  handleClick = e => {
+  handleClick(e) {
+    console.log('click', e);
     this.props.handleClick(this.props.section);
   }
   render() {
@@ -16,5 +16,10 @@ class Navbutton extends React.Component {
     )
   }
 }
+
+Navbutton.propTypes = {
+  handleClick: React.PropTypes.func,
+  section: React.PropTypes.string
+};
 
 export default Navbutton;
