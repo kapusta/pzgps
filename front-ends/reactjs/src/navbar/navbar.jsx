@@ -27,9 +27,9 @@ class Navbar extends React.Component {
 }
 
 Navbar.propTypes = {
-  gpsData: React.PropTypes.object,
-  handleClick: React.PropTypes.func,
-  consumerKey: React.PropTypes.string
+  consumerKey: React.PropTypes.bool,
+  gpsData: React.PropTypes.bool,
+  handleClick: React.PropTypes.func
 };
 
 export default Navbar;
