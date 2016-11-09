@@ -12,7 +12,10 @@ class Navbutton extends React.Component {
   }
   render() {
     return (
-      <button className={`btn btn-primary ${buttonStyles.button}`} onClick={this.handleClick}>{this.props.children}</button>
+      <button
+        className={`btn ${buttonStyles.button}` + ((this.props.isActive) ? ' btn-primary' : '')}
+        onClick={this.handleClick}
+      >{this.props.children}</button>
     )
   }
 }

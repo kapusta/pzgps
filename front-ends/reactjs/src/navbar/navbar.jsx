@@ -14,11 +14,26 @@ class Navbar extends React.Component {
         <div>
           <div className={navbarStyles.navbar}>
 
-            <Navbutton handleClick={this.props.handleClick} section="About">About</Navbutton>
+            <Navbutton
+              handleClick={this.props.handleClick}
+              section="About"
+              isActive={this.props.componentName === 'About'}
+              >About
+            </Navbutton>
 
-            {(this.props.gpsData) ? <Navbutton handleClick={this.props.handleClick} section="GpsData">GPS Data</Navbutton> : ''}
+            {(this.props.gpsData) ? <Navbutton
+              handleClick={this.props.handleClick}
+              section="GpsData"
+              isActive={this.props.componentName === 'GpsData'}
+              >GPS Data</Navbutton> : ''
+            }
 
-            {(this.props.gpsData && this.props.consumerKey) ? <Navbutton handleClick={this.props.handleClick} section="MapQuest">MapQuest</Navbutton> : ''}
+            {(this.props.gpsData && this.props.consumerKey) ? <Navbutton
+              handleClick={this.props.handleClick}
+              section="MapQuest"
+              isActive={this.props.componentName === 'MapQuest'}
+              >MapQuest</Navbutton> : ''
+            }
 
           </div>
         </div>
