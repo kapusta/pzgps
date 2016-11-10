@@ -7,7 +7,7 @@ class Navbutton extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
-  handleClick(e) {
+  handleClick = e => {
     console.log('button click event', e);
     this.props.handleClick(this.props.section);
   }
