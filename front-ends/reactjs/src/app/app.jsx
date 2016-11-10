@@ -54,9 +54,6 @@ const setUpSocket = Component => {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    // until https://github.com/babel/babel/issues/619 is moved up to Stage 2,
-    // use the pre-binding sytnax for binding Class methods to `this`
-    this.handleClick = this.handleClick.bind(this);
     this.state = {
       componentName: 'About',
       gpsData: {},
@@ -74,7 +71,7 @@ class App extends React.Component {
   }
 
   // method is passed down to app -> navbar -> navbutton
-  handleClick(name) {
+  handleClick = name => {
     this.setState({
       componentName: name
     });
