@@ -5,9 +5,10 @@ import buttonStyles from './navbutton.scss';
 class Navbutton extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
   handleClick(e) {
-    console.log('click', e);
+    console.log('button click event', e);
     this.props.handleClick(this.props.section);
   }
   render() {
@@ -21,6 +22,7 @@ class Navbutton extends React.Component {
 }
 
 Navbutton.propTypes = {
+  isActive: React.PropTypes.bool,
   handleClick: React.PropTypes.func,
   section: React.PropTypes.string
 };
