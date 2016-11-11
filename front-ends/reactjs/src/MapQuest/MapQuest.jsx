@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from './mapquest.scss';
+//import styles from './mapquest.scss';
 
 class MapQuest extends React.Component {
   constructor(props) {
@@ -29,5 +29,10 @@ class MapQuest extends React.Component {
     )
   }
 }
+
+MapQuest.propTypes = {
+  gpsData: React.PropTypes.object,
+  consumerKey: React.PropTypes.string
+};
 
 export default MapQuest;

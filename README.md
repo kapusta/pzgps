@@ -1,7 +1,7 @@
 # pzgps
-The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
+The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket. On the way, we'll learn how to do it in multiple UI frameworks.
 
-We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [angular-websocket](https://github.com/AngularClass/angular-websocket).
+We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
 ## Pull Requests Accepted
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
@@ -17,14 +17,11 @@ You...
 ## Project Structure
 
 * At the root of the repo is an `index.js` file, which reads the GPS data and provides it over a WebSocket.
-* A sample AngularJS app to view the data lives in the `angular1` directory.
+* Sample web apps are in the `front-ends` directory. Each has it's own `package.json` file.
+  - Run `npm install` to install the dependencies ('deps') for each part of the project that you want to use.
+  - You'll run each part of the project by running `npm start` where the `package.json` is located.
 
-In both locations is a `package.json` file. Run `npm install` to install the dependencies ('deps') for each part of the project. In the future, more front ends will be provided, each with their own deps to be installed (if you want to use that front end).
-
-You'll run each part of the project by running `npm start` where the `package.json` is located.
-
-
-## Installing NodeJS
+## Installing NodeJS on the pizero
 The version of NodeJS you get via `apt-get install nodejs` is out of date (so you'd be missing some important security patches).
 
 If you want to compile node from scratch on your [#pizero](https://www.raspberrypi.org/products/pi-zero/) and wait all night for it to complete, then [check out this guide](https://www.youtube.com/watch?v=J6g53Hm0rq4).
@@ -137,7 +134,8 @@ In the `angular1` directory, install the deps by running `npm install` then run 
 Assuming the millions of things above went right, you'll see some GPS data in your web browser.
 
 ### ReactJS
-As of this writing, the UI provided in the `reactjs` directory doesn't actually do anything. OVer time it will be built up to provide feature parity with the `angular1` front end.
+In the `reactjs` directory, install the deps by running `npm install` then run `npm start` to start the webserver. This project uses [webpack](https://webpack.github.io/) and will auto-reload your browser for you.
+
 
 ## Enabling a MapQuest staticmap
 

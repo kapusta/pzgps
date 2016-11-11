@@ -19,7 +19,7 @@ class GpsData extends React.Component {
 
           <h3 className={styles.header}>Raw Data</h3>
           <div>
-            {Object.keys(this.props.gpsData).map(function(val, idx, arr) {
+            {Object.keys(this.props.gpsData).map(function(val) {
               return (
                 <li key={shortid.generate()}>{val} - {this.props.gpsData[val]}</li>
               )
@@ -30,5 +30,9 @@ class GpsData extends React.Component {
     )
   }
 }
+
+GpsData.propTypes = {
+  gpsData: React.PropTypes.object
+};
 
 export default GpsData;

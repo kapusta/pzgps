@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from '../index.scss';
+//import styles from '../index.scss';
 import React from 'react';
 
 class About extends React.Component {

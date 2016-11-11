@@ -71,9 +71,9 @@ class App extends React.Component {
   }
 
   // method is passed down to app -> navbar -> navbutton
-  handleClick = n => {
+  handleClick = name => {
     this.setState({
-      componentName: n
+      componentName: name
     });
   }
 
@@ -84,6 +84,7 @@ class App extends React.Component {
           handleClick={this.handleClick}
           consumerKey={this.state.consumerKey ? true : false}
           gpsData={Object.keys(this.state.gpsData).length ? true : false}
+          componentName={this.state.componentName}
         />
 
         <ContentBox
@@ -96,8 +97,8 @@ class App extends React.Component {
   }
 }
 
-App.PropTypes = {
+App.propTypes = {
   componentName: React.PropTypes.string
-}
+};
 
 export default App;

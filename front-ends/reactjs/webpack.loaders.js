@@ -9,7 +9,7 @@ module.exports = [
 		exclude: /(node_modules|bower_components|public)/,
 		loader: 'babel',
 		query: {
-		  presets: ['es2015', 'react'],
+		  presets: ['es2015', 'react', 'stage-1'],
 		  plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties'],
 		}
 	},
