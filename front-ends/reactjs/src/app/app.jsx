@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import sckt from '../../lib/sckt.js';
-import Navbar from '../navbar/navbar.jsx';
+import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
 
 const serverUrl = 'ws://circ.local:9000'; // you'll want to change this
@@ -70,7 +70,7 @@ class App extends React.Component {
     this.state.socket.close();
   }
 
-  // method is passed down to app -> navbar -> navbutton
+  // method is passed down to app -> NavBar -> NavButton
   handleClick = name => {
     this.setState({
       componentName: name
@@ -80,7 +80,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar
+        <NavBar
           handleClick={this.handleClick}
           consumerKey={this.state.consumerKey ? true : false}
           gpsData={Object.keys(this.state.gpsData).length ? true : false}

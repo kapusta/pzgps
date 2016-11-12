@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './app/app.jsx';
+import App from './App/App.jsx';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 render(
