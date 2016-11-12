@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import About from '../about/about.jsx';
+import About from '../About/About.jsx';
 import GpsData from '../GpsData/GpsData.jsx';
 import MapQuest from '../MapQuest/MapQuest.jsx';
 

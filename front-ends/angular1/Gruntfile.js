@@ -13,16 +13,6 @@ module.exports = function (grunt) {
   // if you simply run "grunt" these default tasks will execute, IN THE ORDER THEY APPEAR!
   grunt.registerTask('default', ['jshint', 'clean', 'ngAnnotate', 'ngtemplates', 'uglify', 'concat', 'cssmin', 'copy']);
 
-  // don't need this with `live-server` detecting file changes
-  // grunt.registerTask("reload", "reload Chrome on OS X", function() {
-  //   require("child_process").exec("osascript " +
-  //     "-e 'tell application \"Google Chrome\" " +
-  //     "to tell the active tab of its first window' " +
-  //     "-e 'reload' " +
-  //     "-e 'end tell'"
-  //   );
-  // });
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -53,7 +43,7 @@ module.exports = function (grunt) {
       },
       pzgps: {
         files: {
-          './src/tmp/pzgps.annotated.js':
+          './tmp/pzgps.annotated.js':
           ['./src/js/pzgps.js', './src/js/**/*.js', './src/components/**/*.js']
         }
       }
@@ -66,7 +56,7 @@ module.exports = function (grunt) {
         src: [
           'components/**/*.html'
         ],
-        dest: 'src/tmp/pzgps-components.min.js',
+        dest: 'tmp/pzgps-components.min.js',
         options: {
           standalone: false,
           prefix: '/',
@@ -83,15 +73,19 @@ module.exports = function (grunt) {
 
     uglify: {
       pzgps: {
-        src: ['./src/tmp/pzgps.annotated.js'],
-        dest: './www/js/pzgps.min.js'
+        options: {
+          sourceMap: true,
+          report: 'min'
+        },
+        src: ['./tmp/pzgps.annotated.js'],
+        dest: './tmp/pzgps.uglified.js'
       }
     },
 
     concat: {
       'pzgps': {
-        src: ['www/js/pzgps.min.js', '<%= ngtemplates.pzgps.dest %>'],
-        dest: 'www/js/pzgps.min.js'
+        src: ['<%= uglify.pzgps.dest %>', '<%= ngtemplates.pzgps.dest %>'],
+        dest: 'tmp/pzgps.min.js'
       }
     },
 
@@ -99,7 +93,7 @@ module.exports = function (grunt) {
     cssmin: {
       compress: {
         files: {
-          './www/css/pzgps.min.css': ['./src/css/pzgps.css']
+          './tmp/pzgps.min.css': ['./src/css/pzgps.css']
         }
       }
     },
@@ -121,23 +115,27 @@ module.exports = function (grunt) {
           {
             expand: true,
             flatten: true,
-            src: ['node_modules/angular-websocket/dist/angular-websocket.min.js'],
+            src: [
+              'tmp/pzgps.min.js',
+              'tmp/pzgps.uglified.js.map',
+              'node_modules/angular-websocket/dist/angular-websocket.min.js'
+            ],
             dest: './www/js/',
             filter: 'isFile'
           }
         ]
       },
-      // css: {
-      //   files: [
-      //     {
-      //       expand: true,
-      //       flatten: true,
-      //       src: [],
-      //       dest: './www/css/',
-      //       filter: 'isFile'
-      //     }
-      //   ]
-      // }
+      css: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['tmp/pzgps.min.css'],
+            dest: './www/css/',
+            filter: 'isFile'
+          }
+        ]
+      }
     },
 
     watch: {
