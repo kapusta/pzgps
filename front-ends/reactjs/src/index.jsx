@@ -5,9 +5,7 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 render(
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={App} />
-    </Route>
+    <Route path="/" component={App}></Route>
   </Router>,
   document.querySelector("#app")
 );
