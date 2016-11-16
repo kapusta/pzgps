@@ -45,7 +45,7 @@ Your `/usr/local` dir probably has a few files left over from the install (ie, C
 * `sudo killall gpsd` - To kill gpsd
 * `sudo /etc/init.d/gpsd restart` - To elegantly restart gpsd
 * `cgps -s` - to open a terminal UI for gps data
-* `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746) -
+* `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746)
 
 
 ## Installing `gpsd`
@@ -73,7 +73,7 @@ What did work was...
 * `sudo raspi-config`
 * go to `Advanced Options`
 * then `serial` and turn it off
-* reboot
+* `sudo reboot`
 
 The Adafruit guide mentioned above says you can do this from `/etc/inittab` but that file doesn't exist in Raspbian Jessie (it did in Wheezy). Raspbian Jessie has moved everything to services and there is no `/etc/inittab` file at all, so it's best to use the `raspi-config` command.
 
@@ -103,10 +103,10 @@ Then restart: `sudo /etc/init.d/gpsd restart`
 
 Then try `cgps -s` and you should now see real data. If the GPS Breakout can't see the sky then you might see `no fix` which means it can't see any satellites. Either go outside or put the [#pizero](https://www.raspberrypi.org/products/pi-zero/) on a window sill. 😀
 
-## GPS data via nodejs
+## GPS data via NodeJS
 Now that data is coming from the gps unit, thru `gpsd`, we can read that data from node with the help of [node-gpsd](https://github.com/eelcocramer/node-gpsd).
 
-Run `npm install` to install the deps, including [node-gpsd](https://github.com/eelcocramer/node-gpsd)
+Run `npm install` to install the deps which includes [node-gpsd](https://github.com/eelcocramer/node-gpsd)
 
 This will handle the streaming of data from `gpsd` for us and provide the data as JSON (it can also start and stop the daemon, you should read the docs).
 
