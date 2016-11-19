@@ -4,7 +4,7 @@ import { Router } from 'preact-router';
 import Header from './header';
 import Home from './home';
 import Profile from './profile';
-
+import About from './About/About.jsx';
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -23,6 +23,7 @@ export default class App extends Component {
 					<Home path="/" />
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
+          <About path="/about" />
 				</Router>
 			</div>
 		);
