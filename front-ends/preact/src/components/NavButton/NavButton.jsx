@@ -17,7 +17,7 @@ class Navbutton extends React.Component {
         className={`btn ${buttonStyles.button}` + ((this.props.isActive) ? ' btn-primary' : '')}
         onClick={this.handleClick}
       >{this.props.children}</button>
-    )
+    );
   }
 }
 

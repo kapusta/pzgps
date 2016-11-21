@@ -15,7 +15,7 @@ class About extends Component {
           </p>
         </div>
       </div>
-    )
+    );
   }
 }
 
