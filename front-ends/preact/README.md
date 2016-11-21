@@ -26,6 +26,14 @@ Start a live-reload development server:**
 
 This is a full web server nicely suited to your project. Any time you make changes within the `src` directory, it will rebuild and even refresh your browser.
 
+## Production build
+
+    npm build
+
+
+This will build the prod assets and put them into the `build` directory.
+
+
 ## Testing with `mocha`, `karma`, `chai`, `sinon` via `phantomjs`
 
     npm test
