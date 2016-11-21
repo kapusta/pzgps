@@ -4,13 +4,11 @@
   "description": "pzgps fronted by Preact.",
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
-    "prod": "superstatic build -p 8080 --host 0.0.0.0 --gzip -c '{\"rewrites\": [{\"source\":\"**\",\"destination\":\"index.html\"}],\"headers\":[{\"source\":\"**\",\"headers\":[{\"key\":\"Cache-Control\",\"value\":\"max-age=86400\"}]}]}'",
-    "prestart": "npm run build",
     "build": "cross-env NODE_ENV=production webpack -p --progress",
     "prebuild": "mkdirp build && ncp src/assets build/assets",
     "test": "npm run -s lint && npm run -s test:karma",
     "test:karma": "karma start test/karma.conf.js --single-run",
-    "lint": "eslint --ext .js src --ext .js,.jsx || exit 0"
+    "lint": "eslint --ext .js src --ext .js,.jsx --fix || exit 0"
   },
   "keywords": [
     "preact",
