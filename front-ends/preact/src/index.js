@@ -7,7 +7,8 @@ function init() {
   //let App = require('./components/App/App.jsx').default;
   root = render(
     <App/> ,
-    document.querySelector("#app")
+    document.querySelector("#app"),
+    root
   );
 }
 
