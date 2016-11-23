@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import proptypes from 'proptypes';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import buttonStyles from './navbutton.scss';
 
 class Navbutton extends Component {

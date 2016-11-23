@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import About from '../About/About.jsx';
 import GpsData from '../GpsData/GpsData.jsx';
 import MapQuest from '../MapQuest/MapQuest.jsx';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 // @description this is kind of gross, but neccessary
 // @see https://github.com/facebook/react/issues/3365

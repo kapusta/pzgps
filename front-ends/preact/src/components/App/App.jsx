@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import sckt from '../../lib/sckt.js';
 import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 const serverUrl = 'ws://circ.local:9000'; // you'll want to change this
 

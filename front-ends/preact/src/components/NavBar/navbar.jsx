@@ -1,9 +1,6 @@
 import { h, Component } from 'preact';
-//import { render } from 'react-dom';
-//import styles from '../index.scss';
 import navbarStyles from './Navbar.scss';
 import NavButton from '../NavButton/NavButton.jsx';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Navbar extends Component {
   constructor(props) {

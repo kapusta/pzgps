@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
-//import 'bootstrap/dist/css/bootstrap.min.css';
-//import styles from './mapquest.scss';
+import styles from './mapquest.scss';
 
 class MapQuest extends Component {
   constructor(props) {

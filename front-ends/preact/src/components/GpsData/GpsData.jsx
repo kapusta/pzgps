@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './gpsdata.scss';
 
 class GpsData extends Component {
