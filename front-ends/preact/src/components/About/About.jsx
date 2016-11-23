@@ -1,5 +1,6 @@
-//import styles from '../index.scss';
 import { h, Component } from 'preact';
+//import styles from '../index.scss';
+
 
 class About extends Component {
   constructor(props) {

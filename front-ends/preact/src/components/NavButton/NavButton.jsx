@@ -1,8 +1,9 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import { h, Component } from 'preact';
+import proptypes from 'proptypes';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import buttonStyles from './navbutton.scss';
 
-class Navbutton extends React.Component {
+class Navbutton extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -22,9 +23,9 @@ class Navbutton extends React.Component {
 }
 
 Navbutton.propTypes = {
-  isActive: React.PropTypes.bool,
-  handleClick: React.PropTypes.func,
-  section: React.PropTypes.string
+  isActive: proptypes.bool,
+  handleClick: proptypes.func,
+  section: proptypes.string
 };
 
 export default Navbutton;

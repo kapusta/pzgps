@@ -1,30 +1,30 @@
-// import 'lie';
-// import 'isomorphic-fetch';
 import { h, render } from 'preact';
+import App from './components/App/App.jsx';
 import './style';
-
 let root;
+
 function init() {
-  let App = require('./components/app').default;
-  root = render(<App />, document.body, root);
+  //let App = require('./components/App/App.jsx').default;
+  root = render(
+    <App/> ,
+    document.querySelector("#app")
+  );
 }
 
 init();
 
 if (module.hot) {
-  module.hot.accept('./components/app', () => requestAnimationFrame( () => {
+  module.hot.accept('./components/App/App.jsx', () => requestAnimationFrame(() => {
     flushLogs();
     init();
-  }) );
-
-	// optional: mute HMR/WDS logs
+  }));
+  // optional: mute HMR/WDS logs
   let log = console.log,
     logs = [];
   console.log = (t, ...args) => {
-    if (typeof t==='string' && t.match(/^\[(HMR|WDS)\]/)) {
-      if (t.match(/(up to date|err)/i)) logs.push(t.replace(/^.*?\]\s*/m,''), ...args);
-    }
-    else {
+    if (typeof t === 'string' && t.match(/^\[(HMR|WDS)\]/)) {
+      if (t.match(/(up to date|err)/i)) logs.push(t.replace(/^.*?\]\s*/m, ''), ...args);
+    } else {
       log.call(console, t, ...args);
     }
   };
