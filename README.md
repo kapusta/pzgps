@@ -15,25 +15,28 @@ You...
 * Have [Connected your Adafruit GPS Breakout](https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb)
 
 ## Project Structure
-
-* At the root of the repo is an `index.js` file, which reads the GPS data and provides it over a WebSocket.
+* At the root of the repo is an `index.js` file, which reads the GPS data and provides it over a WebSocket (on port 9001).
 * Sample web apps are in the `front-ends` directory. Each has it's own `package.json` file.
   - Run `npm install` to install the dependencies ('deps') for each part of the project that you want to use.
   - You'll run each part of the project by running `npm start` where the `package.json` is located.
+  - Front web apps all run on port 9001.
 
 ## Installing NodeJS on the pizero
 The version of NodeJS you get via `apt-get install nodejs` is out of date (so you'd be missing some important security patches).
 
 If you want to compile node from scratch on your [#pizero](https://www.raspberrypi.org/products/pi-zero/) and wait all night for it to complete, then [check out this guide](https://www.youtube.com/watch?v=J6g53Hm0rq4).
 
-If you want to make things a bit easier, then download the version of NodeJS you want using `wget` and install it directly. In this case we'll download the latest version for ARM on the 4.x branch...
-* Log in to your pi and remain in your home directory
-* `wget https://nodejs.org/dist/v4.6.0/node-v4.6.0-linux-armv6l.tar.xz`
-* `cd /usr/local`
-* `sudo tar --strip-components 1 -xvf ~/node-v4.6.0-linux-armv6l.tar.xz`
-* `cd && rm node-v4.6.0-linux-armv6l.tar.xz`
-* `node -v` should yield `v4.6.0`
-* `npm -v` should yield `2.15.9`
+If you want to make things a bit easier, then [download Node](https://nodejs.org/en/download/) using `wget` and install it directly. In this case we'll download the latest version (as of this writing) for ARM on the 6.x branch. Log in to your pi and remain in your home directory...
+
+    wget https://nodejs.org/dist/v6.9.1/node-v6.9.1-linux-armv6l.tar.xz
+    cd /usr/local
+    sudo tar --strip-components 1 -xvf ~/node-v6.9.1-linux-armv6l.tar.xz
+    cd && rm node-v6.9.1-linux-armv6l.tar.xz
+
+
+Node is installed now, along with npm.
+* `node -v` should yield `v6.9.1`
+* `npm -v` should yield `3.10.8`
 
 Your `/usr/local` dir probably has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
 
@@ -43,7 +46,7 @@ Your `/usr/local` dir probably has a few files left over from the install (ie, C
 * `sudo killall gpsd` - To kill gpsd
 * `sudo /etc/init.d/gpsd restart` - To elegantly restart gpsd
 * `cgps -s` - to open a terminal UI for gps data
-* `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746) -
+* `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746)
 
 
 ## Installing `gpsd`
@@ -71,13 +74,12 @@ What did work was...
 * `sudo raspi-config`
 * go to `Advanced Options`
 * then `serial` and turn it off
-* reboot
+* `sudo reboot`
 
 The Adafruit guide mentioned above says you can do this from `/etc/inittab` but that file doesn't exist in Raspbian Jessie (it did in Wheezy). Raspbian Jessie has moved everything to services and there is no `/etc/inittab` file at all, so it's best to use the `raspi-config` command.
 
 
 ## Configuring gpsd
-
 To have `gpsd` start up correctly, edit `/etc/default/gpsd`
 
     # Default settings for the gpsd init script and the hotplug wrapper.
@@ -102,18 +104,16 @@ Then restart: `sudo /etc/init.d/gpsd restart`
 
 Then try `cgps -s` and you should now see real data. If the GPS Breakout can't see the sky then you might see `no fix` which means it can't see any satellites. Either go outside or put the [#pizero](https://www.raspberrypi.org/products/pi-zero/) on a window sill. 😀
 
-## GPS data via nodejs
-
+## GPS data via NodeJS
 Now that data is coming from the gps unit, thru `gpsd`, we can read that data from node with the help of [node-gpsd](https://github.com/eelcocramer/node-gpsd).
 
-Run `npm install` to install the deps, including [node-gpsd](https://github.com/eelcocramer/node-gpsd)
+Run `npm install` to install the deps which includes [node-gpsd](https://github.com/eelcocramer/node-gpsd)
 
 This will handle the streaming of data from `gpsd` for us and provide the data as JSON (it can also start and stop the daemon, you should read the docs).
 
 Have a look at the `index.js` in this repo and run `npm start` in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.
 
 ## Auto Start the WebSocket server at System Boot
-
 After getting everything set up, you might want to have the WebSocket server [auto-start when your pizero boots up](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md).
 * Look in the `package.json` file for the `scripts` section
 * note the value for the `start` command
@@ -138,7 +138,6 @@ In the `reactjs` directory, install the deps by running `npm install` then run `
 
 
 ## Enabling a MapQuest staticmap
-
 One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module that includes that key.
 
 * [Register for a developer account for free](https://developer.mapquest.com/).
