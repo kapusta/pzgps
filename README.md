@@ -15,10 +15,11 @@ You...
 * Have [Connected your Adafruit GPS Breakout](https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb)
 
 ## Project Structure
-* At the root of the repo is an `index.js` file, which reads the GPS data and provides it over a WebSocket.
+* At the root of the repo is an `index.js` file, which reads the GPS data and provides it over a WebSocket (on port 9001).
 * Sample web apps are in the `front-ends` directory. Each has it's own `package.json` file.
   - Run `npm install` to install the dependencies ('deps') for each part of the project that you want to use.
   - You'll run each part of the project by running `npm start` where the `package.json` is located.
+  - Front web apps all run on port 9001.
 
 ## Installing NodeJS on the pizero
 The version of NodeJS you get via `apt-get install nodejs` is out of date (so you'd be missing some important security patches).
