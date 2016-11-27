@@ -6,51 +6,6 @@ import ContentBox from '../ContentBox/ContentBox.jsx';
 
 const serverUrl = 'ws://circ.local:9000'; // you'll want to change this
 
-const setUpSocket = Component => {
-
-  sckt.connect(serverUrl).then(socket => {
-
-    Component.setState({
-      socket: socket
-    });
-
-    socket.send(JSON.stringify({
-      'action': 'getConsumerKey'
-    }));
-
-    socket.onclose = e => {
-      // https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent
-      console.error('The WebSocket connection closed', e);
-      console.log('Trying to reconnect...');
-      window.setTimeout(() => {
-        setUpSocket(Component);
-      }, 5000);
-    };
-
-    socket.onmessage = e => {
-      let data = JSON.parse(e.data);
-      if (data.consumerKey) {
-        Component.setState({
-          consumerKey: data.consumerKey
-        });
-      } else {
-        Component.setState({
-          gpsData: data
-        });
-      }
-    };
-
-  }).catch(function(err) {
-    console.error('could not connect to WebSocket server', err);
-    console.log('Trying to reconnect...');
-    setTimeout(function() {
-      setUpSocket(Component);
-    }, 5000);
-  });
-
-};
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    setUpSocket(this);
+    sckt.setUpSocket(serverUrl, this);
   }
 
   componentWillUnmount() {
