@@ -1,40 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>pizero gps by kapusta</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <title>pzgps by kapusta</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>pizero gps</h1>
-        <p>a side project using gps on a raspberry pi zero</p>
-        <p class="view"><a href="https://github.com/kapusta/pizero-gps">View the Project on GitHub <small>kapusta/pizero-gps</small></a></p>
-        <ul>
-          <li><a href="https://github.com/kapusta/pizero-gps/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/kapusta/pizero-gps/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/kapusta/pizero-gps">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a id="gps-over-serial-on-your-raspberry-pi" class="anchor" href="#gps-over-serial-on-your-raspberry-pi" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>gps over serial on your raspberry pi</h1>
+    <header>
+      <div class="inner">
+        <h1>pzgps</h1>
+        <h2>Read GPS data from a PiZero in a single page web app via a WebSocket</h2>
+        <a href="https://github.com/kapusta/pzgps" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="pzgps" class="anchor" href="#pzgps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pzgps</h1>
+
+<p>The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket. On the way, we'll learn how to do it in multiple UI frameworks.</p>
+
+<p>We'll use <a href="https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions">NodeJS</a> and <a href="https://github.com/eelcocramer/node-gpsd">node-gpsd</a> to read and process the data, make it available via  <a href="https://www.npmjs.com/package/ws">ws</a>, and render in the UI with the help of <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API">WebSockets</a>.</p>
 
 <h2>
-<a id="hello" class="anchor" href="#hello" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Hello</h2>
+<a id="pull-requests-accepted" class="anchor" href="#pull-requests-accepted" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Pull Requests Accepted</h2>
 
 <ul>
-<li>If this info turns out to be useful to you, <a href="https://twitter.com/dankapusta">let me know</a>!</li>
+<li>If this info turns out to be useful to you, <a href="https://twitter.com/dankapusta">please let me know</a>!</li>
 <li>I'm very open to changes/fixes/additions, please feel free to submit pull requests.</li>
 </ul>
 
@@ -44,7 +49,7 @@
 <p>You...</p>
 
 <ul>
-<li>Have a #pizero with an <a href="https://en.wikipedia.org/wiki/ARM11">ARM11</a> and a GPIO header soldered onto it.</li>
+<li>Have a <a href="https://www.raspberrypi.org/products/pi-zero/">#pizero</a> with an <a href="https://en.wikipedia.org/wiki/ARM11">ARM11</a> and a GPIO header soldered onto it.</li>
 <li>Have an <a href="https://www.adafruit.com/product/746">Adafruit Ultimate GPS Breakout</a>
 </li>
 <li>Have <a href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian Jessie</a> installed.</li>
@@ -53,25 +58,43 @@
 </ul>
 
 <h2>
-<a id="installing-nodejs" class="anchor" href="#installing-nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing NodeJS</h2>
-
-<p>The goal of this project is to collect data from the GPS and dump it into a database to be queried out later. We'll use <a href="https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions">NodeJS</a> and <a href="https://github.com/eelcocramer/node-gpsd">node-gpsd</a> to read, process and store the data.</p>
-
-<p>If you want to compile node from scratch on your pi and wait all night for it to complete, then <a href="https://www.youtube.com/watch?v=J6g53Hm0rq4">check out this guide</a>.</p>
-
-<p>If you want to make things a bit easier then download the version of Node you want using wget and install it directly. In this case we'll download the latest version for ARM on the 4.x branch...</p>
+<a id="project-structure" class="anchor" href="#project-structure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Structure</h2>
 
 <ul>
-<li>Log in to your pi and remain in your home directory</li>
-<li><code>wget https://nodejs.org/dist/v4.6.0/node-v4.6.0-linux-armv6l.tar.xz</code></li>
-<li><code>cd /usr/local</code></li>
-<li><code>sudo tar --strip-components 1 -xvf ~/node-v4.6.0-linux-armv6l.tar.xz</code></li>
-<li><code>cd &amp;&amp; rm node-v4.6.0-linux-armv6l.tar.xz</code></li>
+<li>At the root of the repo is an <code>index.js</code> file, which reads the GPS data and provides it over a WebSocket (on port 9001).</li>
+<li>Sample web apps are in the <code>front-ends</code> directory. Each has it's own <code>package.json</code> file.
+
+<ul>
+<li>Run <code>npm install</code> to install the dependencies ('deps') for each part of the project that you want to use.</li>
+<li>You'll run each part of the project by running <code>npm start</code> where the <code>package.json</code> is located.</li>
+<li>Front web apps all run on port 9001.</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="installing-nodejs-on-the-pizero" class="anchor" href="#installing-nodejs-on-the-pizero" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing NodeJS on the pizero</h2>
+
+<p>The version of NodeJS you get via <code>apt-get install nodejs</code> is out of date (so you'd be missing some important security patches).</p>
+
+<p>If you want to compile node from scratch on your <a href="https://www.raspberrypi.org/products/pi-zero/">#pizero</a> and wait all night for it to complete, then <a href="https://www.youtube.com/watch?v=J6g53Hm0rq4">check out this guide</a>.</p>
+
+<p>If you want to make things a bit easier, then <a href="https://nodejs.org/en/download/">download Node</a> using <code>wget</code> and install it directly. In this case we'll download the latest version (as of this writing) for ARM on the 6.x branch. Log in to your pi and remain in your home directory...</p>
+
+<pre><code>wget https://nodejs.org/dist/v6.9.1/node-v6.9.1-linux-armv6l.tar.xz
+cd /usr/local
+sudo tar --strip-components 1 -xvf ~/node-v6.9.1-linux-armv6l.tar.xz
+cd &amp;&amp; rm node-v6.9.1-linux-armv6l.tar.xz
+</code></pre>
+
+<p>Node is installed now, along with npm.</p>
+
+<ul>
 <li>
-<code>node -v</code> should yield <code>v4.6.0</code>
+<code>node -v</code> should yield <code>v6.9.1</code>
 </li>
 <li>
-<code>npm -v</code> should yield <code>2.15.9</code>
+<code>npm -v</code> should yield <code>3.10.8</code>
 </li>
 </ul>
 
@@ -81,25 +104,29 @@
 <a id="various-useful-commands" class="anchor" href="#various-useful-commands" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Various Useful Commands</h2>
 
 <ul>
-<li>Kill gpsd - <code>sudo killall gpsd</code>
-</li>
-<li>Elegantly restart gpsd - <code>sudo /etc/init.d/gpsd restart</code>
-</li>
-<li>Terminal UI for gps data - <code>cgps -s</code>
-</li>
-<li>See raw data from the device - <code>cat /dev/ttyAMA0</code>
+<li>
+<code>sudo apt-get update</code> and <code>sudo apt-get upgrade</code> to update your installed packages</li>
+<li>
+<code>sudo killall gpsd</code> - To kill gpsd</li>
+<li>
+<code>sudo /etc/init.d/gpsd restart</code> - To elegantly restart gpsd</li>
+<li>
+<code>cgps -s</code> - to open a terminal UI for gps data</li>
+<li>
+<code>cat /dev/ttyAMA0</code> - See raw data from the <a href="https://www.adafruit.com/product/746">Adafruit Ultimate GPS Breakout</a>
 </li>
 </ul>
 
 <h2>
-<a id="start-gpsd-in-verbosedebug-mode" class="anchor" href="#start-gpsd-in-verbosedebug-mode" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Start gpsd in verbose/debug mode</h2>
+<a id="installing-gpsd" class="anchor" href="#installing-gpsd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing <code>gpsd</code>
+</h2>
 
 <p>Log into your pi and install <code>gpsd</code></p>
 
 <pre><code>sudo apt-get install gpsd gpsd-clients python-gps
 </code></pre>
 
-<p>...then try this command...</p>
+<p>Start <code>gpsd</code> in verbose/debug mode...</p>
 
 <pre><code>sudo gpsd /dev/ttyAMA0 -D 2 -n -b -N -P /tmp/gpsd.pid -F /var/run/gpsd.sock
 </code></pre>
@@ -109,7 +136,7 @@
 <pre><code>gpsd:ERROR: can't bind to local socket /var/run/gpsd.sock
 </code></pre>
 
-<p>You can confirm data is coming to your #pizero with <code>cat /dev/ttyAMA0</code> which should show a stream of data. If you see data coming thru but the commands to start <code>gpsd</code> failed with an error about not being able to connect, then you might have to disable terminal over serial.</p>
+<p>You can confirm data is coming to your <a href="https://www.raspberrypi.org/products/pi-zero/">#pizero</a> with <code>cat /dev/ttyAMA0</code> which should show a stream of data. If you see data coming thru but the commands to start <code>gpsd</code> failed with an error about not being able to connect, then you might have to disable terminal over serial.</p>
 
 <h2>
 <a id="how-disable-terminal-over-serial" class="anchor" href="#how-disable-terminal-over-serial" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How disable terminal over serial</h2>
@@ -127,13 +154,13 @@ sudo systemctl disable serial-getty@ttyAMA0.service
 <li>go to <code>Advanced Options</code>
 </li>
 <li>then <code>serial</code> and turn it off</li>
-<li>reboot</li>
+<li><code>sudo reboot</code></li>
 </ul>
 
 <p>The Adafruit guide mentioned above says you can do this from <code>/etc/inittab</code> but that file doesn't exist in Raspbian Jessie (it did in Wheezy). Raspbian Jessie has moved everything to services and there is no <code>/etc/inittab</code> file at all, so it's best to use the <code>raspi-config</code> command.</p>
 
 <h2>
-<a id="configure-gpsd" class="anchor" href="#configure-gpsd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configure gpsd</h2>
+<a id="configuring-gpsd" class="anchor" href="#configuring-gpsd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuring gpsd</h2>
 
 <p>To have <code>gpsd</code> start up correctly, edit <code>/etc/default/gpsd</code></p>
 
@@ -157,24 +184,94 @@ GPSD_SOCKET="/var/run/gpsd.sock"
 
 <p>Then restart: <code>sudo /etc/init.d/gpsd restart</code></p>
 
-<p>Then try <code>cgps -s</code> and you should now see real data. If the GPS Breakout can't see the sky then you might see <code>no fix</code> which means it can't see any satellites. Either go outside or put the #pizero on a window sill. </p>
+<p>Then try <code>cgps -s</code> and you should now see real data. If the GPS Breakout can't see the sky then you might see <code>no fix</code> which means it can't see any satellites. Either go outside or put the <a href="https://www.raspberrypi.org/products/pi-zero/">#pizero</a> on a window sill. <g-emoji alias="grinning" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f600.png" ios-version="6.0">😀</g-emoji></p>
 
 <h2>
-<a id="gps-data-via-nodejs" class="anchor" href="#gps-data-via-nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GPS data via nodejs</h2>
+<a id="gps-data-via-nodejs" class="anchor" href="#gps-data-via-nodejs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GPS data via NodeJS</h2>
 
 <p>Now that data is coming from the gps unit, thru <code>gpsd</code>, we can read that data from node with the help of <a href="https://github.com/eelcocramer/node-gpsd">node-gpsd</a>.</p>
 
-<p>This will handle the starting and stopping of <code>gpsd</code> for us and provide the data as JSON.</p>
+<p>Run <code>npm install</code> to install the deps which includes <a href="https://github.com/eelcocramer/node-gpsd">node-gpsd</a></p>
 
-<p>Have a look at the index.js file in this repo and try <code>node index.js</code> in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.</p>
-      </section>
+<p>This will handle the streaming of data from <code>gpsd</code> for us and provide the data as JSON (it can also start and stop the daemon, you should read the docs).</p>
+
+<p>Have a look at the <code>index.js</code> in this repo and run <code>npm start</code> in your terminal. If everything is set up correctly, you should see some basic info, then a bunch of TPV events streaming by. Now you have something you can write an application around.</p>
+
+<h2>
+<a id="auto-start-the-websocket-server-at-system-boot" class="anchor" href="#auto-start-the-websocket-server-at-system-boot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Auto Start the WebSocket server at System Boot</h2>
+
+<p>After getting everything set up, you might want to have the WebSocket server <a href="https://www.raspberrypi.org/documentation/linux/usage/rc-local.md">auto-start when your pizero boots up</a>.</p>
+
+<ul>
+<li>Look in the <code>package.json</code> file for the <code>scripts</code> section</li>
+<li>note the value for the <code>start</code> command</li>
+<li>Add that command to <code>rc.local</code> with the correct path to the <code>index.js</code> file</li>
+</ul>
+
+<p>Your entry in <code>rc.local</code> will look something like this...</p>
+
+<pre><code>/usr/local/bin/node /home/pi/Projects/pzgps/index.js --port 9000 &amp;
+</code></pre>
+
+<p>Change the port number as needed.</p>
+
+<h2>
+<a id="using-the-websocket-from-a-front-end" class="anchor" href="#using-the-websocket-from-a-front-end" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using the WebSocket from a Front End</h2>
+
+<h3>
+<a id="angularjs" class="anchor" href="#angularjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AngularJS</h3>
+
+<p>In the <code>angular1</code> directory, install the deps by running <code>npm install</code> then run <code>npm start</code> to start the <a href="https://github.com/johnpapa/lite-server">webserver</a>. Using your web browser, navigate to your pizero's IP address on port 9001 (the default). The default port of the webserver can be changed in the <code>angular1/bs-config.json</code> file.</p>
+
+<p>Assuming the millions of things above went right, you'll see some GPS data in your web browser.</p>
+
+<h3>
+<a id="reactjs" class="anchor" href="#reactjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReactJS</h3>
+
+<p>In the <code>reactjs</code> directory, install the deps by running <code>npm install</code> then run <code>npm start</code> to start the webserver. This project uses <a href="https://webpack.github.io/">webpack</a> and will auto-reload your browser for you.</p>
+
+<h2>
+<a id="enabling-a-mapquest-staticmap" class="anchor" href="#enabling-a-mapquest-staticmap" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enabling a MapQuest staticmap</h2>
+
+<p>One of the views can load a <a href="http://www.mapquestapi.com/staticmap/">Mapquest "staticmap"</a> if you have a "Consumer Key" and provide a module that includes that key.</p>
+
+<ul>
+<li>
+<a href="https://developer.mapquest.com/">Register for a developer account for free</a>.</li>
+<li>Go to your new profile, and click the "Create a New Key" button.</li>
+<li>You can always find your Consumer Key on the "Keys &amp; Reporting" page after creating one.</li>
+<li>
+<p>Make a file in the <code>lib</code> directory named <code>mqkey.js</code> and format it like the example below.</p>
+
+<p>module.exports = {
+  'consumerKey': 'PASTE YOUR CONSUMER KEY HERE'
+};</p>
+</li>
+</ul>
+
+<p>On the command line you can now start the server using the <code>--mq</code> flag. An NPM command is provided in <code>package.json</code> that will start with the MapQuest module included (eg, <code>npm run withMapquest</code> will execute <code>node index.js --port 9000 --mq</code>).</p>
+
+<p>Assuming all of the above is in place, the MapQuest component in the UI will receive the key over the WebSocket and use it to formulate the URL to get the static map. Because the client is receiving updates from the server continually, the map will update if the coordinates change.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/kapusta/pzgps/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/kapusta/pzgps/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/kapusta/pzgps"></a> is maintained by <a href="https://github.com/kapusta">kapusta</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/kapusta">kapusta</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-              <script type="text/javascript">
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
