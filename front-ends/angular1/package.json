@@ -7,9 +7,11 @@
     "url": "http://about.me/dankapusta"
   },
   "scripts": {
-    "start": "lite-server -c bs-config.json"
+    "start": "concurrently --kill-others 'lite-server -c bs-config.json' 'grunt watch'",
+    "server": "lite-server -c bs-config.json"
   },
   "devDependencies": {
+    "concurrently": "^3.1.0",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^1.1.0",
     "grunt-contrib-clean": "^0.6.0",
