@@ -1,11 +1,19 @@
 var argv = require('yargs').argv;
 var Server = require('ws').Server;
+var Realm = require('realm');
+
 var daemon = require('./lib/daemon.js');
+var realmSchema = require('./lib/realmSchema.js');
+var realmApi = require('./lib/realmApi.js');
 
 const mqkey = {
   path: './lib/mqkey.js',
   consumerKey: ''
 };
+
+const pzgpsRealm = new Realm({
+  schema: [realmSchema.Location]
+});
 
 const location = {
   current: {}
@@ -46,6 +54,15 @@ wss.on('connection', socket => {
     if (parsedData.action === 'getConsumerKey' && mqkey.consumerKey) {
       socket.send(JSON.stringify(mqkey));
     }
+
+    if (parsedData.action === 'setLocation') {
+      var location = realmApi.set(pzgpsRealm, location.current);
+      Object.assign(location, {
+        realmData: true
+      });
+      socket.send(JSON.stringify(location));
+    }
+
   });
 
   socket.on('close', () => {
