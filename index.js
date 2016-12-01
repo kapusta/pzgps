@@ -3,11 +3,10 @@ var Server = require('ws').Server;
 var Realm = require('realm');
 
 var daemon = require('./lib/daemon.js');
-var realmSchema = require('./lib/realmSchema.js');
-var realmApi = require('./lib/realmApi.js');
+var realmSchema = require('./lib/realm-schema.js');
+var realmApi = require('./lib/realm-api.js');
 
 const mqkey = {
-  path: './lib/mqkey.js',
   consumerKey: ''
 };
 
@@ -21,9 +20,9 @@ const location = {
 
 if (argv.mq) {
   try {
-    mqkey.consumerKey = require(mqkey.path).consumerKey;
+    mqkey.consumerKey = require('./lib/mqkey.js').consumerKey;
   } catch (err) {
-    console.warn('Tried to import mqkey at path', mqkey.path, err);
+    console.warn('Failed to import mqkey', err);
   }
 }
 
@@ -62,7 +61,6 @@ wss.on('connection', socket => {
       });
       socket.send(JSON.stringify(location));
     }
-
   });
 
   socket.on('close', () => {
