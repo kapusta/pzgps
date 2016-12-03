@@ -11,7 +11,7 @@ const mqkey = {
 };
 
 const pzgpsRealm = new Realm({
-  schema: [realmSchema.Location]
+  schema: [realmSchema.Location, realmSchema.Climb]
 });
 
 const location = {
