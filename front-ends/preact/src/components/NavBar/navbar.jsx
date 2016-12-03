@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import navbarStyles from './Navbar.scss';
+import navbarStyles from './navbar.scss';
 import NavButton from '../NavButton/NavButton.jsx';
 
 class Navbar extends Component {

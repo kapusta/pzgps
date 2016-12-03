@@ -45,6 +45,7 @@ class App extends Component {
           gpsData={this.state.gpsData}
           consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null}
           content={this.state.componentName}
+          socket={this.state.socket}
         />
       </div>
     );

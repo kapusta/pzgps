@@ -30,7 +30,7 @@ class ContentBox extends Component {
     // http://eslint.org/docs/rules/no-else-return
     return (
       <div>
-        <Content gpsData={this.props.gpsData}>{this.props.children}</Content>
+        <Content gpsData={this.props.gpsData} socket={this.props.socket}>{this.props.children}</Content>
       </div>
     );
   }
