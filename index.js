@@ -54,13 +54,22 @@ wss.on('connection', socket => {
       socket.send(JSON.stringify(mqkey));
     }
 
-    if (parsedData.action === 'setLocation') {
-      var location = realmApi.set(pzgpsRealm, location.current);
-      Object.assign(location, {
+    if (parsedData.action === 'newClimb') {
+      var climb = Object.assign({}, {
+        name: parsedData.name,
+        pitches: parsedData.pitches,
+        rating: parsedData.rating,
+        location: location.current
+      });
+
+      let loc = realmApi.set(pzgpsRealm, climb);
+
+      Object.assign(loc, {
         realmData: true
       });
-      socket.send(JSON.stringify(location));
-    }
+
+      socket.send(JSON.stringify(loc));
+    } // end setLocation
   });
 
   socket.on('close', () => {
