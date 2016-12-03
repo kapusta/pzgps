@@ -8,7 +8,7 @@
     "prebuild": "mkdirp build && ncp src/assets build/assets",
     "test": "npm run -s lint && npm run -s test:karma",
     "test:karma": "karma start test/karma.conf.js --single-run",
-    "lint": "eslint --ext .js src --ext .js,.jsx --fix || exit 0"
+    "lint": "eslint --ext .js src --ext .js,.jsx || exit 0"
   },
   "keywords": [
     "preact",
