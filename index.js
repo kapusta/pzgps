@@ -1,3 +1,5 @@
+'use strict';
+
 var argv = require('yargs').argv;
 var Server = require('ws').Server;
 var Realm = require('realm');
