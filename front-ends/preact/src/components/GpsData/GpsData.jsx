@@ -32,35 +32,52 @@ class GpsData extends Component {
   }
   render() {
     return (
-      <div>
-        <div className="card card-block">
-          <h3 className="card-title">GPS Data</h3>
+      <div className="row">
+        <div className="col-lg-6">
+          <div className="card card-block">
+            <h4 className="card-title">GPS Data</h4>
 
-          <span className={styles.keyname}>Latitude</span> {this.props.gpsData.lat}<br/>
-          <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
-          <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
+            <span className={styles.keyname}>Latitude</span> {this.props.gpsData.lat}<br/>
+            <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
+            <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
 
-          <h3 className={styles.header}>Raw Data</h3>
-          <div>
-            {Object.keys(this.props.gpsData).map((val) => {
-              return (
-                <li key={shortid.generate()}>{val} - {this.props.gpsData[val]}</li>
-              );
-            })}
+            <h4 className={styles.header}>Raw Data</h4>
+            <div>
+              {Object.keys(this.props.gpsData).map((val) => {
+                return (
+                  <li key={shortid.generate()}>{val} - {this.props.gpsData[val]}</li>
+                );
+              })}
+            </div>
           </div>
+        </div>
 
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Name <input type="text" value={this.state.name} onChange={this.handleChange} />
-            </label>
-            <label>
-              Pitches <input type="text" value={this.state.pitches} onChange={this.handleChange} />
-            </label>
-            <label>
-              Rating <input type="text" value={this.state.pitches} onChange={this.handleChange} />
-            </label>
-            <input type="button" value="Save" onClick={this.saveLocation}  />
-          </form>
+
+        <div className="col-lg-6">
+          <h4 className="card-title">Save New Climb</h4>
+          <div className="card card-block">
+            <form>
+              <label for="climb-name" className={styles.label + ' col-lg-2 col-form-label'}>Name</label>
+              <div className="col-lg-8">
+                <input id="climb-name" type="text" className="form-control" value={this.state.name} onChange={this.handleChange} />
+              </div>
+              <br/><br/>
+
+              <label for="climb-pitches" className={styles.label + ' col-lg-2 col-form-label'}>Pitches</label>
+              <div className="col-lg-8">
+                <input id="climb-pitches" type="text" className="form-control" value={this.state.pitches} onChange={this.handleChange} />
+              </div>
+              <br/><br/>
+
+
+              <label for="climb-rating" className={styles.label + ' col-lg-2 col-form-label'}>Rating</label>
+              <div className="col-lg-8">
+                <input id="climb-rating" type="text" className="form-control" value={this.state.rating} onChange={this.handleChange} />
+              </div>
+
+            </form>
+          </div>
+          <input type="button" className="btn btn-primary" value="Save" onClick={this.saveLocation}  />
         </div>
       </div>
     );
