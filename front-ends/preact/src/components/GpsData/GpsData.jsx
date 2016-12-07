@@ -40,15 +40,18 @@ class GpsData extends Component {
 
     return (
       <div className="row">
-        <div className="col-lg-6">
-          <div className="card card-block">
-            <h4 className="card-title">GPS Data</h4>
 
+        <div className="col-lg-6">
+          <h4 className="card-title">GPS Data</h4>
+          <div className="card card-block">
             <span className={styles.keyname}>Latitude</span> {this.props.gpsData.lat}<br/>
             <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
             <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
+          </div>
 
-            <h4 className={styles.header}>Raw Data</h4>
+
+          <h4 className={styles.header}>Raw Data</h4>
+          <div className="card card-block">
             <div>
               {Object.keys(this.props.gpsData).map((val) => {
                 return (
@@ -58,6 +61,7 @@ class GpsData extends Component {
             </div>
           </div>
         </div>
+
 
         <div className="col-lg-6">
           <h4 className="card-title">Save New Climb</h4>
