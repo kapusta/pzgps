@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
+import classNames from 'classnames/bind';
 import styles from './gpsdata.scss';
 
 class GpsData extends Component {
@@ -31,6 +32,12 @@ class GpsData extends Component {
     }));
   }
   render() {
+
+    let cx = classNames.bind(styles);
+    let labelStyles = cx('col-lg-2 col-form-label', {
+      label: true
+    });
+
     return (
       <div className="row">
         <div className="col-lg-6">
@@ -52,25 +59,24 @@ class GpsData extends Component {
           </div>
         </div>
 
-
         <div className="col-lg-6">
           <h4 className="card-title">Save New Climb</h4>
           <div className="card card-block">
             <form>
-              <label for="climb-name" className={styles.label + ' col-lg-2 col-form-label'}>Name</label>
+              <label for="climb-name" className={labelStyles}>Name</label>
               <div className="col-lg-8">
                 <input id="climb-name" type="text" className="form-control" value={this.state.name} onChange={this.handleChange} />
               </div>
               <br/><br/>
 
-              <label for="climb-pitches" className={styles.label + ' col-lg-2 col-form-label'}>Pitches</label>
+              <label for="climb-pitches" className={labelStyles}>Pitches</label>
               <div className="col-lg-8">
                 <input id="climb-pitches" type="text" className="form-control" value={this.state.pitches} onChange={this.handleChange} />
               </div>
               <br/><br/>
 
 
-              <label for="climb-rating" className={styles.label + ' col-lg-2 col-form-label'}>Rating</label>
+              <label for="climb-rating" className={labelStyles}>Rating</label>
               <div className="col-lg-8">
                 <input id="climb-rating" type="text" className="form-control" value={this.state.rating} onChange={this.handleChange} />
               </div>
