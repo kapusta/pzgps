@@ -20,8 +20,8 @@ class MapQuest extends Component {
   render() {
     return (
       <div>
+        <h4 className="card-title">MapQuest Staticmap</h4>
         <div className="card card-block">
-          <h3 className="card-title">MapQuest</h3>
           <img src={this.state.mapUrl} />
         </div>
       </div>
