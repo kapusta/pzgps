@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import proptypes from 'proptypes';
-import buttonStyles from './navbutton.scss';
+import classNames from 'classnames/bind';
+import styles from './navbutton.scss';
 
 class Navbutton extends Component {
   constructor(props) {
@@ -12,9 +13,16 @@ class Navbutton extends Component {
     this.props.handleClick(this.props.section);
   }
   render() {
+
+    let cx = classNames.bind(styles);
+    let buttonStyles = cx('btn', {
+      'button': true,
+      'btn-primary': this.props.isActive
+    });
+
     return (
       <button
-        className={`btn ${buttonStyles.button}` + ((this.props.isActive) ? ' btn-primary' : '')}
+        className={buttonStyles}
         onClick={this.handleClick}
       >{this.props.children}</button>
     );
