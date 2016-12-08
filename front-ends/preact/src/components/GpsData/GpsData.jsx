@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import shortid from 'shortid';
 import classNames from 'classnames/bind';
 import styles from './gpsdata.scss';
+import Select from 'react-select';
 
 class GpsData extends Component {
   constructor(props) {
@@ -9,7 +10,14 @@ class GpsData extends Component {
     this.state = {
       name: '',
       pitches: 3,
-      rating: 5.5
+      rating: "5.5",
+      usRatings: [{
+        value: 5.0,
+        label: "5.0"
+      }, {
+        value: 5.1,
+        label: "5.1"
+      }]
     };
     this.props.socket.onmessage = e => {
       let data = JSON.parse(e.data);
@@ -17,6 +25,9 @@ class GpsData extends Component {
         console.log(data);
       }
     };
+  }
+  selectChanged(val) {
+    console.log('select changed to', val);
   }
   handleChange(evt) {
     this.setState({
@@ -83,6 +94,14 @@ class GpsData extends Component {
               <label for="climb-rating" className={labelStyles}>Rating</label>
               <div className="col-lg-8">
                 <input id="climb-rating" type="text" className="form-control" value={this.state.rating} onChange={this.handleChange} />
+                <br/>
+
+                <Select
+                  name="climb-rating"
+                  value={this.state.usRatings[0]}
+                  options={this.state.usRatings}
+                  onChange={this.logChange}
+                />
               </div>
 
             </form>
