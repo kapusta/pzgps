@@ -1,5 +1,6 @@
 import { h, render } from 'preact';
 import App from './components/App/App.jsx';
+import 'react-select/dist/react-select.css';
 import './style';
 let root;
 
