@@ -90,7 +90,7 @@ class GpsData extends Component {
             <form>
               <label for="climbName" className={labelStyles}>Name</label>
               <div className="col-lg-8">
-                <input id="climbName" type="text" className="form-control" value={this.state.climbName} onKeyUp={this.handleChange} />
+                <input id="climbName" placeholder="Name of the Climb" type="text" className="form-control" value={this.state.climbName} onKeyUp={this.handleChange} />
               </div>
               <br/><br/>
 
