@@ -8,14 +8,14 @@ class GpsData extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      pitches: 3,
-      rating: "5.5",
+      climbName: '',
+      climbPitches: 3,
+      climbRating: "5.5",
       usRatings: [{
-        value: 5.0,
+        value: "5.0",
         label: "5.0"
       }, {
-        value: 5.1,
+        value: "5.1",
         label: "5.1"
       }]
     };
@@ -26,20 +26,27 @@ class GpsData extends Component {
       }
     };
   }
-  selectChanged(val) {
+  selectChanged = val => {
     console.log('select changed to', val);
-  }
-  handleChange(evt) {
     this.setState({
-      description: evt.target.value
+      climbRating: val
     });
   }
-  saveLocation(evt) {
+  handleChange = evt => {
+    console.log('?', evt);
+    this.setState({
+      [evt.target.id]: evt.target.value
+    });
+  }
+  logState = () => {
+    console.log(this.state);
+  }
+  saveLocation = evt => {
     this.props.socket.send(JSON.stringify({
       action: 'newClimb',
-      name: this.state.name,
-      pitches: this.state.pitches,
-      rating: this.state.rating
+      climbName: this.state.climbName,
+      climbPitches: this.state.climbPitches,
+      climbRating: this.state.climbRating
     }));
   }
   render() {
@@ -47,6 +54,9 @@ class GpsData extends Component {
     let cx = classNames.bind(styles);
     let labelStyles = cx('col-lg-2 col-form-label', {
       label: true
+    });
+    let loggerStyles = cx('btn', {
+      'btn-logger': true
     });
 
     return (
@@ -78,35 +88,32 @@ class GpsData extends Component {
           <h4 className="card-title">Save New Climb</h4>
           <div className="card card-block">
             <form>
-              <label for="climb-name" className={labelStyles}>Name</label>
+              <label for="climbName" className={labelStyles}>Name</label>
               <div className="col-lg-8">
-                <input id="climb-name" type="text" className="form-control" value={this.state.name} onChange={this.handleChange} />
+                <input id="climbName" type="text" className="form-control" value={this.state.climbName} onKeyUp={this.handleChange} />
               </div>
               <br/><br/>
 
-              <label for="climb-pitches" className={labelStyles}>Pitches</label>
+              <label for="climbPitches" className={labelStyles}>Pitches</label>
               <div className="col-lg-8">
-                <input id="climb-pitches" type="text" className="form-control" value={this.state.pitches} onChange={this.handleChange} />
+                <input id="climbPitches" type="text" className="form-control" value={this.state.climbPitches} onKeyUp={this.handleChange} />
               </div>
               <br/><br/>
 
-
-              <label for="climb-rating" className={labelStyles}>Rating</label>
+              <label for="climbRating" className={labelStyles}>Rating</label>
               <div className="col-lg-8">
-                <input id="climb-rating" type="text" className="form-control" value={this.state.rating} onChange={this.handleChange} />
-                <br/>
-
                 <Select
-                  name="climb-rating"
-                  value={this.state.usRatings[0]}
+                  name="climbRating"
+                  value={this.state.climbRating}
                   options={this.state.usRatings}
-                  onChange={this.logChange}
+                  onChange={this.selectChanged}
                 />
               </div>
 
             </form>
           </div>
-          <input type="button" className="btn btn-primary" value="Save" onClick={this.saveLocation}  />
+          <input type="button" className="btn btn-primary" value="Save" onClick={this.saveLocation} />
+          <input type="button" className={loggerStyles} value="Log State" onClick={this.logState} />
         </div>
       </div>
     );
