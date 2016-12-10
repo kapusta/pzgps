@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import SaveClimb from '../SaveClimb/SaveClimb.jsx';
 import shortid from 'shortid';
 import classNames from 'classnames/bind';
 import styles from './gpsdata.css';
@@ -7,18 +8,6 @@ import Select from 'react-select';
 class GpsData extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      climbName: '',
-      climbPitches: 3,
-      climbRating: "5.5",
-      usRatings: [{
-        value: "5.0",
-        label: "5.0"
-      }, {
-        value: "5.1",
-        label: "5.1"
-      }]
-    };
     this.props.socket.onmessage = e => {
       let data = JSON.parse(e.data);
       if (data.realmData) {
@@ -33,13 +22,9 @@ class GpsData extends Component {
     });
   }
   handleChange = evt => {
-    console.log('?', evt);
     this.setState({
       [evt.target.id]: evt.target.value
     });
-  }
-  logState = () => {
-    console.log(this.state);
   }
   saveLocation = evt => {
     this.props.socket.send(JSON.stringify({
@@ -83,38 +68,8 @@ class GpsData extends Component {
           </div>
         </div>
 
+        <SaveClimb socket={this.props.socket}/>
 
-        <div className="col-lg-6">
-          <h4 className="card-title">Save New Climb</h4>
-          <div className="card card-block">
-            <form>
-              <label for="climbName" className={labelStyles}>Name</label>
-              <div className="col-lg-8">
-                <input id="climbName" placeholder="Name of the Climb" type="text" className="form-control" value={this.state.climbName} onKeyUp={this.handleChange} />
-              </div>
-              <br/><br/>
-
-              <label for="climbPitches" className={labelStyles}>Pitches</label>
-              <div className="col-lg-8">
-                <input id="climbPitches" type="text" className="form-control" value={this.state.climbPitches} onKeyUp={this.handleChange} />
-              </div>
-              <br/><br/>
-
-              <label for="climbRating" className={labelStyles}>Rating</label>
-              <div className="col-lg-8">
-                <Select
-                  name="climbRating"
-                  value={this.state.climbRating}
-                  options={this.state.usRatings}
-                  onChange={this.selectChanged}
-                />
-              </div>
-
-            </form>
-          </div>
-          <input type="button" className="btn btn-primary" value="Save" onClick={this.saveLocation} />
-          <input type="button" className={loggerStyles} value="Log State" onClick={this.logState} />
-        </div>
       </div>
     );
   }
