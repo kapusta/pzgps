@@ -39,7 +39,7 @@
     "babel-preset-es2015-minimal": "^2.0.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.18.0",
-    "babel-runtime": "^6.18.0",
+    "babel-runtime": "^6.20.0",
     "chai": "^3.5.0",
     "core-js": "^2.4.1",
     "cross-env": "^2.0.0",
@@ -64,7 +64,7 @@
     "ncp": "^2.0.0",
     "path": "^0.12.7",
     "phantomjs-prebuilt": "^2.1.12",
-    "postcss-loader": "^0.13.0",
+    "postcss-loader": "^1.2.0",
     "raw-loader": "^0.5.1",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
@@ -78,13 +78,11 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.5",
     "classnames": "^2.2.5",
-    "node-sass": "^3.13.0",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.1",
     "preact-router": "^2.3.1",
     "proptypes": "^0.14.3",
     "react-select": "^1.0.0-rc.2",
-    "sass-loader": "^4.0.2",
     "shortid": "^2.2.6"
   }
 }
