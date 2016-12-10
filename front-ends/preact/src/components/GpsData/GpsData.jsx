@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
 import classNames from 'classnames/bind';
-import styles from './gpsdata.scss';
+import styles from './gpsdata.css';
 import Select from 'react-select';
 
 class GpsData extends Component {
