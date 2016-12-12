@@ -43,7 +43,6 @@ class SaveClimb extends Component {
     }));
   }
   render() {
-
     let cx = classNames.bind(styles);
     let labelStyles = cx('col-lg-2 col-form-label', {
       label: true
@@ -57,6 +56,7 @@ class SaveClimb extends Component {
         <h4 className="card-title">Save New Climb</h4>
         <div className="card card-block">
           <form>
+
             <label for="climbName" className={labelStyles}>Name</label>
             <div className="col-lg-8">
               <input id="climbName" placeholder="Name of the Climb" type="text" className="form-control" value={this.state.climbName} onKeyUp={this.handleChange} />
