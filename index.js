@@ -58,10 +58,10 @@ wss.on('connection', socket => {
 
     if (parsedData.action === 'newClimb') {
       var climb = Object.assign({}, {
-        name: parsedData.name,
-        pitches: parsedData.pitches,
-        rating: parsedData.rating,
-        location: location.current
+        name: parsedData.climbName,
+        pitches: parsedData.climbPitches,
+        rating: parsedData.climbRating,
+        location: location.current // includes elevation
       });
 
       let loc = realmApi.set(pzgpsRealm, climb);
@@ -71,7 +71,7 @@ wss.on('connection', socket => {
       });
 
       socket.send(JSON.stringify(loc));
-    } // end setLocation
+    }
   });
 
   socket.on('close', () => {
