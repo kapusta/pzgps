@@ -1,9 +1,10 @@
 import { h, Component } from 'preact';
 import sckt from '../../lib/sckt.js';
+import configs from '../../lib/conf.js';
 import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
 
-const serverUrl = 'ws://circ.local:9000'; // you'll want to change this
+const serverUrl = configs.socketServer; // you'll want to change this
 
 class App extends Component {
   constructor(props) {
@@ -15,22 +16,18 @@ class App extends Component {
       socket: {}
     };
   }
-
   componentDidMount() {
     sckt.setUpSocket(serverUrl, this);
   }
-
   componentWillUnmount() {
     this.state.socket.close();
   }
-
   // method is passed down to App -> NavBar -> NavButton
   handleClick = name => {
     this.setState({
       componentName: name
     });
   }
-
   render() {
     return (
       <div>
@@ -51,9 +48,5 @@ class App extends Component {
     );
   }
 }
-
-// App.propTypes = {
-//   componentName: React.PropTypes.string
-// };
 
 export default App;
