@@ -70,6 +70,7 @@ wss.on('connection', socket => {
         realmData: true
       });
 
+      console.log(climb, loc);
       socket.send(JSON.stringify(loc));
     }
   });
