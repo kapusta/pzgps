@@ -1,10 +1,8 @@
 import { h, Component } from 'preact';
 import sckt from '../../lib/sckt.js';
-import configs from '../../lib/conf.js';
+import conf from '../../lib/conf.js';
 import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
-
-const serverUrl = configs.socketServer; // you'll want to change this
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +15,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    sckt.setUpSocket(serverUrl, this);
+    sckt.setUpSocket(conf.socketServer, this);
   }
   componentWillUnmount() {
     this.state.socket.close();
