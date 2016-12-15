@@ -56,7 +56,7 @@ const setUpSocket = (serverUrl, Component) => {
 
 };
 
-module.exports = {
+export default {
   connect,
   setUpSocket
 };
