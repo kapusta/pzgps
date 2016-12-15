@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
+import Select from 'react-select';
 import classNames from 'classnames/bind';
 import styles from './saveclimb.css';
-import Select from 'react-select';
+import ratings from '../../lib/ratings.js';
 
 class SaveClimb extends Component {
   constructor(props) {
@@ -10,14 +11,8 @@ class SaveClimb extends Component {
     this.state = {
       climbName: '',
       climbPitches: 3,
-      climbRating: "5.5",
-      usRatings: [{
-        value: "5.0",
-        label: "5.0"
-      }, {
-        value: "5.1",
-        label: "5.1"
-      }]
+      climbRating: '5.5',
+      usRatings: ratings.yds
     };
   }
   selectChanged = val => {
@@ -43,11 +38,11 @@ class SaveClimb extends Component {
     }));
   }
   render() {
-    let cx = classNames.bind(styles);
-    let labelStyles = cx('col-lg-2 col-form-label', {
+    let cn = classNames.bind(styles);
+    let labelStyles = cn('col-lg-2 col-form-label', {
       label: true
     });
-    let loggerStyles = cx('btn', {
+    let loggerStyles = cn('btn', {
       'btn-logger': true
     });
 
