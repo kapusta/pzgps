@@ -56,7 +56,7 @@ wss.on('connection', socket => {
       socket.send(JSON.stringify(mqkey));
     }
 
-    if (parsedData.action === 'newClimb') {
+    if (parsedData.action === 'newRoute') {
       var climb = Object.assign({}, {
         name: parsedData.climbName,
         pitches: parsedData.climbPitches,
