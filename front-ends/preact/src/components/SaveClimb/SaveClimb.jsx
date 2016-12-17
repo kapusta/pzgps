@@ -3,38 +3,51 @@ import shortid from 'shortid';
 import Select from 'react-select';
 import classNames from 'classnames/bind';
 import styles from './saveclimb.css';
-import ratings from '../../lib/ratings.js';
+import { yds } from '../../lib/ratings.js';
+import merge from 'lodash/merge';
 
 class SaveClimb extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      climbName: '',
-      climbPitches: 3,
-      climbRating: '5.5',
-      usRatings: ratings.yds
+      route: {
+        name: '',
+        pitches: 3,
+        rating: '5.5'
+      }
     };
+    this.pitches = new Array(30).fill(0).map((val, idx) => {
+      return {
+        'value': idx + 1,
+        'label': idx + 1
+      };
+    });
   }
-  selectChanged = val => {
-    console.log('select changed to', val);
+  handleRatingChange = val => {
+    let route = merge({}, this.state.route, {rating: val.value});
     this.setState({
-      climbRating: val
+      route
+    });
+  }
+  handlePitchesChange = val => {
+    let route = merge({}, this.state.route, {pitches: val.value});
+    this.setState({
+      route
     });
   }
   handleChange = evt => {
+    let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
     this.setState({
-      [evt.target.id]: evt.target.value
+      route
     });
   }
   logState = () => {
     console.log(this.state);
   }
-  saveLocation = evt => {
+  save = evt => {
     this.props.socket.send(JSON.stringify({
-      action: 'newClimb',
-      climbName: this.state.climbName,
-      climbPitches: this.state.climbPitches,
-      climbRating: this.state.climbRating
+      action: 'newRoute',
+      route: this.state.route
     }));
   }
   render() {
@@ -52,31 +65,38 @@ class SaveClimb extends Component {
         <div className="card card-block">
           <form>
 
-            <label for="climbName" className={labelStyles}>Name</label>
+            <label for="route" className={labelStyles}>Route Name</label>
             <div className="col-lg-8">
-              <input id="climbName" placeholder="Name of the Climb" type="text" className="form-control" value={this.state.climbName} onKeyUp={this.handleChange} />
+              <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
             </div>
             <br/><br/>
 
-            <label for="climbPitches" className={labelStyles}>Pitches</label>
-            <div className="col-lg-8">
-              <input id="climbPitches" type="text" className="form-control" value={this.state.climbPitches} onKeyUp={this.handleChange} />
-            </div>
-            <br/><br/>
-
-            <label for="climbRating" className={labelStyles}>Rating</label>
+            <label for="pitches" className={labelStyles}>Pitches</label>
             <div className="col-lg-8">
               <Select
-                name="climbRating"
-                value={this.state.climbRating}
-                options={this.state.usRatings}
-                onChange={this.selectChanged}
+                name="pitches"
+                id="pitches"
+                value={this.state.route.pitches}
+                options={this.pitches}
+                onChange={this.handlePitchesChange}
+              />
+            </div>
+            <br/><br/>
+
+            <label for="rating" className={labelStyles}>Rating</label>
+            <div className="col-lg-8">
+              <Select
+                name="rating"
+                id="rating"
+                value={this.state.route.rating}
+                options={yds}
+                onChange={this.handleRatingChange}
               />
             </div>
 
           </form>
         </div>
-        <input type="button" className="btn btn-primary" value="Save" onClick={this.saveLocation} />
+        <input type="button" className="btn btn-primary" value="Save" onClick={this.save} />
         <input type="button" className={loggerStyles} value="Log State" onClick={this.logState} />
       </div>
     );
