@@ -3,6 +3,7 @@
 var argv = require('yargs').argv;
 var Server = require('ws').Server;
 var Realm = require('realm');
+var merge = require('lodash/merge');
 
 var daemon = require('./lib/daemon.js');
 var realmSchema = require('./lib/realm-schema.js');
@@ -49,28 +50,27 @@ wss.on('connection', socket => {
 
   socket.on('message', data => { // (data, flags)
     var parsedData = JSON.parse(data);
-    // console.log('new message from client', parsedData);
 
-    // there's room for more protocols here...
+    // there is room for more structure around recieving messages
+    // with different actions, probably realm-api.js methods(?)
+    // and this probably starts to look like a router of some sort
     if (parsedData.action === 'getConsumerKey' && mqkey.consumerKey) {
       socket.send(JSON.stringify(mqkey));
     }
 
     if (parsedData.action === 'newRoute') {
-      var climb = Object.assign({}, {
-        name: parsedData.climbName,
-        pitches: parsedData.climbPitches,
-        rating: parsedData.climbRating,
-        location: location.current // includes elevation
+      var route = merge(
+        {},
+        {timestamp: new Date()},
+        {location: location.current},
+        {route: parsedData.route}
+      );
+      console.log('saving new route', route);
+      let loc = realmApi.set(pzgpsRealm, route);
+
+      merge(loc, {
+        event: 'routeSaved'
       });
-
-      let loc = realmApi.set(pzgpsRealm, climb);
-
-      Object.assign(loc, {
-        realmData: true
-      });
-
-      console.log(climb, loc);
       socket.send(JSON.stringify(loc));
     }
   });
