@@ -1,21 +1,14 @@
 'use strict';
 
-var argv = require('yargs').argv;
-var Server = require('ws').Server;
-var Realm = require('realm');
-var merge = require('lodash/merge');
+let argv = require('yargs').argv;
+let Server = require('ws').Server;
+let merge = require('lodash/merge');
 
-var daemon = require('./lib/daemon.js');
-var realmSchema = require('./lib/realm-schema.js');
-var realmApi = require('./lib/realm-api.js');
+let daemon = require('./lib/daemon.js');
 
 const mqkey = {
   consumerKey: ''
 };
-
-const pzgpsRealm = new Realm({
-  schema: [realmSchema.Location, realmSchema.Climb]
-});
 
 const location = {
   current: {}
@@ -29,7 +22,7 @@ if (argv.mq) {
   }
 }
 
-var wss = new Server({
+let wss = new Server({
   port: (argv.port) ? argv.port : '9000'
 });
 
@@ -44,34 +37,29 @@ wss.on('connection', socket => {
   console.log('new websocket connection, (', wss.clients.length, ' total)');
 
   // send out the location data on an interval
-  var intervalId = setInterval(function () {
+  let intervalId = setInterval(function () {
     socket.send(JSON.stringify(location.current));
   }, 2000);
 
   socket.on('message', data => { // (data, flags)
-    var parsedData = JSON.parse(data);
+    let parsedData = JSON.parse(data);
 
-    // there is room for more structure around recieving messages
-    // with different actions, probably realm-api.js methods(?)
-    // and this probably starts to look like a router of some sort
+    // there is room for more structure around recieving messages with
+    // different actions, probably starts to look like a router of some sort,
+    // should probably name space the actions (eg, pzgps.get.something)
     if (parsedData.action === 'getConsumerKey' && mqkey.consumerKey) {
       socket.send(JSON.stringify(mqkey));
     }
 
     if (parsedData.action === 'newRoute') {
-      var route = merge(
+      let route = merge(
         {},
         {timestamp: new Date()},
         {location: location.current},
         {route: parsedData.route}
       );
       console.log('saving new route', route);
-      let loc = realmApi.set(pzgpsRealm, route);
-
-      merge(loc, {
-        event: 'routeSaved'
-      });
-      socket.send(JSON.stringify(loc));
+      socket.send(JSON.stringify(route));
     }
   });
 
