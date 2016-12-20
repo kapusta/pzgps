@@ -10,6 +10,7 @@ class SaveClimb extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      saving: false, // is the page saving data
       route: {
         name: '',
         pitches: 3,
@@ -45,6 +46,10 @@ class SaveClimb extends Component {
     console.log(this.state);
   }
   save = evt => {
+    this.setState({
+      saving: true
+    });
+
     this.props.socket.send(JSON.stringify({
       action: 'newRoute',
       route: this.state.route
@@ -53,10 +58,18 @@ class SaveClimb extends Component {
   render() {
     let cn = classNames.bind(styles);
     let labelStyles = cn('col-lg-2 col-form-label', {
-      label: true
+      'label': true
     });
-    let loggerStyles = cn('btn', {
+    let loggerStyles = cn('btn btn-sm', {
       'btn-logger': true
+    });
+    let saveButtonStyles = cn('btn btn-sm', {
+      'btn-primary': true
+    });
+    let saveButtonIcon = cn('fa', {
+      'fa-floppy-o': !this.state.saving,
+      'fa-spinner': this.state.saving,
+      'fa-spin': this.state.saving
     });
 
     return (
@@ -65,7 +78,7 @@ class SaveClimb extends Component {
         <div className="card card-block">
           <form>
 
-            <label for="route" className={labelStyles}>Route Name</label>
+            <label for="route" className={labelStyles}>Route</label>
             <div className="col-lg-8">
               <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
             </div>
@@ -96,8 +109,23 @@ class SaveClimb extends Component {
 
           </form>
         </div>
-        <input type="button" className="btn btn-primary" value="Save" onClick={this.save} />
-        <input type="button" className={loggerStyles} value="Log State" onClick={this.logState} />
+
+        <button
+          bs-button
+          className={saveButtonStyles}
+          onClick={this.save}
+          disabled={this.state.saving}
+        >
+          <i className={saveButtonIcon} aria-hidden="true"></i> Save
+        </button>
+
+        <button
+          bs-button
+          className={loggerStyles}
+          onClick={this.logState}
+        >
+          <i className="fa fa-list" aria-hidden="true"></i> Log State
+        </button>
       </div>
     );
   }
