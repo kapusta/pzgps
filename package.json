@@ -26,7 +26,6 @@
   "dependencies": {
     "lodash": "^4.17.2",
     "node-gpsd": "^0.2.6",
-    "realm": "^0.15.0",
     "ws": "^1.1.1",
     "yargs": "^6.0.0"
   },
