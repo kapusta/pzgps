@@ -1,13 +1,13 @@
 'use strict';
 
-let argv = require('yargs').argv;
-let Server = require('ws').Server;
-let Realm = require('realm');
-let merge = require('lodash/merge');
+var argv = require('yargs').argv;
+var Server = require('ws').Server;
+var Realm = require('realm');
+var merge = require('lodash/merge');
 
-let daemon = require('./lib/daemon.js');
-let realmSchema = require('./lib/realm-schema.js');
-let realmApi = require('./lib/realm-api.js');
+var daemon = require('./lib/daemon.js');
+var realmSchema = require('./lib/realm-schema.js');
+var realmApi = require('./lib/realm-api.js');
 
 const mqkey = {
   consumerKey: ''
@@ -29,7 +29,7 @@ if (argv.mq) {
   }
 }
 
-let wss = new Server({
+var wss = new Server({
   port: (argv.port) ? argv.port : '9000'
 });
 
@@ -44,12 +44,12 @@ wss.on('connection', socket => {
   console.log('new websocket connection, (', wss.clients.length, ' total)');
 
   // send out the location data on an interval
-  let intervalId = setInterval(function () {
+  var intervalId = setInterval(function () {
     socket.send(JSON.stringify(location.current));
   }, 2000);
 
   socket.on('message', data => { // (data, flags)
-    let parsedData = JSON.parse(data);
+    var parsedData = JSON.parse(data);
 
     // there is room for more structure around recieving messages
     // with different actions, probably realm-api.js methods(?)
@@ -59,7 +59,7 @@ wss.on('connection', socket => {
     }
 
     if (parsedData.action === 'newRoute') {
-      let route = merge(
+      var route = merge(
         {},
         {timestamp: new Date()},
         {location: location.current},
