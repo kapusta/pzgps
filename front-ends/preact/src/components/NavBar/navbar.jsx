@@ -15,21 +15,21 @@ class Navbar extends Component {
               handleClick={this.props.handleClick}
               section="About"
               isActive={this.props.componentName === 'About'}
-              >Home
+              ><i className="fa fa-home" aria-hidden="true"></i> Home
             </NavButton>
 
             {(this.props.gpsData) ? <NavButton
               handleClick={this.props.handleClick}
               section="GpsData"
               isActive={this.props.componentName === 'GpsData'}
-              >Location Data</NavButton> : ''
+              ><i className="fa fa-map-marker" aria-hidden="true"></i> Location Data</NavButton> : ''
             }
 
             {(this.props.gpsData && this.props.consumerKey) ? <NavButton
               handleClick={this.props.handleClick}
               section="MapQuest"
               isActive={this.props.componentName === 'MapQuest'}
-              >Map</NavButton> : ''
+              ><i className="fa fa-map" aria-hidden="true"></i> Map</NavButton> : ''
             }
 
           </div>
