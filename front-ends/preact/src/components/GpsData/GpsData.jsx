@@ -10,9 +10,7 @@ class GpsData extends Component {
     super(props);
     this.props.socket.onmessage = e => {
       let data = JSON.parse(e.data);
-      if (data.realmData) {
-        console.log(data);
-      }
+      console.log(data);
     };
   }
   selectChanged = val => {
