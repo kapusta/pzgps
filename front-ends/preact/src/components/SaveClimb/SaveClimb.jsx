@@ -54,6 +54,14 @@ class SaveClimb extends Component {
       action: 'newRoute',
       route: this.state.route
     }));
+
+    this.props.socket.on('message', data => { // (data, flags)
+      let parsedData = JSON.parse(data);
+      if (parsedData.event === 'pzgps.new.route') {
+        console.log('new route', parsedData);
+      }
+    });
+
   }
   render() {
     let cn = classNames.bind(styles);

@@ -59,7 +59,9 @@ wss.on('connection', socket => {
         {route: parsedData.route}
       );
       console.log('saving new route', route);
-      socket.send(JSON.stringify(route));
+      socket.send(JSON.stringify(merge(route, {
+        event: 'pzgps.new.route'
+      })));
     }
   });
 
