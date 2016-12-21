@@ -79,6 +79,7 @@
     "bootstrap": "^4.0.0-alpha.5",
     "classnames": "^2.2.5",
     "lodash": "^4.17.2",
+    "pouchdb": "^6.1.0",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.1",
     "preact-router": "^2.3.1",

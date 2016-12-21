@@ -1,8 +1,15 @@
 import { h, Component } from 'preact';
+import PouchDB from 'pouchdb';
 import sckt from '../../lib/sckt.js';
 import conf from '../../lib/conf.js';
 import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
+
+let dbname = 'routes'
+let db = PouchDB(conf.couchdb + '/' + dbname);
+db.info().then(function(info) {
+  console.log(dbname, info);
+});
 
 class App extends Component {
   constructor(props) {
