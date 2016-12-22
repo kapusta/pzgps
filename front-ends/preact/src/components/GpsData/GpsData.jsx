@@ -66,7 +66,7 @@ class GpsData extends Component {
           </div>
         </div>
 
-        <SaveClimb socket={this.props.socket}/>
+        <SaveClimb socket={this.props.socket} gpsData={this.props.gpsData}/>
 
       </div>
     );
