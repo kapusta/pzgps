@@ -111,7 +111,7 @@ class SaveClimb extends Component {
     let loggerStyles = cn('btn btn-sm mybuttons', {
       mybuttons: true // add css module styles
     });
-    let searchButtonStyles = cn('btn btn-sm btn-primary', {
+    let searchButtonStyles = cn('btn btn-sm', {
       mybuttons: true // add css module styles
     });
     let searchButtonIcon = cn('fa', {
@@ -177,7 +177,7 @@ class SaveClimb extends Component {
           bs-button
           className={searchButtonStyles}
           onClick={this.search}
-          disabled={this.state.searching}
+          disabled={this.state.searching || !this.state.route.name}
         >
           <i className={searchButtonIcon} aria-hidden="true"></i> Look Up By Route Name
         </button>
