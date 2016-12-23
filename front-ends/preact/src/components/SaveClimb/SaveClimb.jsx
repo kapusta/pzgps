@@ -9,14 +9,14 @@ import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
 
 let dbname = 'routes'
-let db = PouchDB(conf.couchdb + '/' + dbname);
+let db = new PouchDB(conf.couchdb + '/' + dbname);
 
 class SaveClimb extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      saving: false, // is the page saving data
-      searching: false, // is the page saving data
+      saving: false, // is the page saving data?
+      searching: false, // is the page searching for data?
       route: {
         name: '',
         pitches: 3,
@@ -54,7 +54,7 @@ class SaveClimb extends Component {
   handleChange = evt => {
     let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
     this.setState({
-      _rev: null, // kill the db doc _rev value if/when the user changes the name
+      doc: null, // kill the db doc in state if/when the user changes the name
       route
     });
   }
@@ -76,6 +76,7 @@ class SaveClimb extends Component {
         rating: doc.rating
       });
       that.setState({
+        doc,
         _rev: doc._rev,
         searching: false,
         route
@@ -89,19 +90,32 @@ class SaveClimb extends Component {
 
     });
   }
-  save = evt => {
+  create = evt => {
+    var that = this;
     this.setState({
       saving: true
     });
 
     db.put(merge({
-      _id: (this.state._rev) ? this.state._rev : this.state.route.name
-    }, this.state.route, this.props.gpsData));
-
-    this.props.socket.send(JSON.stringify({
-      action: 'newRoute',
-      route: this.state.route
-    }));
+      _id: this.state.route.name
+    }, this.state.route, this.props.gpsData))
+    .then(function(response) {
+      that.setState({
+        saving: true
+      });
+    });
+  }
+  save = evt => {
+    this.setState({
+      saving: true
+    });
+    // TODO: if "update location" checked also merge `this.props.gpsData`
+    db.put(merge({}, doc, this.state.route))
+    .then(function(response) {
+      that.setState({
+        saving: true
+      });
+    });
   }
   render() {
     let cn = classNames.bind(styles);
@@ -164,14 +178,23 @@ class SaveClimb extends Component {
           </form>
         </div>
 
-        <button
+        {(!this.state.doc) ? <button
+          bs-button
+          className={saveButtonStyles}
+          onClick={this.create}
+          disabled={this.state.saving}
+        >
+          <i className={saveButtonIcon} aria-hidden="true"></i> Create
+        </button> : ''}
+
+        {(this.state.doc) ? <button
           bs-button
           className={saveButtonStyles}
           onClick={this.save}
           disabled={this.state.saving}
         >
           <i className={saveButtonIcon} aria-hidden="true"></i> Save
-        </button>
+        </button> : ''}
 
         <button
           bs-button
