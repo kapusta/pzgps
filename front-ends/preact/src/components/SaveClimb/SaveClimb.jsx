@@ -17,6 +17,7 @@ class SaveClimb extends Component {
     this.state = {
       saving: false, // is the page saving data?
       searching: false, // is the page searching for data?
+      updateLocation: false,
       route: {
         name: '',
         pitches: 3,
@@ -29,15 +30,6 @@ class SaveClimb extends Component {
         'label': idx + 1
       };
     });
-    this.props.socket.onmessage = e => {
-      let parsedData = JSON.parse(e.data);
-      if (parsedData.event === 'pzgps.new.route') {
-        console.log('new route', parsedData);
-        this.setState({
-          saving: false
-        });
-      }
-    };
   }
   handleRatingChange = val => {
     let route = merge({}, this.state.route, {rating: val.value});
@@ -58,6 +50,12 @@ class SaveClimb extends Component {
       route
     });
   }
+  handleCheckbox = evt => {
+    console.log(evt);
+    this.setState({
+      updateLocation: !this.state.updateLocation
+    })
+  }
   logState = () => {
     console.log(this.state);
   }
@@ -76,9 +74,8 @@ class SaveClimb extends Component {
         rating: doc.rating
       });
       that.setState({
-        doc,
-        _rev: doc._rev,
         searching: false,
+        doc,
         route
       });
     })
@@ -87,7 +84,6 @@ class SaveClimb extends Component {
       that.setState({
         searching: false
       });
-
     });
   }
   create = evt => {
@@ -95,25 +91,30 @@ class SaveClimb extends Component {
     this.setState({
       saving: true
     });
-
     db.put(merge({
       _id: this.state.route.name
     }, this.state.route, this.props.gpsData))
     .then(function(response) {
       that.setState({
-        saving: true
+        saving: false
       });
     });
   }
   save = evt => {
+    var that = this;
     this.setState({
       saving: true
     });
     // TODO: if "update location" checked also merge `this.props.gpsData`
-    db.put(merge({}, doc, this.state.route))
+    let data = merge({}, this.state.doc, this.state.route);
+    db.put(data)
     .then(function(response) {
       that.setState({
-        saving: true
+        saving: false
+      });
+    }).catch(function(err) {
+      that.setState({
+        saving: false
       });
     });
   }
@@ -146,55 +147,63 @@ class SaveClimb extends Component {
         <div className="card card-block">
           <form>
 
-            <label for="route" className={labelStyles}>Route</label>
-            <div className="col-lg-8">
-              <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
+            <div class="row">
+              <label for="route" className={labelStyles}>Route</label>
+              <div className="col-lg-8">
+                <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
+                {(this.state.doc) ?
+                  <span>
+                    <input
+                      type="checkbox"
+                      id="updateLocation"
+                      name="updateLocation"
+                      onClick={this.handleCheckbox}
+                      checked={this.state.updateLocation}
+                    /> <small><label for="updateLocation">Update "{this.state.route.name}" to current location?</label></small>
+                  </span> : ''
+                }
+              </div>
             </div>
-            <br/><br/>
 
-            <label for="pitches" className={labelStyles}>Pitches</label>
-            <div className="col-lg-8">
-              <Select
-                name="pitches"
-                id="pitches"
-                value={this.state.route.pitches}
-                options={this.pitches}
-                onChange={this.handlePitchesChange}
-              />
+            <div class="row">
+              <label for="pitches" className={labelStyles}>Pitches</label>
+              <div className="col-lg-8">
+                <Select
+                  name="pitches"
+                  id="pitches"
+                  value={this.state.route.pitches}
+                  options={this.pitches}
+                  onChange={this.handlePitchesChange}
+                />
+              </div>
             </div>
-            <br/><br/>
 
-            <label for="rating" className={labelStyles}>Rating</label>
-            <div className="col-lg-8">
-              <Select
-                name="rating"
-                id="rating"
-                value={this.state.route.rating}
-                options={yds}
-                onChange={this.handleRatingChange}
-              />
+            <div class="row">
+              <label for="rating" className={labelStyles}>Rating</label>
+              <div className="col-lg-8">
+                <Select
+                  name="rating"
+                  id="rating"
+                  value={this.state.route.rating}
+                  options={yds}
+                  onChange={this.handleRatingChange}
+                />
+              </div>
             </div>
 
           </form>
         </div>
 
-        {(!this.state.doc) ? <button
+        {/* if there IS NOT a `doc` from the database, then we are creating a new `doc` */}
+        {/* if there IS a `doc` from the database, then we are saving an update to the `doc` */}
+        <button
           bs-button
           className={saveButtonStyles}
-          onClick={this.create}
+          onClick={(this.state.doc) ? this.save : this.create}
           disabled={this.state.saving}
         >
-          <i className={saveButtonIcon} aria-hidden="true"></i> Create
-        </button> : ''}
-
-        {(this.state.doc) ? <button
-          bs-button
-          className={saveButtonStyles}
-          onClick={this.save}
-          disabled={this.state.saving}
-        >
-          <i className={saveButtonIcon} aria-hidden="true"></i> Save
-        </button> : ''}
+          <i className={saveButtonIcon} aria-hidden="true"></i> {(this.state.doc) ? 'Save' : 'Create'}
+        </button>
 
         <button
           bs-button
