@@ -105,9 +105,15 @@ class SaveClimb extends Component {
     this.setState({
       saving: true
     });
-    // TODO: if "update location" checked also merge `this.props.gpsData`
-    let data = merge({}, this.state.doc, this.state.route);
-    db.put(data)
+
+    let climbData = merge(
+      {}, // new object
+      this.state.doc, // the document from the database
+      this.state.route, // the route data from the from in the UI
+      ((this.state.updateLocation) ? this.props.gpsData : {}) // gps data if  update location is true
+    );
+
+    db.put(climbData)
     .then(function(response) {
       that.setState({
         saving: false
