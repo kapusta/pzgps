@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import SaveClimb from '../SaveClimb/SaveClimb.jsx';
+import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 import shortid from 'shortid';
 import classNames from 'classnames/bind';
 import styles from './gpsdata.css';
@@ -68,13 +69,13 @@ class GpsData extends Component {
 
         <SaveClimb socket={this.props.socket} gpsData={this.props.gpsData}/>
 
+        <br/>
+
+        <ListRoutes/>
+
       </div>
     );
   }
 }
-
-// GpsData.propTypes = {
-//   gpsData: React.PropTypes.object
-// };
 
 export default GpsData;
