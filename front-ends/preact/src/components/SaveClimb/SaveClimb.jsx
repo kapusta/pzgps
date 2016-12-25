@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import shortid from 'shortid';
 import Select from 'react-select';
 import classNames from 'classnames/bind';
 import PouchDB from 'pouchdb';
