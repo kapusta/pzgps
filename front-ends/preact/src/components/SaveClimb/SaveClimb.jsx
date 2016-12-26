@@ -1,12 +1,14 @@
 import { h, Component } from 'preact';
 import Select from 'react-select';
 import classNames from 'classnames/bind';
-import PouchDB from 'pouchdb';
 import styles from './saveclimb.css';
-import conf from '../../lib/conf.js';
 import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
+import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 
+// database
+import PouchDB from 'pouchdb';
+import conf from '../../lib/conf.js';
 let dbname = 'routes'
 let db = new PouchDB(conf.couchdb + '/' + dbname);
 
@@ -17,10 +19,11 @@ class SaveClimb extends Component {
       saving: false, // is the page saving data?
       searching: false, // is the page searching for data?
       updateLocation: false,
+      routeList: [],
       route: {
         name: '',
-        pitches: 3,
-        rating: '5.5'
+        pitches: null,
+        rating: null
       }
     };
     this.pitches = new Array(30).fill(0).map((val, idx) => {
@@ -29,6 +32,9 @@ class SaveClimb extends Component {
         'label': idx + 1
       };
     });
+  }
+  componentWillMount = () => {
+    this.listRoutes();
   }
   handleRatingChange = val => {
     let route = merge({}, this.state.route, {rating: val.value});
@@ -86,7 +92,7 @@ class SaveClimb extends Component {
     });
   }
   create = evt => {
-    var that = this;
+    let that = this;
     this.setState({
       saving: true
     });
@@ -95,12 +101,16 @@ class SaveClimb extends Component {
     }, this.state.route, this.props.gpsData))
     .then(function(response) {
       that.setState({
-        saving: false
+        saving: false,
+        doc: null,
+        route: {
+          name: ''
+        }
       });
     });
   }
   save = evt => {
-    var that = this;
+    let that = this;
     this.setState({
       saving: true
     });
@@ -114,13 +124,39 @@ class SaveClimb extends Component {
 
     db.put(climbData)
     .then(function(response) {
+      that.listRoutes();
       that.setState({
-        saving: false
+        saving: false,
+        doc: null,
+        route: {
+          name: ''
+        }
       });
     }).catch(function(err) {
       that.setState({
         saving: false
       });
+    });
+  }
+  listRoutes = () => {
+    let that = this;
+    /*
+      @see https://pouchdb.com/api.html#batch_fetch
+      @example db.allDocs([options], [callback])
+    */
+    db.allDocs({
+      include_docs: true,
+      attachments: false
+    }).then(function(result) {
+      console.log(result);
+      let routeList = result.rows.map(function(row) {
+        return row.doc;
+      });
+      that.setState({
+        routeList
+      });
+    }).catch(function(err) {
+      console.log(err);
     });
   }
   render() {
@@ -147,85 +183,91 @@ class SaveClimb extends Component {
     });
 
     return (
-      <div className="col-lg-6">
-        <h4 className="card-title">Save New Climb</h4>
-        <div className="card card-block">
-          <form>
+      <div>
 
-            <div class="row">
-              <label for="route" className={labelStyles}>Route</label>
-              <div className="col-lg-8">
-                <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
-                {(this.state.doc) ?
-                  <span>
-                    <input
-                      type="checkbox"
-                      id="updateLocation"
-                      name="updateLocation"
-                      onClick={this.handleCheckbox}
-                      checked={this.state.updateLocation}
-                    /> <small><label for="updateLocation">Update "{this.state.route.name}" to current location?</label></small>
-                  </span> : ''
-                }
+        <div className="col-lg-6">
+          <h4 className="card-title">{(this.state.doc) ? 'Save' : 'Create New'} Route</h4>
+          <div className="card card-block">
+            <form>
+
+              <div class="row">
+                <label for="route" className={labelStyles}>Route</label>
+                <div className="col-lg-8">
+                  <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
+                  {(this.state.doc) ?
+                    <span>
+                      <input
+                        type="checkbox"
+                        id="updateLocation"
+                        name="updateLocation"
+                        onClick={this.handleCheckbox}
+                        checked={this.state.updateLocation}
+                      /> <small><label for="updateLocation">Update "{this.state.route.name}" to current location?</label></small>
+                    </span> : ''
+                  }
+                </div>
               </div>
-            </div>
 
-            <div class="row">
-              <label for="pitches" className={labelStyles}>Pitches</label>
-              <div className="col-lg-8">
-                <Select
-                  name="pitches"
-                  id="pitches"
-                  value={this.state.route.pitches}
-                  options={this.pitches}
-                  onChange={this.handlePitchesChange}
-                />
+              <div class="row">
+                <label for="pitches" className={labelStyles}>Pitches</label>
+                <div className="col-lg-8">
+                  <Select
+                    name="pitches"
+                    id="pitches"
+                    value={this.state.route.pitches}
+                    options={this.pitches}
+                    onChange={this.handlePitchesChange}
+                  />
+                </div>
               </div>
-            </div>
 
-            <div class="row">
-              <label for="rating" className={labelStyles}>Rating</label>
-              <div className="col-lg-8">
-                <Select
-                  name="rating"
-                  id="rating"
-                  value={this.state.route.rating}
-                  options={yds}
-                  onChange={this.handleRatingChange}
-                />
+              <div class="row">
+                <label for="rating" className={labelStyles}>Rating</label>
+                <div className="col-lg-8">
+                  <Select
+                    name="rating"
+                    id="rating"
+                    value={this.state.route.rating}
+                    options={yds}
+                    onChange={this.handleRatingChange}
+                  />
+                </div>
               </div>
-            </div>
 
-          </form>
+            </form>
+          </div>
+
+          {/* if there IS NOT a `doc` from the database, then we are creating a new `doc` */}
+          {/* if there IS a `doc` from the database, then we are saving an update to the `doc` */}
+          <button
+            bs-button
+            className={saveButtonStyles}
+            onClick={(this.state.doc) ? this.save : this.create}
+            disabled={this.state.saving}
+          >
+            <i className={saveButtonIcon} aria-hidden="true"></i> {(this.state.doc) ? 'Save' : 'Create'}
+          </button>
+
+          <button
+            bs-button
+            className={searchButtonStyles}
+            onClick={this.search}
+            disabled={this.state.searching || !this.state.route.name}
+          >
+            <i className={searchButtonIcon} aria-hidden="true"></i> Look Up By Route Name
+          </button>
+
+          <button
+            bs-button
+            className={loggerStyles}
+            onClick={this.logState}
+          >
+            <i className="fa fa-list" aria-hidden="true"></i> Log State
+          </button>
         </div>
 
-        {/* if there IS NOT a `doc` from the database, then we are creating a new `doc` */}
-        {/* if there IS a `doc` from the database, then we are saving an update to the `doc` */}
-        <button
-          bs-button
-          className={saveButtonStyles}
-          onClick={(this.state.doc) ? this.save : this.create}
-          disabled={this.state.saving}
-        >
-          <i className={saveButtonIcon} aria-hidden="true"></i> {(this.state.doc) ? 'Save' : 'Create'}
-        </button>
+        <ListRoutes routeList={this.state.routeList}/>
 
-        <button
-          bs-button
-          className={searchButtonStyles}
-          onClick={this.search}
-          disabled={this.state.searching || !this.state.route.name}
-        >
-          <i className={searchButtonIcon} aria-hidden="true"></i> Look Up By Route Name
-        </button>
-
-        <button
-          bs-button
-          className={loggerStyles}
-          onClick={this.logState}
-        >
-          <i className="fa fa-list" aria-hidden="true"></i> Log State
-        </button>
       </div>
     );
   }
