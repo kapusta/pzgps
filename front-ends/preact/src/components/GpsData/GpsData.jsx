@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import SaveClimb from '../SaveClimb/SaveClimb.jsx';
-import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 import shortid from 'shortid';
 import classNames from 'classnames/bind';
 import styles from './gpsdata.css';
@@ -25,16 +24,7 @@ class GpsData extends Component {
       [evt.target.id]: evt.target.value
     });
   }
-  saveLocation = evt => {
-    this.props.socket.send(JSON.stringify({
-      action: 'newClimb',
-      climbName: this.state.climbName,
-      climbPitches: this.state.climbPitches,
-      climbRating: this.state.climbRating
-    }));
-  }
   render() {
-
     let cx = classNames.bind(styles);
     let labelStyles = cx('col-lg-2 col-form-label', {
       label: true
@@ -67,11 +57,11 @@ class GpsData extends Component {
           </div>
         </div>
 
-        <SaveClimb socket={this.props.socket} gpsData={this.props.gpsData}/>
-
-        <br/>
-
-        <ListRoutes/>
+        <SaveClimb
+          socket={this.props.socket}
+          gpsData={this.props.gpsData}
+          updateRouteList={this.updateRouteList}
+        />
 
       </div>
     );
