@@ -1,50 +1,25 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
 import styles from './listroutes.css';
-
-// database
-import PouchDB from 'pouchdb';
-import conf from '../../lib/conf.js';
-let dbname = 'routes'
-let db = new PouchDB(conf.couchdb + '/' + dbname);
+import classNames from 'classnames/bind';
 
 class ListRoutes extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      docs: []
-    };
-  }
-  componentWillMount = () => {
-    let that = this;
-    /*
-      @see https://pouchdb.com/api.html#batch_fetch
-      @example db.allDocs([options], [callback])
-    */
-    db.allDocs({
-      include_docs: true,
-      attachments: false
-    }).then(function(result) {
-      console.log(result);
-      var docs = result.rows.map(function(row) {
-        return row.doc;
-      });
-      that.setState({
-        docs
-      });
-    }).catch(function(err) {
-      console.log(err);
-    });
   }
   render() {
+    let cn = classNames.bind(styles);
+    let routeBlock = cn('col-lg-6', {
+      'routes': true
+    });
     return (
-      <div className="col-lg-6">
+      <div className={routeBlock}>
         <h4 className="card-title">Known Routes</h4>
         <div className="card card-block">
           <ul>
-          {this.state.docs.map((val) => {
+          {this.props.routeList.map((val) => {
             return (
-              <li key={shortid.generate()}>{val.name}</li>
+              <li key={shortid.generate()}>{val.name} - {val.rating}</li>
             );
           })}
           </ul>
@@ -52,7 +27,6 @@ class ListRoutes extends Component {
       </div>
     );
   }
-
 }
 
 export default ListRoutes;
