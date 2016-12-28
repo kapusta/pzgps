@@ -183,7 +183,7 @@ class RouteEditor extends Component {
     });
 
     return (
-      <div>
+      <div className="row">
 
         <div className="col-lg-6">
           <h4 className="card-title">{(this.state.doc) ? 'Save' : 'Create New'} Route</h4>

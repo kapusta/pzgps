@@ -38,7 +38,6 @@ class GpsData extends Component {
 
     return (
       <div className="row">
-
         <div className="col-lg-6">
           <h4 className="card-title">GPS Data</h4>
           <div className="card card-block">
@@ -59,7 +58,6 @@ class GpsData extends Component {
             </div>
           </div>
         </div>
-
       </div>
     );
   }
