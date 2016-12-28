@@ -22,7 +22,14 @@ class Navbar extends Component {
               handleClick={this.props.handleClick}
               section="GpsData"
               isActive={this.props.componentName === 'GpsData'}
-              ><i className="fa fa-map-marker" aria-hidden="true"></i> Location Data</NavButton> : ''
+              ><i className="fa fa-map-marker" aria-hidden="true"></i> GPS Data</NavButton> : ''
+            }
+
+            {(this.props.gpsData) ? <NavButton
+              handleClick={this.props.handleClick}
+              section="RouteEditor"
+              isActive={this.props.componentName === 'RouteEditor'}
+              ><i class="fa fa-list-alt" aria-hidden="true"></i> My Routes</NavButton> : ''
             }
 
             {(this.props.gpsData && this.props.consumerKey) ? <NavButton
@@ -30,13 +37,6 @@ class Navbar extends Component {
               section="MapQuest"
               isActive={this.props.componentName === 'MapQuest'}
               ><i className="fa fa-map" aria-hidden="true"></i> Current Location</NavButton> : ''
-            }
-
-            {(this.props.gpsData) ? <NavButton
-              handleClick={this.props.handleClick}
-              section="RouteEditor"
-              isActive={this.props.componentName === 'RouteEditor'}
-              ><i class="fa fa-list-alt" aria-hidden="true"></i> Routes</NavButton> : ''
             }
 
           </div>

@@ -29,9 +29,4 @@ class MapQuest extends Component {
   }
 }
 
-// MapQuest.propTypes = {
-//   gpsData: React.PropTypes.object,
-//   consumerKey: React.PropTypes.string
-// };
-
 export default MapQuest;

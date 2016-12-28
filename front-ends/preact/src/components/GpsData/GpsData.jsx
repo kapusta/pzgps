@@ -38,6 +38,7 @@ class GpsData extends Component {
 
     return (
       <div className="row">
+
         <div className="col-lg-6">
           <h4 className="card-title">GPS Data</h4>
           <div className="card card-block">
@@ -45,9 +46,10 @@ class GpsData extends Component {
             <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
             <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
           </div>
+        </div>
 
-
-          <h4 className={styles.header}>Raw Data</h4>
+        <div className="col-lg-6">
+          <h4 className="card-title">Raw Data</h4>
           <div className={rawdata}>
             <div>
               {Object.keys(this.props.gpsData).map((val) => {

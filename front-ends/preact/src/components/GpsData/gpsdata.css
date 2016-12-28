@@ -4,9 +4,9 @@
   font-weight: bold;
 }
 .header {
-  margin-top: 10px;
+  margin-top: 0px;
 }
 .rawdata {
-  max-height: 400px;
+  max-height: 300px;
   overflow: auto;
 }
