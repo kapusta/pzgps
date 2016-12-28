@@ -2,13 +2,15 @@ import { h, Component } from 'preact';
 import About from '../About/About.jsx';
 import GpsData from '../GpsData/GpsData.jsx';
 import MapQuest from '../MapQuest/MapQuest.jsx';
+import RouteEditor from '../RouteEditor/RouteEditor.jsx';
 
 // @description this is kind of gross, but neccessary
 // @see https://github.com/facebook/react/issues/3365
 const contentComponents = {
   About,
   GpsData,
-  MapQuest
+  MapQuest,
+  RouteEditor
 };
 
 class ContentBox extends Component {
@@ -35,10 +37,5 @@ class ContentBox extends Component {
     );
   }
 }
-
-// ContentBox.propTypes = {
-//   content: React.PropTypes.string,
-//   gpsData: React.PropTypes.object
-// };
 
 export default ContentBox;

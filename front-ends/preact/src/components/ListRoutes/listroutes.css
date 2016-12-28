@@ -1,3 +1,7 @@
 .routes {
   margin-top: 20px;
 }
+.cell {
+  background: white;
+  padding: 5px;
+}

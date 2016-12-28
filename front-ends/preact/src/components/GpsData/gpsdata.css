@@ -6,3 +6,7 @@
 .header {
   margin-top: 10px;
 }
+.rawdata {
+  max-height: 200px;
+  overflow: auto;
+}

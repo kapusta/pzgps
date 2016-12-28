@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import SaveClimb from '../SaveClimb/SaveClimb.jsx';
+import RouteEditor from '../RouteEditor/RouteEditor.jsx';
 import shortid from 'shortid';
 import classNames from 'classnames/bind';
 import styles from './gpsdata.css';
@@ -25,12 +25,15 @@ class GpsData extends Component {
     });
   }
   render() {
-    let cx = classNames.bind(styles);
-    let labelStyles = cx('col-lg-2 col-form-label', {
-      label: true
+    let cn = classNames.bind(styles);
+    let labelStyles = cn('col-lg-2 col-form-label', {
+      'label': true
     });
-    let loggerStyles = cx('btn', {
+    let loggerStyles = cn('btn', {
       'btn-logger': true
+    });
+    let rawdata = cn('card card-block', {
+      'rawdata': true
     });
 
     return (
@@ -46,7 +49,7 @@ class GpsData extends Component {
 
 
           <h4 className={styles.header}>Raw Data</h4>
-          <div className="card card-block">
+          <div className={rawdata}>
             <div>
               {Object.keys(this.props.gpsData).map((val) => {
                 return (
@@ -56,12 +59,6 @@ class GpsData extends Component {
             </div>
           </div>
         </div>
-
-        <SaveClimb
-          socket={this.props.socket}
-          gpsData={this.props.gpsData}
-          updateRouteList={this.updateRouteList}
-        />
 
       </div>
     );

@@ -29,10 +29,4 @@ class Navbutton extends Component {
   }
 }
 
-Navbutton.propTypes = {
-  isActive: proptypes.bool,
-  handleClick: proptypes.func,
-  section: proptypes.string
-};
-
 export default Navbutton;

@@ -29,7 +29,14 @@ class Navbar extends Component {
               handleClick={this.props.handleClick}
               section="MapQuest"
               isActive={this.props.componentName === 'MapQuest'}
-              ><i className="fa fa-map" aria-hidden="true"></i> Map</NavButton> : ''
+              ><i className="fa fa-map" aria-hidden="true"></i> Current Location</NavButton> : ''
+            }
+
+            {(this.props.gpsData) ? <NavButton
+              handleClick={this.props.handleClick}
+              section="RouteEditor"
+              isActive={this.props.componentName === 'RouteEditor'}
+              ><i class="fa fa-list-alt" aria-hidden="true"></i> Routes</NavButton> : ''
             }
 
           </div>
@@ -37,12 +44,5 @@ class Navbar extends Component {
     );
   }
 }
-
-// Navbar.propTypes = {
-//   consumerKey: React.PropTypes.bool,
-//   componentName: React.PropTypes.string,
-//   gpsData: React.PropTypes.bool,
-//   handleClick: React.PropTypes.func
-// };
 
 export default Navbar;

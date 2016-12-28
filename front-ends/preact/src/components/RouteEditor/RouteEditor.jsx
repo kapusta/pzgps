@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import Select from 'react-select';
 import classNames from 'classnames/bind';
-import styles from './saveclimb.css';
+import styles from './RouteEditor.css';
 import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
@@ -12,7 +12,7 @@ import conf from '../../lib/conf.js';
 let dbname = 'routes'
 let db = new PouchDB(conf.couchdb + '/' + dbname);
 
-class SaveClimb extends Component {
+class RouteEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -273,4 +273,4 @@ class SaveClimb extends Component {
   }
 }
 
-export default SaveClimb;
+export default RouteEditor;
