@@ -1,6 +1,6 @@
 .label {
   font-weight: bold;
 }
-.mybuttons {
-  margin-left: 10px;
+.searchbutton {
+  cursor: pointer;
 }

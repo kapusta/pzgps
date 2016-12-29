@@ -66,30 +66,33 @@ class RouteEditor extends Component {
   }
   search = () => {
     let that = this; // gross, need it for the promise closure
-    this.setState({
-      searching: true
-    });
-    // get data based on the name, if found, use the data to
-    // prepopulate the rest of the form
-    db.get(this.state.route.name)
-    .then(function(doc){
-      let route = merge({}, {
-        name: doc.name,
-        pitches: doc.pitches,
-        rating: doc.rating
+    if (this.state.route.name.length) {
+      this.setState({
+        searching: true
       });
-      that.setState({
-        searching: false,
-        doc,
-        route
+      // get data based on the name, if found, use the data to
+      // prepopulate the rest of the form
+      db.get(this.state.route.name)
+      .then(function(doc){
+        console.log('this', doc);
+        let route = merge({}, {
+          name: doc.name,
+          pitches: doc.pitches,
+          rating: doc.rating
+        });
+        that.setState({
+          searching: false,
+          doc,
+          route
+        });
+      })
+      .catch(function(err) {
+        console.error(err);
+        that.setState({
+          searching: false
+        });
       });
-    })
-    .catch(function(err) {
-      console.error(err);
-      that.setState({
-        searching: false
-      });
-    });
+    }
   }
   create = evt => {
     let that = this;
@@ -167,8 +170,11 @@ class RouteEditor extends Component {
     let loggerStyles = cn('btn btn-sm mybuttons', {
       mybuttons: true // add css module styles
     });
-    let searchButtonStyles = cn('btn btn-sm', {
-      mybuttons: true // add css module styles
+    let searchButtonStyles = cn('fa', {
+      'fa-search-plus': !this.state.searching,
+      'fa-spinner': this.state.searching,
+      'fa-spin': this.state.searching,
+      'searchbutton': true // add css module styles
     });
     let searchButtonIcon = cn('fa', {
       'fa-search': !this.state.searching,
@@ -193,7 +199,24 @@ class RouteEditor extends Component {
               <div class="row">
                 <label for="route" className={labelStyles}>Route</label>
                 <div className="col-lg-8">
-                  <input id="name" placeholder="Name of the Route" type="text" className="form-control" value={this.state.route.name} onKeyUp={this.handleChange} />
+
+                  <div class="input-group">
+                    <input
+                      id="name"
+                      placeholder="Name of the Route"
+                      type="text"
+                      className="form-control"
+                      value={this.state.route.name}
+                      onKeyUp={this.handleChange}
+                    /><span className="input-group-addon">
+                      <i
+                        className={searchButtonStyles}
+                        onClick={this.search}
+                        disabled={this.state.searching || !this.state.route.name}
+                      ></i>
+                    </span>
+                  </div>
+
                   {(this.state.doc) ?
                     <span>
                       <input
@@ -246,15 +269,6 @@ class RouteEditor extends Component {
             disabled={this.state.saving}
           >
             <i className={saveButtonIcon} aria-hidden="true"></i> {(this.state.doc) ? 'Save' : 'Create'}
-          </button>
-
-          <button
-            bs-button
-            className={searchButtonStyles}
-            onClick={this.search}
-            disabled={this.state.searching || !this.state.route.name}
-          >
-            <i className={searchButtonIcon} aria-hidden="true"></i> Look Up By Route Name
           </button>
 
           <button
