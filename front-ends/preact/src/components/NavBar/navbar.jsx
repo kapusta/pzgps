@@ -8,39 +8,39 @@ class Navbar extends Component {
   }
   render() {
     return (
-        <div>
-          <div className={navbarStyles.navbar}>
+      <div>
+        <div className={navbarStyles.navbar}>
 
-            <NavButton
-              handleClick={this.props.handleClick}
-              section="About"
-              isActive={this.props.componentName === 'About'}
-              ><i className="fa fa-home" aria-hidden="true"></i> Home
-            </NavButton>
+          <NavButton
+            handleClick={this.props.handleClick}
+            section="About"
+            isActive={this.props.componentName === 'About'}
+            ><i className="fa fa-home" aria-hidden="true"></i> Home
+          </NavButton>
 
-            {(this.props.gpsData) ? <NavButton
-              handleClick={this.props.handleClick}
-              section="GpsData"
-              isActive={this.props.componentName === 'GpsData'}
-              ><i className="fa fa-map-marker" aria-hidden="true"></i> GPS Data</NavButton> : ''
-            }
+          {(this.props.gpsData) ? <NavButton
+            handleClick={this.props.handleClick}
+            section="GpsData"
+            isActive={this.props.componentName === 'GpsData'}
+            ><i className="fa fa-map-marker" aria-hidden="true"></i> GPS Data</NavButton> : ''
+          }
 
-            {(this.props.gpsData) ? <NavButton
-              handleClick={this.props.handleClick}
-              section="RouteEditor"
-              isActive={this.props.componentName === 'RouteEditor'}
-              ><i class="fa fa-list-alt" aria-hidden="true"></i> My Routes</NavButton> : ''
-            }
+          {(this.props.gpsData) ? <NavButton
+            handleClick={this.props.handleClick}
+            section="RouteEditor"
+            isActive={this.props.componentName === 'RouteEditor'}
+            ><i class="fa fa-list-alt" aria-hidden="true"></i> My Routes</NavButton> : ''
+          }
 
-            {(this.props.gpsData && this.props.consumerKey) ? <NavButton
-              handleClick={this.props.handleClick}
-              section="MapQuest"
-              isActive={this.props.componentName === 'MapQuest'}
-              ><i className="fa fa-map" aria-hidden="true"></i> Current Location</NavButton> : ''
-            }
+          {(this.props.gpsData && this.props.consumerKey) ? <NavButton
+            handleClick={this.props.handleClick}
+            section="MapQuest"
+            isActive={this.props.componentName === 'MapQuest'}
+            ><i className="fa fa-map" aria-hidden="true"></i> Current Location</NavButton> : ''
+          }
 
-          </div>
         </div>
+      </div>
     );
   }
 }
