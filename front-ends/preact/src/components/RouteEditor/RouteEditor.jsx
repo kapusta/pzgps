@@ -56,7 +56,6 @@ class RouteEditor extends Component {
     });
   }
   handleCheckbox = evt => {
-    console.log(evt);
     this.setState({
       updateLocation: !this.state.updateLocation
     })
@@ -74,7 +73,6 @@ class RouteEditor extends Component {
       // prepopulate the rest of the form
       db.get(this.state.route.name)
       .then(function(doc){
-        console.log('this', doc);
         let route = merge({}, {
           name: doc.name,
           pitches: doc.pitches,
@@ -116,6 +114,7 @@ class RouteEditor extends Component {
     });
   }
   save = evt => {
+    let attrData = evt.target[Symbol.for('preactattr')]; // get attr data from the clicked button
     let that = this;
     this.setState({
       saving: true
@@ -282,6 +281,7 @@ class RouteEditor extends Component {
             <i className="fa fa-list" aria-hidden="true"></i> Log State
           </button>
         </div>
+        <br/>
 
         <ListRoutes routeList={this.state.routeList}/>
 
