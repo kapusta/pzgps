@@ -6,10 +6,10 @@ import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 
-// database
+// database things
 import PouchDB from 'pouchdb';
 import conf from '../../lib/conf.js';
-let dbname = 'routes'
+const dbname = 'routes'
 let db = new PouchDB(conf.couchdb + '/' + dbname);
 
 class RouteEditor extends Component {
@@ -99,9 +99,12 @@ class RouteEditor extends Component {
     this.setState({
       saving: true
     });
-    db.put(merge({
-      _id: this.state.route.name
-    }, this.state.route, this.props.gpsData))
+    let newRoute = merge(
+      { _id: this.state.route.name },
+      this.state.route,
+      this.props.gpsData
+    );
+    db.put(newRoute)
     .then(function(response) {
       that.setState({
         saving: false,
@@ -118,14 +121,14 @@ class RouteEditor extends Component {
       saving: true
     });
 
-    let climbData = merge(
+    let routeData = merge(
       {}, // new object
       this.state.doc, // the document from the database
       this.state.route, // the route data from the from in the UI
       ((this.state.updateLocation) ? this.props.gpsData : {}) // gps data if  update location is true
     );
 
-    db.put(climbData)
+    db.put(routeData)
     .then(function(response) {
       that.listRoutes();
       that.setState({
