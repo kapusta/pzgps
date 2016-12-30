@@ -4,3 +4,6 @@
 .searchbutton {
   cursor: pointer;
 }
+.mybuttons {
+  margin-left: 10px;
+}
