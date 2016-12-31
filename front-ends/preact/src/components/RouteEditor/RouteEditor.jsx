@@ -9,7 +9,7 @@ import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 // database things
 import PouchDB from 'pouchdb';
 import conf from '../../lib/conf.js';
-const dbname = 'routes'
+const dbname = 'routes';
 let db = new PouchDB(conf.couchdb + '/' + dbname);
 
 class RouteEditor extends Component {
@@ -58,7 +58,7 @@ class RouteEditor extends Component {
   handleCheckbox = evt => {
     this.setState({
       updateLocation: !this.state.updateLocation
-    })
+    });
   }
   logState = () => {
     console.log(this.state);
@@ -72,7 +72,7 @@ class RouteEditor extends Component {
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
       db.get(this.state.route.name)
-      .then(function(doc){
+      .then(doc => {
         let route = merge({}, {
           name: doc.name,
           pitches: doc.pitches,
@@ -84,7 +84,7 @@ class RouteEditor extends Component {
           route
         });
       })
-      .catch(function(err) {
+      .catch(err => {
         console.error(err);
         that.setState({
           searching: false
@@ -103,7 +103,7 @@ class RouteEditor extends Component {
       this.props.gpsData
     );
     db.put(newRoute)
-    .then(function(response) {
+    .then(response => {
       that.setState({
         saving: false,
         doc: null,
@@ -114,7 +114,9 @@ class RouteEditor extends Component {
     });
   }
   save = evt => {
-    let attrData = evt.target[Symbol.for('preactattr')]; // get attr data from the clicked button
+    // get attr data from the clicked button via the undocumented Symbol feature
+    // @see https://twitter.com/_developit/status/815027807818514432
+    // let attrData = evt.target[Symbol.for('preactattr')];
     let that = this;
     this.setState({
       saving: true
@@ -128,7 +130,7 @@ class RouteEditor extends Component {
     );
 
     db.put(routeData)
-    .then(function(response) {
+    .then(response => {
       that.listRoutes();
       that.setState({
         saving: false,
@@ -137,7 +139,7 @@ class RouteEditor extends Component {
           name: ''
         }
       });
-    }).catch(function(err) {
+    }).catch(err => {
       that.setState({
         saving: false
       });
@@ -152,15 +154,15 @@ class RouteEditor extends Component {
     db.allDocs({
       include_docs: true,
       attachments: false
-    }).then(function(result) {
+    }).then(result => {
       console.log(result);
-      let routeList = result.rows.map(function(row) {
+      let routeList = result.rows.map(row => {
         return row.doc;
       });
       that.setState({
         routeList
       });
-    }).catch(function(err) {
+    }).catch(err => {
       console.log(err);
     });
   }
