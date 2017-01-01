@@ -9,17 +9,15 @@ class Navbutton extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick = e => {
-    console.log('button click event', e);
+    //console.log('button click event', e);
     this.props.handleClick(this.props.section);
   }
   render() {
-
     let cx = classNames.bind(styles);
     let buttonStyles = cx('btn btn-sm', {
       'button': true,
       'btn-primary': this.props.isActive
     });
-
     return (
       <button
         className={buttonStyles}

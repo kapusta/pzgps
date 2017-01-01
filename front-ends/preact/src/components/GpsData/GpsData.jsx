@@ -35,10 +35,8 @@ class GpsData extends Component {
     let rawdata = cn('card card-block', {
       'rawdata': true
     });
-
     return (
       <div className="row">
-
         <div className="col-lg-6">
           <h4 className="card-title">GPS Data</h4>
           <div className="card card-block">
@@ -47,7 +45,6 @@ class GpsData extends Component {
             <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
           </div>
         </div>
-
         <div className="col-lg-6">
           <h4 className="card-title">Raw Data</h4>
           <div className={rawdata}>
