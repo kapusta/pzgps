@@ -1,7 +1,7 @@
 # pzgps
-The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket. On the way, we'll learn how to do it in multiple UI frameworks.
+The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
-We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
+We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). That data, along with user defined information, can then be saved to a CouchDB database on the [#pizero](https://www.raspberrypi.org/products/pi-zero/).
 
 ## Pull Requests Accepted
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
@@ -40,14 +40,20 @@ Node is installed now, along with npm.
 
 Your `/usr/local` dir probably has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
 
+## Installing CouchDB on the pizero.
+[The guide for setting up PouchDB to use CouchDB on the backend is excellent](https://pouchdb.com/guides/setup-couchdb.html). The Preact front end (see below) requires and uses PouchDB to persist data to the CouchDB instance. You don't need to follow the entire guide to develop and use the Preact FE effectively.
 
-## Various Useful Commands
+TLDR...
+
+    sudo apt-get install couchdb
+
+
+## Useful Commands for GPSD on the pizero
 * `sudo apt-get update` and `sudo apt-get upgrade` to update your installed packages
 * `sudo killall gpsd` - To kill gpsd
 * `sudo /etc/init.d/gpsd restart` - To elegantly restart gpsd
 * `cgps -s` - to open a terminal UI for gps data
 * `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746)
-
 
 ## Installing `gpsd`
 Log into your pi and install `gpsd`
@@ -77,7 +83,6 @@ What did work was...
 * `sudo reboot`
 
 The Adafruit guide mentioned above says you can do this from `/etc/inittab` but that file doesn't exist in Raspbian Jessie (it did in Wheezy). Raspbian Jessie has moved everything to services and there is no `/etc/inittab` file at all, so it's best to use the `raspi-config` command.
-
 
 ## Configuring gpsd
 To have `gpsd` start up correctly, edit `/etc/default/gpsd`
@@ -135,6 +140,11 @@ Assuming the millions of things above went right, you'll see some GPS data in yo
 
 ### ReactJS
 In the `reactjs` directory, install the deps by running `npm install` then run `npm start` to start the webserver. This project uses [webpack](https://webpack.github.io/) and will auto-reload your browser for you.
+
+### Preact
+Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
+
+Like in the other front ends, install the deps by running `npm install` and run the webserver with `npm start`. There is also code linting configured using eslint which you can run with `npm run lint`.
 
 
 ## Enabling a MapQuest staticmap
