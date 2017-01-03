@@ -10,7 +10,8 @@ import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 import PouchDB from 'pouchdb';
 import conf from '../../lib/conf.js';
 const dbname = 'routes';
-let db = new PouchDB(conf.couchdb + '/' + dbname);
+let localDB = new PouchDB(dbname);
+let remoteDB = new PouchDB(conf.couchdb + '/' + dbname);
 
 class RouteEditor extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class RouteEditor extends Component {
   handleChange = evt => {
     let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
     this.setState({
-      doc: null, // kill the db doc in state if/when the user changes the name
+      doc: null, // kill the remoteDB doc in state if/when the user changes the name
       route
     });
   }
@@ -71,7 +72,7 @@ class RouteEditor extends Component {
       });
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
-      db.get(this.state.route.name)
+      remoteDB.get(this.state.route.name)
       .then(doc => {
         let route = merge({}, {
           name: doc.name,
@@ -102,7 +103,7 @@ class RouteEditor extends Component {
       this.state.route,
       this.props.gpsData
     );
-    db.put(newRoute)
+    remoteDB.put(newRoute)
     .then(response => {
       that.setState({
         saving: false,
@@ -129,7 +130,7 @@ class RouteEditor extends Component {
       ((this.state.updateLocation) ? this.props.gpsData : {}) // gps data if  update location is true
     );
 
-    db.put(routeData)
+    remoteDB.put(routeData)
     .then(response => {
       that.listRoutes();
       that.setState({
@@ -149,12 +150,13 @@ class RouteEditor extends Component {
     let that = this;
     /*
       @see https://pouchdb.com/api.html#batch_fetch
-      @example db.allDocs([options], [callback])
+      @example remoteDB.allDocs([options], [callback])
     */
-    db.allDocs({
+    remoteDB.allDocs({
       include_docs: true,
       attachments: false
     }).then(result => {
+      console.log(result);
       let routeList = result.rows.map(row => {
         return row.doc;
       });
