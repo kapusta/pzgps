@@ -5,7 +5,6 @@ import './style';
 let root;
 
 function init() {
-  //let App = require('./components/App/App.jsx').default;
   root = render(
     <App/> ,
     document.querySelector("#app"),
