@@ -155,7 +155,6 @@ class RouteEditor extends Component {
       include_docs: true,
       attachments: false
     }).then(result => {
-      console.log(result);
       let routeList = result.rows.map(row => {
         return row.doc;
       });
