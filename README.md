@@ -1,7 +1,7 @@
 # pzgps
 The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
-We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). That data, along with user defined information, can then be saved to a CouchDB database on the [#pizero](https://www.raspberrypi.org/products/pi-zero/).
+We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). That data, along with user defined information, can then be saved to a CouchDB database on your [#pizero](https://www.raspberrypi.org/products/pi-zero/).
 
 ## Pull Requests Accepted
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
@@ -19,7 +19,8 @@ You...
 * Sample web apps are in the `front-ends` directory. Each has it's own `package.json` file.
   - Run `npm install` to install the dependencies ('deps') for each part of the project that you want to use.
   - You'll run each part of the project by running `npm start` where the `package.json` is located.
-  - Front web apps all run on port 9001.
+  - All web apps run on port 9001.
+* If you install CouchDB (see below) it will run on port 5984 (Futon would then be at http://yourhostname:5984/_utils/index.html).
 
 ## Installing NodeJS on the pizero
 The version of NodeJS you get via `apt-get install nodejs` is out of date (so you'd be missing some important security patches).
@@ -28,27 +29,31 @@ If you want to compile node from scratch on your [#pizero](https://www.raspberry
 
 If you want to make things a bit easier, then [download Node](https://nodejs.org/en/download/) using `wget` and install it directly. In this case we'll download the latest version (as of this writing) for ARM on the 6.x branch. Log in to your pi and remain in your home directory...
 
-    wget https://nodejs.org/dist/v6.9.1/node-v6.9.1-linux-armv6l.tar.xz
+    wget https://nodejs.org/dist/v6.9.2/node-v6.9.2-linux-armv6l.tar.xz
     cd /usr/local
-    sudo tar --strip-components 1 -xvf ~/node-v6.9.1-linux-armv6l.tar.xz
-    cd && rm node-v6.9.1-linux-armv6l.tar.xz
+    sudo tar --strip-components 1 -xvf ~/node-v6.9.2-linux-armv6l.tar.xz
+    cd && rm node-v6.9.2-linux-armv6l.tar.xz
 
 
 Node is installed now, along with npm.
-* `node -v` should yield `v6.9.1`
-* `npm -v` should yield `3.10.8`
+* `node -v` should yield `v6.9.2`
+* `npm -v` should yield `3.10.9`
 
-Your `/usr/local` dir probably has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
+Your `/usr/local` dir has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
+
+Now it would be a good idea to install `[n](https://github.com/tj/n)` or `[nvm](https://github.com/creationix/nvm)` so you can very easily install new versions of Node and NPM (and switch between them at will).
 
 ## Installing CouchDB on the pizero.
-[The guide for setting up PouchDB to use CouchDB on the backend is excellent](https://pouchdb.com/guides/setup-couchdb.html). The Preact front end (see below) requires and uses PouchDB to persist data to the CouchDB instance. You don't need to follow the entire guide to develop and use the Preact FE effectively.
+[The official PouchDB set up guide for things up is excellent](https://pouchdb.com/guides/setup-couchdb.html). The Preact front end (see below) uses PouchDB to persist data to the CouchDB instance.
+
+You don't need to follow the entire set up guide to develop and use the Preact front end.
 
 TLDR...
 
     sudo apt-get install couchdb
 
 
-## Useful Commands for GPSD on the pizero
+## Useful Commands for dealing with GPSD on the pizero
 * `sudo apt-get update` and `sudo apt-get upgrade` to update your installed packages
 * `sudo killall gpsd` - To kill gpsd
 * `sudo /etc/init.d/gpsd restart` - To elegantly restart gpsd
@@ -146,6 +151,11 @@ Currently the [Preact](https://preactjs.com/) version of the front end has the m
 
 Like in the other front ends, install the deps by running `npm install` and run the webserver with `npm start`. There is also code linting configured using eslint which you can run with `npm run lint`.
 
+Note the `front-ends/preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
+* `raspi-config`
+* Go to "Advanced Options"
+* Go to "Hostname"
+* Type in a new hostname then hit `Ok`
 
 ## Enabling a MapQuest staticmap
 One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module that includes that key.
