@@ -41,7 +41,7 @@ Node is installed now, along with npm.
 
 Your `/usr/local` dir has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
 
-Now it would be a good idea to install `[n](https://github.com/tj/n)` or `[nvm](https://github.com/creationix/nvm)` so you can very easily install new versions of Node and NPM (and switch between them at will).
+Now it would be a good idea to install [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm) so you can very easily install new versions of Node and NPM (and switch between them at will).
 
 ## Installing CouchDB on the pizero.
 [The official PouchDB set up guide for things up is excellent](https://pouchdb.com/guides/setup-couchdb.html). The Preact front end (see below) uses PouchDB to persist data to the CouchDB instance.
@@ -153,8 +153,8 @@ Like in the other front ends, install the deps by running `npm install` and run 
 
 Note the `front-ends/preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
 * `raspi-config`
-* Go to "Advanced Options"
-* Go to "Hostname"
+* Go to `Advanced Options`
+* Go to `Hostname`
 * Type in a new hostname then hit `Ok`
 
 ## Enabling a MapQuest staticmap
