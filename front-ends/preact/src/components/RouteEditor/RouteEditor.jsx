@@ -7,11 +7,21 @@ import merge from 'lodash/merge';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 
 // database things
-import PouchDB from 'pouchdb';
 import conf from '../../lib/conf.js';
+import PouchDB from 'pouchdb';
 const dbname = 'routes';
 let localDB = new PouchDB(dbname);
 let remoteDB = new PouchDB(conf.couchdb + '/' + dbname);
+let sync = localDB.sync(remoteDB, {
+  live: true,
+  retry: true
+}).on('complete', function () {
+  console.log('local/remote database synced');
+}).on('error', function (err) {
+  console.error('replication error', err);
+});
+// sync is cancellable, maybe on componentWillUnmount?
+// sync.cancel();
 
 class RouteEditor extends Component {
   constructor(props) {
@@ -52,7 +62,7 @@ class RouteEditor extends Component {
   handleChange = evt => {
     let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
     this.setState({
-      doc: null, // kill the remoteDB doc in state if/when the user changes the name
+      doc: null, // kill the doc in state if/when the user changes the name
       route
     });
   }
@@ -72,7 +82,7 @@ class RouteEditor extends Component {
       });
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
-      remoteDB.get(this.state.route.name)
+      localDB.get(this.state.route.name)
       .then(doc => {
         let route = merge({}, {
           name: doc.name,
@@ -103,7 +113,7 @@ class RouteEditor extends Component {
       this.state.route,
       this.props.gpsData
     );
-    remoteDB.put(newRoute)
+    localDB.put(newRoute)
     .then(response => {
       that.setState({
         saving: false,
@@ -130,7 +140,7 @@ class RouteEditor extends Component {
       ((this.state.updateLocation) ? this.props.gpsData : {}) // gps data if  update location is true
     );
 
-    remoteDB.put(routeData)
+    localDB.put(routeData)
     .then(response => {
       that.listRoutes();
       that.setState({
@@ -152,7 +162,7 @@ class RouteEditor extends Component {
       @see https://pouchdb.com/api.html#batch_fetch
       @example remoteDB.allDocs([options], [callback])
     */
-    remoteDB.allDocs({
+    localDB.allDocs({
       include_docs: true,
       attachments: false
     }).then(result => {
