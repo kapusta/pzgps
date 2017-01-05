@@ -15,9 +15,9 @@ let remoteDB = new PouchDB(conf.couchdb + '/' + dbname);
 let sync = localDB.sync(remoteDB, {
   live: true,
   retry: true
-}).on('complete', function () {
+}).on('complete', () => {
   console.log('local/remote database synced');
-}).on('error', function (err) {
+}).on('error', err => {
   console.error('replication error', err);
 });
 // sync is cancellable, maybe on componentWillUnmount?
@@ -45,7 +45,7 @@ class RouteEditor extends Component {
     });
   }
   componentWillMount = () => {
-    this.listRoutes();
+    this.getRoutes();
   }
   handleRatingChange = val => {
     let route = merge({}, this.state.route, {rating: val.value});
@@ -96,12 +96,22 @@ class RouteEditor extends Component {
         });
       })
       .catch(err => {
-        console.error(err);
         that.setState({
           searching: false
         });
+        console.error(err);
       });
     }
+  }
+  removeRoute = route => {
+    let that = this;
+    localDB.get(route._id).then(doc => {
+      return localDB.remove(doc);
+    }).then(response => {
+      that.getRoutes();
+    }).catch(err => {
+      console.error('failed to delete a route', err);
+    });
   }
   create = evt => {
     let that = this;
@@ -115,6 +125,7 @@ class RouteEditor extends Component {
     );
     localDB.put(newRoute)
     .then(response => {
+      that.getRoutes();
       that.setState({
         saving: false,
         doc: null,
@@ -142,7 +153,7 @@ class RouteEditor extends Component {
 
     localDB.put(routeData)
     .then(response => {
-      that.listRoutes();
+      that.getRoutes();
       that.setState({
         saving: false,
         doc: null,
@@ -156,7 +167,7 @@ class RouteEditor extends Component {
       });
     });
   }
-  listRoutes = () => {
+  getRoutes = () => {
     let that = this;
     /*
       @see https://pouchdb.com/api.html#batch_fetch
@@ -296,7 +307,7 @@ class RouteEditor extends Component {
         </div>
         <br/>
 
-        <ListRoutes routeList={this.state.routeList}/>
+        <ListRoutes removeRoute={this.removeRoute} routeList={this.state.routeList}/>
 
       </div>
     );
