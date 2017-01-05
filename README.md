@@ -44,7 +44,7 @@ Your `/usr/local` dir has a few files left over from the install (ie, CHANGELOG.
 Now it would be a good idea to install [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm) so you can very easily install new versions of Node and NPM (and switch between them at will).
 
 ## Installing CouchDB on the pizero.
-[The official PouchDB set up guide for things up is excellent](https://pouchdb.com/guides/setup-couchdb.html). The Preact front end (see below) uses PouchDB to persist data to the CouchDB instance.
+[The official PouchDB set up guide is excellent](https://pouchdb.com/guides/setup-couchdb.html). This front end uses PouchDB to persist data to the CouchDB (see below) instance.
 
 You don't need to follow the entire set up guide to develop and use the Preact front end.
 
