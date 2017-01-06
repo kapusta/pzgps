@@ -78,11 +78,11 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.5",
     "classnames": "^2.2.5",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.4",
     "pouchdb": "^6.1.0",
-    "preact": "^6.4.0",
-    "preact-compat": "^3.9.1",
-    "preact-router": "^2.3.1",
+    "preact": "^7.1.0",
+    "preact-compat": "^3.9.4",
+    "preact-router": "^2.3.2",
     "proptypes": "^0.14.3",
     "react-select": "^1.0.0-rc.2",
     "shortid": "^2.2.6"
