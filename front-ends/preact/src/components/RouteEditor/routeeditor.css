@@ -1,9 +1,18 @@
+.mybuttons {
+  margin-left: 10px;
+}
 .label {
   font-weight: bold;
 }
-.searchbutton {
+.search-enabled {
   cursor: pointer;
+  opacity: 1;
 }
-.mybuttons {
-  margin-left: 10px;
+.search-disabled {
+  cursor: default;
+  opacity: 0.6
+}
+.blue {
+  background-color: #0275d8;
+  color: #ffffff;
 }
