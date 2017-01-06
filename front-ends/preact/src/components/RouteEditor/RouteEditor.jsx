@@ -197,13 +197,9 @@ class RouteEditor extends Component {
       mybuttons: true // add css module styles
     });
     let searchButtonStyles = cn('fa', {
+      'search-enabled': this.state.route.name, // there has to be a better...
+      'search-disabled': !this.state.route.name, // ...way to do this.
       'fa-search-plus': !this.state.searching,
-      'fa-spinner': this.state.searching,
-      'fa-spin': this.state.searching,
-      'searchbutton': true // add css module styles
-    });
-    let searchButtonIcon = cn('fa', {
-      'fa-search': !this.state.searching,
       'fa-spinner': this.state.searching,
       'fa-spin': this.state.searching
     });
@@ -212,6 +208,9 @@ class RouteEditor extends Component {
       'fa-floppy-o': !this.state.saving,
       'fa-spinner': this.state.saving,
       'fa-spin': this.state.saving
+    });
+    let inputGroupAddon = cn('input-group-addon', {
+      'blue': this.state.route.name
     });
 
     return (
@@ -222,11 +221,11 @@ class RouteEditor extends Component {
           <div className="card card-block">
             <form>
 
-              <div class="row">
+              <div className="row">
                 <label for="route" className={labelStyles}>Route</label>
                 <div className="col-lg-8">
 
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       id="name"
                       placeholder="Name of the Route"
@@ -234,11 +233,10 @@ class RouteEditor extends Component {
                       className="form-control"
                       value={this.state.route.name}
                       onKeyUp={this.handleChange}
-                    /><span className="input-group-addon">
+                    /><span className={inputGroupAddon}>
                       <i
                         className={searchButtonStyles}
                         onClick={this.search}
-                        disabled={this.state.searching || !this.state.route.name}
                       ></i>
                     </span>
                   </div>
@@ -304,8 +302,8 @@ class RouteEditor extends Component {
           >
             <i className="fa fa-list" aria-hidden="true"></i> Log State
           </button>
+          <br/><br/>
         </div>
-        <br/>
 
         <ListRoutes removeRoute={this.removeRoute} routeList={this.state.routeList}/>
 
