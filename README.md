@@ -1,11 +1,14 @@
 # pzgps
 The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
-We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API). That data, along with user defined information, can then be saved to a CouchDB database on your [#pizero](https://www.raspberrypi.org/products/pi-zero/).
+We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
-## Pull Requests Accepted
-* If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
+That data, along with user defined information, can then be saved to a [PouchDB database](https://pouchdb.com/guides/databases.html) on your browser/device that syncs to a CouchDB database on your [#pizero](https://www.raspberrypi.org/products/pi-zero/).
+
+## Pull Requests Accepted!
 * I'm very open to changes/fixes/additions, please feel free to submit pull requests.
+* This project is meant to be a sandbox for learning various things, so expect things to change.
+* If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 
 ## Assumptions
 You...
@@ -15,12 +18,13 @@ You...
 * Have [Connected your Adafruit GPS Breakout](https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb)
 
 ## Project Structure
-* At the root of the repo is an `index.js` file, which reads the GPS data and provides it over a WebSocket (on port 9001).
-* Sample web apps are in the `front-ends` directory. Each has it's own `package.json` file.
+* At the root of the repo is an `index.js` file, which is a NodeJS application that reads the GPS data and provides it over a WebSocket (on port 9001).
+* Sample web apps are in the `front-ends` directory, each with it's own `package.json` file.
+  - Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
   - Run `npm install` to install the dependencies ('deps') for each part of the project that you want to use.
   - You'll run each part of the project by running `npm start` where the `package.json` is located.
-  - All web apps run on port 9001.
-* If you install CouchDB (see below) it will run on port 5984 (Futon would then be at http://yourhostname:5984/_utils/index.html).
+  - All front end web apps run on port 9001.
+* If you want to persist data to a database, then install CouchDB on your pizero (see below) which will run on port 5984 (the Futon UI would then be at http://yourhostname:5984/_utils/index.html).
 
 ## Installing NodeJS on the pizero
 The version of NodeJS you get via `apt-get install nodejs` is out of date (so you'd be missing some important security patches).
@@ -34,34 +38,24 @@ If you want to make things a bit easier, then [download Node](https://nodejs.org
     sudo tar --strip-components 1 -xvf ~/node-v6.9.2-linux-armv6l.tar.xz
     cd && rm node-v6.9.2-linux-armv6l.tar.xz
 
-
 Node is installed now, along with npm.
 * `node -v` should yield `v6.9.2`
 * `npm -v` should yield `3.10.9`
 
 Your `/usr/local` dir has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
 
-Now it would be a good idea to install [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm) so you can very easily install new versions of Node and NPM (and switch between them at will).
+Now consider installing [n](https://github.com/tj/n) or [nvm](https://github.com/creationix/nvm) so you can easily install new versions of Node and NPM (and switch between them at will).
 
 ## Installing CouchDB on the pizero.
-[The official PouchDB set up guide is excellent](https://pouchdb.com/guides/setup-couchdb.html). This front end uses PouchDB to persist data to the CouchDB (see below) instance.
+[The official PouchDB set up guide is excellent](https://pouchdb.com/guides/setup-couchdb.html). The Preact based front end uses PouchDB to store data locally and to persist data to the CouchDB (see below) instance.
 
-You don't need to follow the entire set up guide to develop and use the Preact front end.
-
-TLDR...
+To install CouchDB on the pizero, log into it, then...
 
     sudo apt-get install couchdb
 
 
-## Useful Commands for dealing with GPSD on the pizero
-* `sudo apt-get update` and `sudo apt-get upgrade` to update your installed packages
-* `sudo killall gpsd` - To kill gpsd
-* `sudo /etc/init.d/gpsd restart` - To elegantly restart gpsd
-* `cgps -s` - to open a terminal UI for gps data
-* `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746)
-
 ## Installing `gpsd`
-Log into your pi and install `gpsd`
+Log into your pi...
 
     sudo apt-get install gpsd gpsd-clients python-gps
 
@@ -75,7 +69,7 @@ When starting `gpsd` you might see an error like this...
 
 You can confirm data is coming to your [#pizero](https://www.raspberrypi.org/products/pi-zero/) with `cat /dev/ttyAMA0` which should show a stream of data. If you see data coming thru but the commands to start `gpsd` failed with an error about not being able to connect, then you might have to disable terminal over serial.
 
-## How disable terminal over serial
+### How disable terminal over serial
 These didn't work, not sure why...
 
     sudo systemctl stop serial-getty@ttyAMA0.service
@@ -89,7 +83,7 @@ What did work was...
 
 The Adafruit guide mentioned above says you can do this from `/etc/inittab` but that file doesn't exist in Raspbian Jessie (it did in Wheezy). Raspbian Jessie has moved everything to services and there is no `/etc/inittab` file at all, so it's best to use the `raspi-config` command.
 
-## Configuring gpsd
+### Configuring gpsd
 To have `gpsd` start up correctly, edit `/etc/default/gpsd`
 
     # Default settings for the gpsd init script and the hotplug wrapper.
@@ -109,10 +103,17 @@ To have `gpsd` start up correctly, edit `/etc/default/gpsd`
 
     GPSD_SOCKET="/var/run/gpsd.sock"
 
-
 Then restart: `sudo /etc/init.d/gpsd restart`
 
 Then try `cgps -s` and you should now see real data. If the GPS Breakout can't see the sky then you might see `no fix` which means it can't see any satellites. Either go outside or put the [#pizero](https://www.raspberrypi.org/products/pi-zero/) on a window sill. 😀
+
+
+### More useful Commands for dealing with GPSD on the pizero
+* `sudo killall gpsd` - To kill gpsd
+* `sudo /etc/init.d/gpsd restart` - To elegantly restart gpsd
+* `cgps -s` - to open a terminal UI for gps data
+* `cat /dev/ttyAMA0` - See raw data from the [Adafruit Ultimate GPS Breakout](https://www.adafruit.com/product/746)
+
 
 ## GPS data via NodeJS
 Now that data is coming from the gps unit, thru `gpsd`, we can read that data from node with the help of [node-gpsd](https://github.com/eelcocramer/node-gpsd).
@@ -135,8 +136,18 @@ Your entry in `rc.local` will look something like this...
 
 Change the port number as needed.
 
-
 ## Using the WebSocket from a Front End
+
+### Preact
+Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
+
+Install the deps by running `npm install` and run the webserver with `npm start`. There is also code linting configured using eslint which you can run with `npm run lint`.
+
+Note the `front-ends/preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
+* `raspi-config`
+* Go to `Advanced Options`
+* Go to `Hostname`
+* Type in a new hostname then hit `Ok`
 
 ### AngularJS
 In the `angular1` directory, install the deps by running `npm install` then run `npm start` to start the [webserver](https://github.com/johnpapa/lite-server). Using your web browser, navigate to your pizero's IP address on port 9001 (the default). The default port of the webserver can be changed in the `angular1/bs-config.json` file.
@@ -146,24 +157,13 @@ Assuming the millions of things above went right, you'll see some GPS data in yo
 ### ReactJS
 In the `reactjs` directory, install the deps by running `npm install` then run `npm start` to start the webserver. This project uses [webpack](https://webpack.github.io/) and will auto-reload your browser for you.
 
-### Preact
-Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
-
-Like in the other front ends, install the deps by running `npm install` and run the webserver with `npm start`. There is also code linting configured using eslint which you can run with `npm run lint`.
-
-Note the `front-ends/preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
-* `raspi-config`
-* Go to `Advanced Options`
-* Go to `Hostname`
-* Type in a new hostname then hit `Ok`
-
 ## Enabling a MapQuest staticmap
-One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module that includes that key.
+One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module from the NodeJS application that includes that key.
 
 * [Register for a developer account for free](https://developer.mapquest.com/).
 * Go to your new profile, and click the "Create a New Key" button.
 * You can always find your Consumer Key on the "Keys &amp; Reporting" page after creating one.
-* Make a file in the `lib` directory named `mqkey.js` and format it like the example below.
+* Make a file in the `/lib` directory named `mqkey.js` and format it like the example below.
 
     module.exports = {
       'consumerKey': 'PASTE YOUR CONSUMER KEY HERE'
