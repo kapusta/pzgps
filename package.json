@@ -1,6 +1,6 @@
 {
   "name": "@dankapusta/pzgps",
-  "version": "1.14.0",
+  "version": "2.0.0",
   "description": "Read GPS data from a PiZero in a single page web app via a WebSocket",
   "main": "index.js",
   "scripts": {
