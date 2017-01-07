@@ -6,11 +6,11 @@ let merge = require('lodash/merge');
 
 let daemon = require('./lib/daemon.js');
 
-const mqkey = {
+let mqkey = {
   consumerKey: ''
 };
 
-const location = {
+let location = {
   current: {}
 };
 
@@ -46,8 +46,7 @@ wss.on('connection', socket => {
 
     // there is room for more structure around recieving messages with
     // different actions, probably starts to look like a router of some sort,
-    // should probably name space the actions (eg, pzgps.get.something)
-    if (parsedData.action === 'getConsumerKey' && mqkey.consumerKey) {
+    if (parsedData.action === 'pzgps.get.consumerKey' && mqkey.consumerKey) {
       socket.send(JSON.stringify(mqkey));
     }
 
@@ -59,8 +58,11 @@ wss.on('connection', socket => {
         {route: parsedData.route}
       );
       console.log('saving new route', route);
+      // at this point, you could PUT/POST data into a database (eg, CouchDB)
+      // then report that back out to the consuming client. the schema for that
+      // message out to the client is up to you, the format below is naive at best.
       socket.send(JSON.stringify(merge(route, {
-        event: 'pzgps.new.route'
+        event: 'pzgps.put.route'
       })));
     }
   });
