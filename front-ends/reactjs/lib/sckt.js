@@ -21,7 +21,7 @@ const setUpSocket = (serverUrl, Component) => {
     });
 
     socket.send(JSON.stringify({
-      'action': 'getConsumerKey'
+      'action': 'pzgps.get.consumerKey'
     }));
 
     socket.onclose = e => {

@@ -19,7 +19,7 @@
 
       ctrl.getConsumerKey = function() {
         ctrl.socket.send({
-          'action': 'getConsumerKey'
+          'action': 'pzgps.get.consumerKey'
         });
       };
 
