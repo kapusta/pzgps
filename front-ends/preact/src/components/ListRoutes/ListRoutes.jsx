@@ -30,7 +30,7 @@ class ListRoutes extends Component {
               <th>Rating</th>
               <th>Pitches</th>
               <th>Lat/Lon</th>
-              <th className={trash}></th>
+              <th className={trash}><i className="fa fa-trash" aria-hidden="true"></i></th>
             </tr>
           </thead>
           <tbody>
