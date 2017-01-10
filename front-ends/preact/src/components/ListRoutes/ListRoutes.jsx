@@ -7,6 +7,19 @@ import DeleteButton from './DeleteButton.jsx';
 class ListRoutes extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      routes: []
+    };
+  }
+  componentWillUpdate = () => {
+    if (this.props.routeList.length) {
+      let routes = this.props.routeList.filter(route => {
+        return !route.views;
+      });
+      this.setState({
+        routes
+      });
+    }
   }
   render() {
     let cn = classNames.bind(styles);
@@ -34,7 +47,7 @@ class ListRoutes extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.props.routeList.map((route) => {
+          {this.state.routes.map((route) => {
             return (
               <tr key={shortid.generate()}>
                 <td className={cell}>{route.name}</td>
