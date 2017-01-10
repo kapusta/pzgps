@@ -6,23 +6,6 @@ import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 
-// database things
-import conf from '../../lib/conf.js';
-import PouchDB from 'pouchdb';
-const dbname = 'routes';
-let localDB = new PouchDB(dbname);
-let remoteDB = new PouchDB(conf.couchdb + '/' + dbname);
-let sync = localDB.sync(remoteDB, {
-  live: true,
-  retry: true
-}).on('complete', () => {
-  console.log('local/remote database synced');
-}).on('error', err => {
-  console.error('replication error', err);
-});
-// sync is cancellable, maybe on componentWillUnmount?
-// sync.cancel();
-
 class RouteEditor extends Component {
   constructor(props) {
     super(props);
@@ -82,7 +65,7 @@ class RouteEditor extends Component {
       });
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
-      localDB.get(this.state.route.name)
+      this.props.routes.get(this.state.route.name)
       .then(doc => {
         let route = merge({}, {
           name: doc.name,
@@ -105,8 +88,8 @@ class RouteEditor extends Component {
   }
   removeRoute = route => {
     let that = this;
-    localDB.get(route._id).then(doc => {
-      return localDB.remove(doc);
+    this.props.routes.get(route._id).then(doc => {
+      return this.props.routes.remove(doc);
     }).then(response => {
       that.getRoutes();
     }).catch(err => {
@@ -123,7 +106,7 @@ class RouteEditor extends Component {
       this.state.route,
       this.props.gpsData
     );
-    localDB.put(newRoute)
+    this.props.routes.put(newRoute)
     .then(response => {
       that.getRoutes();
       that.setState({
@@ -151,7 +134,7 @@ class RouteEditor extends Component {
       ((this.state.updateLocation) ? this.props.gpsData : {}) // gps data if  update location is true
     );
 
-    localDB.put(routeData)
+    this.props.routes.put(routeData)
     .then(response => {
       that.getRoutes();
       that.setState({
@@ -169,11 +152,7 @@ class RouteEditor extends Component {
   }
   getRoutes = () => {
     let that = this;
-    /*
-      @see https://pouchdb.com/api.html#batch_fetch
-      @example remoteDB.allDocs([options], [callback])
-    */
-    localDB.allDocs({
+    this.props.routes.allDocs({
       include_docs: true,
       attachments: false
     }).then(result => {
