@@ -6,7 +6,7 @@ let root;
 
 function init() {
   root = render(
-    <App/> ,
+    <App/>,
     document.querySelector("#app"),
     root
   );
