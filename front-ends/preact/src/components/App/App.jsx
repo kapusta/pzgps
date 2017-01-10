@@ -3,6 +3,7 @@ import sckt from '../../lib/sckt.js';
 import conf from '../../lib/conf.js';
 import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
+import db from '../../lib/db.js';
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +14,9 @@ class App extends Component {
       consumerKey: '',
       socket: {}
     };
+  }
+  componentWillMount() {
+    db.init();
   }
   componentDidMount() {
     sckt.setUpSocket(conf.socketServer, this);
@@ -41,6 +45,7 @@ class App extends Component {
           consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null}
           content={this.state.componentName}
           socket={this.state.socket}
+          databases={db.databases}
         />
       </div>
     );
