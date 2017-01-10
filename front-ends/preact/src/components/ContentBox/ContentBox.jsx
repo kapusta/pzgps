@@ -19,18 +19,59 @@ class ContentBox extends Component {
   }
   render() {
     let Content = contentComponents[this.props.content];
-    if (this.props.content === 'MapQuest') {
+
+    // brain dead switch based `router` should be refactored out
+    switch (this.props.content) {
+    case 'MapQuest':
       return (
         <div>
           <Content {...this.props}>{this.props.children}</Content>
         </div>
       );
+
+    case 'RouteEditor':
+      return (
+        <div>
+          <Content
+            gpsData={this.props.gpsData}
+            socket={this.props.socket}
+            routes={this.props.databases['routes-local']}
+          >
+            {this.props.children}
+          </Content>
+        </div>
+      );
+
+    default:
+      return (
+        <div>
+          <Content
+            gpsData={this.props.gpsData}
+            socket={this.props.socket}
+          >
+            {this.props.children}
+          </Content>
+        </div>
+      );
     }
-    return (
-      <div>
-        <Content gpsData={this.props.gpsData} socket={this.props.socket}>{this.props.children}</Content>
-      </div>
-    );
+
+    // if (this.props.content === 'MapQuest') {
+    //   return (
+    //     <div>
+    //       <Content {...this.props}>{this.props.children}</Content>
+    //     </div>
+    //   );
+    // }
+    // return (
+    //   <div>
+    //     <Content
+    //       gpsData={this.props.gpsData}
+    //       socket={this.props.socket}
+    //     >
+    //       {this.props.children}
+    //     </Content>
+    //   </div>
+    // );
   }
 }
 
