@@ -19,8 +19,6 @@ class ContentBox extends Component {
   }
   render() {
     let Content = contentComponents[this.props.content];
-
-    // brain dead switch based `router` should be refactored out
     switch (this.props.content) {
     case 'MapQuest':
       return (
@@ -28,7 +26,6 @@ class ContentBox extends Component {
           <Content {...this.props}>{this.props.children}</Content>
         </div>
       );
-
     case 'RouteEditor':
       return (
         <div>
@@ -41,7 +38,6 @@ class ContentBox extends Component {
           </Content>
         </div>
       );
-
     default:
       return (
         <div>
@@ -54,24 +50,6 @@ class ContentBox extends Component {
         </div>
       );
     }
-
-    // if (this.props.content === 'MapQuest') {
-    //   return (
-    //     <div>
-    //       <Content {...this.props}>{this.props.children}</Content>
-    //     </div>
-    //   );
-    // }
-    // return (
-    //   <div>
-    //     <Content
-    //       gpsData={this.props.gpsData}
-    //       socket={this.props.socket}
-    //     >
-    //       {this.props.children}
-    //     </Content>
-    //   </div>
-    // );
   }
 }
 
