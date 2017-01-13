@@ -2,22 +2,28 @@ import { h, Component } from 'preact';
 import shortid from 'shortid';
 import styles from './listroutes.css';
 import classNames from 'classnames/bind';
-import DeleteButton from './DeleteButton.jsx';
+import DeleteButton from './DeleteButton/DeleteButton.jsx';
 
 class ListRoutes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      routes: []
+      routes: [],
+      gettingRoutes: false
     };
   }
   componentWillUpdate = () => {
-    if (this.props.routeList.length) {
+    console.log('componentDidMount');
+    this.setState({
+      gettingRoutes: true
+    });
+    if (this.props.routeList && this.props.routeList.length) {
       let routes = this.props.routeList.filter(route => {
         return !route.views;
       });
       this.setState({
-        routes
+        routes,
+        gettingRoutes: false
       });
     }
   }
@@ -47,6 +53,13 @@ class ListRoutes extends Component {
             </tr>
           </thead>
           <tbody>
+
+          {(this.state.gettingRoutes) ?
+            <tr>
+              <td colspan="5">Loading...</td>
+            </tr> : ''
+          }
+
           {this.state.routes.map((route) => {
             return (
               <tr key={shortid.generate()}>
