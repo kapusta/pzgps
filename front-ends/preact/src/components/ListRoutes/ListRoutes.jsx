@@ -8,24 +8,13 @@ class ListRoutes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      routes: [],
-      gettingRoutes: false
+      gettingRoutes: true
     };
   }
   componentWillUpdate = () => {
-    console.log('componentDidMount');
     this.setState({
-      gettingRoutes: true
+      gettingRoutes: false
     });
-    if (this.props.routeList && this.props.routeList.length) {
-      let routes = this.props.routeList.filter(route => {
-        return !route.views;
-      });
-      this.setState({
-        routes,
-        gettingRoutes: false
-      });
-    }
   }
   render() {
     let cn = classNames.bind(styles);
@@ -60,7 +49,7 @@ class ListRoutes extends Component {
             </tr> : ''
           }
 
-          {this.state.routes.map((route) => {
+          {this.props.routeList.map((route) => {
             return (
               <tr key={shortid.generate()}>
                 <td className={cell}>{route.name}</td>

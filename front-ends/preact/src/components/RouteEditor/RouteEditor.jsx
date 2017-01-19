@@ -27,7 +27,7 @@ class RouteEditor extends Component {
       };
     });
   }
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.getRoutes();
   }
   handleRatingChange = val => {
@@ -158,6 +158,8 @@ class RouteEditor extends Component {
     }).then(result => {
       let routeList = result.rows.map(row => {
         return row.doc;
+      }).filter(route => {
+        return !route.views;
       });
       that.setState({
         routeList
