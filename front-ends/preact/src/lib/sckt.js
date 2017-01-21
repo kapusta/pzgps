@@ -1,3 +1,5 @@
+import {isEqual} from 'lodash';
+
 const connect = serverUrl => {
   return new Promise((resolve, reject) => {
     let socket = new WebSocket(serverUrl);
@@ -12,7 +14,9 @@ const connect = serverUrl => {
 };
 
 // TODO: not purely functional
-const setUpSocket = (serverUrl, Component) => {
+const init = (serverUrl, Component) => {
+
+  let lastLocation = {}; // location, uses to compare current to previous
 
   connect(serverUrl).then(socket => {
 
@@ -29,7 +33,7 @@ const setUpSocket = (serverUrl, Component) => {
       console.error('The WebSocket connection closed', e);
       console.log('Trying to reconnect...');
       window.setTimeout(() => {
-        setUpSocket(Component);
+        init(Component);
       }, 5000);
     };
 
@@ -39,7 +43,8 @@ const setUpSocket = (serverUrl, Component) => {
         Component.setState({
           consumerKey: data.consumerKey
         });
-      } else {
+      }
+      if (data.lat && !isEqual(lastLocation, data)) {
         Component.setState({
           gpsData: data
         });
@@ -50,7 +55,7 @@ const setUpSocket = (serverUrl, Component) => {
     console.error('could not connect to WebSocket server', err);
     console.log('Trying to reconnect...');
     setTimeout(() => {
-      setUpSocket(Component);
+      init(Component);
     }, 5000);
   });
 
@@ -58,5 +63,5 @@ const setUpSocket = (serverUrl, Component) => {
 
 export default {
   connect,
-  setUpSocket
+  init
 };
