@@ -10,16 +10,14 @@ class App extends Component {
     super(props);
     this.state = {
       componentName: 'About',
-      gpsData: {},
       consumerKey: '',
+      gpsData: {},
       socket: {}
     };
   }
   componentWillMount() {
     db.init();
-  }
-  componentDidMount() {
-    sckt.setUpSocket(conf.socketServer, this);
+    sckt.init(conf.socketServer, this);
   }
   componentWillUnmount() {
     this.state.socket.close();
@@ -44,7 +42,6 @@ class App extends Component {
           gpsData={this.state.gpsData}
           consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null}
           content={this.state.componentName}
-          socket={this.state.socket}
           databases={db.databases}
         />
       </div>
