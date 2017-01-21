@@ -171,6 +171,9 @@ class RouteEditor extends Component {
     let labelStyles = cn('col-lg-2 col-form-label', {
       'label': true
     });
+    let valueStyles = cn('col-lg-8', {
+      'value': true
+    });
     let loggerStyles = cn('btn btn-sm mybuttons', {
       mybuttons: true // add css module styles
     });
@@ -259,11 +262,30 @@ class RouteEditor extends Component {
                 </div>
               </div>
 
+              <div class="row">
+                <label className={labelStyles}>Latitude</label>
+                <div className={valueStyles}>
+                  {this.props.gpsData.lat}
+                </div>
+              </div>
+
+              <div class="row">
+                <label className={labelStyles}>Longitude</label>
+                <div className={valueStyles}>
+                  {this.props.gpsData.lon}
+                </div>
+              </div>
+
+              <div class="row">
+                <label className={labelStyles}>Altitude</label>
+                <div className={valueStyles}>
+                  {this.props.gpsData.alt} meters
+                </div>
+              </div>
+
             </form>
           </div>
 
-          {/* if there IS NOT a `doc` from the database, then we are creating a new `doc` */}
-          {/* if there IS a `doc` from the database, then we are saving an update to the `doc` */}
           <button
             bs-button
             className={saveButtonStyles}
