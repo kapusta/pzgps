@@ -8,13 +8,8 @@ import Select from 'react-select';
 class GpsData extends Component {
   constructor(props) {
     super(props);
-    this.props.socket.onmessage = e => {
-      //let data = JSON.parse(e.data);
-      //console.log(data);
-    };
   }
   selectChanged = val => {
-    console.log('select changed to', val);
     this.setState({
       climbRating: val
     });
