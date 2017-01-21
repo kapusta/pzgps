@@ -3,6 +3,10 @@
 }
 .label {
   font-weight: bold;
+  width: 100px;
+}
+.value {
+  line-height: 40px;
 }
 .search-enabled {
   cursor: pointer;
