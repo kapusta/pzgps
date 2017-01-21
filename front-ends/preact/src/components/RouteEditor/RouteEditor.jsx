@@ -58,7 +58,6 @@ class RouteEditor extends Component {
     console.log(this.state);
   }
   search = () => {
-    let that = this; // gross, need it for the promise closure
     if (this.state.route.name.length) {
       this.setState({
         searching: true
@@ -72,14 +71,14 @@ class RouteEditor extends Component {
           pitches: doc.pitches,
           rating: doc.rating
         });
-        that.setState({
+        this.setState({
           searching: false,
           doc,
           route
         });
       })
       .catch(err => {
-        that.setState({
+        this.setState({
           searching: false
         });
         console.error(err);
@@ -87,17 +86,15 @@ class RouteEditor extends Component {
     }
   }
   removeRoute = route => {
-    let that = this;
     this.props.routes.get(route._id).then(doc => {
       return this.props.routes.remove(doc);
     }).then(response => {
-      that.getRoutes();
+      this.getRoutes();
     }).catch(err => {
       console.error('failed to delete a route', err);
     });
   }
   create = evt => {
-    let that = this;
     this.setState({
       saving: true
     });
@@ -108,8 +105,8 @@ class RouteEditor extends Component {
     );
     this.props.routes.put(newRoute)
     .then(response => {
-      that.getRoutes();
-      that.setState({
+      this.getRoutes();
+      this.setState({
         saving: false,
         doc: null,
         route: {
@@ -122,7 +119,6 @@ class RouteEditor extends Component {
     // get attr data from the clicked button via the undocumented Symbol feature
     // @see https://twitter.com/_developit/status/815027807818514432
     // let attrData = evt.target[Symbol.for('preactattr')];
-    let that = this;
     this.setState({
       saving: true
     });
@@ -136,8 +132,8 @@ class RouteEditor extends Component {
 
     this.props.routes.put(routeData)
     .then(response => {
-      that.getRoutes();
-      that.setState({
+      this.getRoutes();
+      this.setState({
         saving: false,
         doc: null,
         route: {
@@ -145,13 +141,12 @@ class RouteEditor extends Component {
         }
       });
     }).catch(err => {
-      that.setState({
+      this.setState({
         saving: false
       });
     });
   }
   getRoutes = () => {
-    let that = this;
     this.props.routes.allDocs({
       include_docs: true,
       attachments: false
@@ -161,7 +156,7 @@ class RouteEditor extends Component {
       }).filter(route => {
         return !route.views;
       });
-      that.setState({
+      this.setState({
         routeList
       });
     }).catch(err => {
