@@ -43,6 +43,9 @@ class RouteEditor extends Component {
     });
   }
   handleChange = evt => {
+    if (evt.keyCode === 13) { // return
+      this.search();
+    }
     let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
     this.setState({
       doc: null, // kill the doc in state if/when the user changes the name
