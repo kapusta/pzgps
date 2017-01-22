@@ -67,7 +67,7 @@ class RouteEditor extends Component {
       });
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
-      this.props.routes.get(this.state.route.name)
+      this.props.routesDb.get(this.state.route.name)
       .then(doc => {
         let route = merge({}, {
           name: doc.name,
@@ -89,8 +89,8 @@ class RouteEditor extends Component {
     }
   }
   removeRoute = route => {
-    this.props.routes.get(route._id).then(doc => {
-      return this.props.routes.remove(doc);
+    this.props.routesDb.get(route._id).then(doc => {
+      return this.props.routesDb.remove(doc);
     }).then(response => {
       this.getRoutes();
     }).catch(err => {
@@ -106,7 +106,7 @@ class RouteEditor extends Component {
       this.state.route,
       this.props.gpsData
     );
-    this.props.routes.put(newRoute)
+    this.props.routesDb.put(newRoute)
     .then(response => {
       this.getRoutes();
       this.setState({
@@ -133,7 +133,7 @@ class RouteEditor extends Component {
       ((this.state.updateLocation) ? this.props.gpsData : {}) // gps data if  update location is true
     );
 
-    this.props.routes.put(routeData)
+    this.props.routesDb.put(routeData)
     .then(response => {
       this.getRoutes();
       this.setState({
@@ -150,7 +150,7 @@ class RouteEditor extends Component {
     });
   }
   getRoutes = () => {
-    this.props.routes.allDocs({
+    this.props.routesDb.allDocs({
       include_docs: true,
       attachments: false
     }).then(result => {

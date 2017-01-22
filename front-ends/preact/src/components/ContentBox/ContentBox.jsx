@@ -31,7 +31,7 @@ class ContentBox extends Component {
         <div>
           <Content
             gpsData={this.props.gpsData}
-            routes={this.props.databases['routes-local']}
+            routesDb={this.props.databases['routes-local']}
           >
             {this.props.children}
           </Content>
