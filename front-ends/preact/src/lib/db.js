@@ -29,7 +29,7 @@ let queries = {
 
 const init = () => {
   ['routes', 'boulders'].forEach(name => {
-    console.log('Initializing' + name + 'database...');
+    console.log('Initializing ' + name + ' database...');
     databases[name + '-local'] = new PouchDB(name);
     databases[name + '-remote'] = new PouchDB(conf.couchdb + '/' + name);
     databases[name + '-sync'] = databases[name + '-local'].sync(databases[name + '-remote'], {
