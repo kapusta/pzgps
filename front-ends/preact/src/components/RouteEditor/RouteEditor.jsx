@@ -28,7 +28,17 @@ class RouteEditor extends Component {
     });
   }
   componentDidMount = () => {
-    this.getRoutes();
+    this.getRoutesByIndex().then(routeList => {
+      console.log(routeList);
+      this.setState({
+        routeList
+      });
+    });
+    // this.getRoutes().then(routeList => {
+    //   this.setState({
+    //     routeList
+    //   });
+    // });
   }
   handleRatingChange = val => {
     let route = merge({}, this.state.route, {rating: val.value});
@@ -149,23 +159,35 @@ class RouteEditor extends Component {
       });
     });
   }
-  getRoutes = () => {
-    this.props.routesDb.allDocs({
-      include_docs: true,
-      attachments: false
-    }).then(result => {
-      let routeList = result.rows.map(row => {
-        return row.doc;
-      }).filter(route => {
-        return !route.views;
+  getRoutesByIndex = () => {
+    function getRoutes(doc) {
+      emit(doc.name);
+    };
+    let opt = {
+      include_docs: true
+    };
+    return this.props.routesDb.query(getRoutes, opt).then(res => {
+      return res.rows.map(route => {
+        return route.doc;
       });
-      this.setState({
-        routeList
-      });
-    }).catch(err => {
-      console.log(err);
+    }).catch(function (err) {
+      return err;
     });
   }
+  // getRoutes = () => {
+  //   return this.props.routesDb.allDocs({
+  //     include_docs: true,
+  //     attachments: false
+  //   }).then(result => {
+  //     return result.rows.map(row => {
+  //       return row.doc;
+  //     }).filter(route => {
+  //       return !route.views;
+  //     });
+  //   }).catch(err => {
+  //     console.log(err);
+  //   });
+  // }
   render() {
     let cn = classNames.bind(styles);
     let labelStyles = cn('col-lg-2 col-form-label', {
