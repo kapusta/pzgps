@@ -28,12 +28,7 @@ class RouteEditor extends Component {
     });
   }
   componentDidMount = () => {
-    this.getRoutesByIndex().then(routeList => {
-      console.log(routeList);
-      this.setState({
-        routeList
-      });
-    });
+    this.getRoutesByIndex();
     // this.getRoutes().then(routeList => {
     //   this.setState({
     //     routeList
@@ -94,7 +89,7 @@ class RouteEditor extends Component {
         this.setState({
           searching: false
         });
-        console.error(err);
+        console.error('searched for', this.state.route.name, 'but no route found', err);
       });
     }
   }
@@ -102,7 +97,7 @@ class RouteEditor extends Component {
     this.props.routesDb.get(route._id).then(doc => {
       return this.props.routesDb.remove(doc);
     }).then(response => {
-      this.getRoutes();
+      this.getRoutesByIndex();
     }).catch(err => {
       console.error('failed to delete a route', err);
     });
@@ -116,9 +111,8 @@ class RouteEditor extends Component {
       this.state.route,
       this.props.gpsData
     );
-    this.props.routesDb.put(newRoute)
-    .then(response => {
-      this.getRoutes();
+    this.props.routesDb.put(newRoute).then(response => {
+      this.getRoutesByIndex();
       this.setState({
         saving: false,
         doc: null,
@@ -145,7 +139,7 @@ class RouteEditor extends Component {
 
     this.props.routesDb.put(routeData)
     .then(response => {
-      this.getRoutes();
+      this.getRoutesByIndex();
       this.setState({
         saving: false,
         doc: null,
@@ -166,28 +160,17 @@ class RouteEditor extends Component {
     let opt = {
       include_docs: true
     };
-    return this.props.routesDb.query(getRoutes, opt).then(res => {
-      return res.rows.map(route => {
+    this.props.routesDb.query(getRoutes, opt).then(res => {
+      let routeList = res.rows.map(route => {
         return route.doc;
+      });
+      this.setState({
+        routeList
       });
     }).catch(function (err) {
       return err;
     });
   }
-  // getRoutes = () => {
-  //   return this.props.routesDb.allDocs({
-  //     include_docs: true,
-  //     attachments: false
-  //   }).then(result => {
-  //     return result.rows.map(row => {
-  //       return row.doc;
-  //     }).filter(route => {
-  //       return !route.views;
-  //     });
-  //   }).catch(err => {
-  //     console.log(err);
-  //   });
-  // }
   render() {
     let cn = classNames.bind(styles);
     let labelStyles = cn('col-lg-2 col-form-label', {
