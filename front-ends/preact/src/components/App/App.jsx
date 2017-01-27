@@ -5,6 +5,8 @@ import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
 import db from '../../lib/db.js';
 
+require('offline-plugin/runtime').install();
+
 class App extends Component {
   constructor(props) {
     super(props);
