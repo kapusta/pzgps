@@ -3,6 +3,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import OfflinePlugin from 'offline-plugin';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -97,7 +99,15 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './index.html',
 			minify: { collapseWhitespace: true }
-		})
+		}),
+    new CopyWebpackPlugin([
+      { from: './manifest.json', to: './' }
+    ]),
+    new OfflinePlugin({
+      relativePaths: false,
+      AppCache: false,
+      publicPath: '/'
+    })
 	]).concat(ENV==='production' ? [
 		new webpack.optimize.OccurenceOrderPlugin()
 	] : []),
@@ -117,11 +127,12 @@ module.exports = {
 
 	devServer: {
 		port: process.env.PORT || 9001,
-		host: '0.0.0.0',
+		host: 'localhost',
 		colors: true,
 		publicPath: '/',
 		contentBase: './src',
 		historyApiFallback: true,
+    open: true,
 		proxy: {
 			// OPTIONAL: proxy configuration:
 			// '/optional-prefix/**': { // path pattern to rewrite
