@@ -1,3 +1,8 @@
+/* global emit:false */
+/*
+  @global `emit` is in scope in getRoutes() when run in PouchDB context
+  @see https://pouchdb.com/guides/queries.html
+*/
 import { h, Component } from 'preact';
 import Select from 'react-select';
 import classNames from 'classnames/bind';
