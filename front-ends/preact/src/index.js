@@ -15,13 +15,13 @@ function init() {
 
 // register ServiceWorker via OfflinePlugin, for prod only:
 if (process.env.NODE_ENV==='production') {
-	require('./pwa.js');
+  require('./pwa.js');
 }
 
 // in development, set up HMR:
 if (module.hot) {
-	//require('preact/devtools');   // turn this on if you want to enable React DevTools!
-	module.hot.accept('./components/App/App.jsx', () => requestAnimationFrame(init) );
+  //require('preact/devtools');   // turn this on if you want to enable React DevTools!
+  module.hot.accept('./components/App/App.jsx', () => requestAnimationFrame(init) );
 }
 
 init();

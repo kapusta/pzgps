@@ -156,7 +156,7 @@ class RouteEditor extends Component {
   getRoutesByIndex = () => {
     function getRoutes(doc) {
       emit(doc.name);
-    };
+    }
     let opt = {
       include_docs: true
     };
@@ -167,7 +167,7 @@ class RouteEditor extends Component {
       this.setState({
         routeList
       });
-    }).catch(function (err) {
+    }).catch(err => {
       return err;
     });
   }
