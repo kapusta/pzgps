@@ -39,7 +39,9 @@ class GpsData extends Component {
             <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
             <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
           </div>
+          <br/>
         </div>
+
         <div className="col-lg-6">
           <h4 className="card-title">Raw Data</h4>
           <div className={rawdata}>

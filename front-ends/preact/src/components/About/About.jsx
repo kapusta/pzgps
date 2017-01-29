@@ -17,6 +17,7 @@ class About extends Component {
               If the server on the pizero is set up correctly, more buttons will appear above after establishing the WebSocket connection.
             </p>
           </div>
+          <br/>
         </div>
 
         <div className="col-lg-6">

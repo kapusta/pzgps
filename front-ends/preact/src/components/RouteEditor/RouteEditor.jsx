@@ -295,6 +295,7 @@ class RouteEditor extends Component {
 
             </form>
           </div>
+          <br/>
 
           <button
             bs-button
