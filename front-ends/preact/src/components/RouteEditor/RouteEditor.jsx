@@ -178,10 +178,13 @@ class RouteEditor extends Component {
   }
   render() {
     let cn = classNames.bind(styles);
+    let rowStyles = cn('row', {
+      'row-route': true
+    });
     let labelStyles = cn('col-lg-2 col-form-label', {
       'label': true
     });
-    let valueStyles = cn('col-lg-8', {
+    let valueStyles = cn('col-lg-6', {
       'value': true
     });
     let loggerStyles = cn('btn btn-sm mybuttons', {
@@ -212,7 +215,7 @@ class RouteEditor extends Component {
           <div className="card card-block">
             <form>
 
-              <div className="row">
+              <div className={rowStyles}>
                 <label for="route" className={labelStyles}>Route</label>
                 <div className="col-lg-8">
 
@@ -246,7 +249,7 @@ class RouteEditor extends Component {
                 </div>
               </div>
 
-              <div class="row">
+              <div className={rowStyles}>
                 <label for="pitches" className={labelStyles}>Pitches</label>
                 <div className="col-lg-8">
                   <Select
@@ -259,7 +262,7 @@ class RouteEditor extends Component {
                 </div>
               </div>
 
-              <div class="row">
+              <div className={rowStyles}>
                 <label for="rating" className={labelStyles}>Rating</label>
                 <div className="col-lg-8">
                   <Select
@@ -272,21 +275,21 @@ class RouteEditor extends Component {
                 </div>
               </div>
 
-              <div class="row">
+              <div className={rowStyles}>
                 <label className={labelStyles}>Latitude</label>
                 <div className={valueStyles}>
                   {this.props.gpsData.lat}
                 </div>
               </div>
 
-              <div class="row">
+              <div className={rowStyles}>
                 <label className={labelStyles}>Longitude</label>
                 <div className={valueStyles}>
                   {this.props.gpsData.lon}
                 </div>
               </div>
 
-              <div class="row">
+              <div className={rowStyles}>
                 <label className={labelStyles}>Altitude</label>
                 <div className={valueStyles}>
                   {this.props.gpsData.alt} meters
