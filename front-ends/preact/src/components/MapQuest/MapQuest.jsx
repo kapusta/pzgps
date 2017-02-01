@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import classNames from 'classnames/bind';
 import styles from './mapquest.css';
 
 class MapQuest extends Component {
@@ -18,12 +19,18 @@ class MapQuest extends Component {
     });
   }
   render() {
+    let cn = classNames.bind(styles);
+    let mapStyles = cn({
+      'staticmap': true
+    });
+    let divStyles = cn('card card-block', {
+      'mapdiv': true
+    });
+
     return (
       <div>
         <h4 className="card-title">MapQuest Staticmap</h4>
-        <div className="card card-block">
-          <img src={this.state.mapUrl} />
-        </div>
+        <div className={divStyles} style={{backgroundImage: 'url('+this.state.mapUrl+')'}}></div>
       </div>
     );
   }
