@@ -1,5 +1,5 @@
 {
-  "name": "pzgps",
+  "name": "pzgps-angular1",
   "description": "Show GPS data via a websocket",
   "version": "1.0.0",
   "author": {
