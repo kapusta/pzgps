@@ -1,6 +1,6 @@
 {
   "name": "pzgps-reactjs",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "pzgps fronted by ReactJS",
   "main": "''",
   "scripts": {
