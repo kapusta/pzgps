@@ -1,0 +1,35 @@
+{
+  "name": "pzgps-server",
+  "version": "1.0.0",
+  "description": "Read GPS data from a PiZero in a single page web app via a WebSocket",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo",
+    "start": "node index.js --port 9000",
+    "withMapquest": "node index.js --port 9000 --mq"
+  },
+  "keywords": [
+    "gps"
+  ],
+  "author": "dankapusta",
+  "license": "Apache-2.0",
+  "xo": {
+    "space": true,
+    "semicolon": true,
+    "ignores": [
+      "front-ends/**"
+    ],
+    "rules": {
+      "import/no-dynamic-require": 1
+    }
+  },
+  "dependencies": {
+    "lodash": "^4.17.2",
+    "node-gpsd": "^0.2.6",
+    "ws": "^1.1.1",
+    "yargs": "^6.0.0"
+  },
+  "devDependencies": {
+    "xo": "^0.17.1"
+  }
+}
