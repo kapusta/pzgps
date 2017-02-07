@@ -1,7 +1,7 @@
 {
   "name": "pzgps-angular1",
-  "description": "Show GPS data via a websocket",
   "version": "1.0.0",
+  "description": "pzgps fronted by AngularJS 1.x",
   "author": {
     "name": "Daniel Kapusta",
     "url": "http://about.me/dankapusta"
