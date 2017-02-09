@@ -18,7 +18,7 @@
       "url": "https://github.com/kapusta/"
     }
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
     "node-sass": "^3.10.1",
