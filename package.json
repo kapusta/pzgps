@@ -5,9 +5,13 @@
   "keywords": [
     "gps"
   ],
+  "scripts": {
+    "lerna-wizard": "lerna-wizard"
+  },
   "author": "dankapusta",
   "license": "Apache-2.0",
   "devDependencies": {
-    "lerna": "2.0.0-beta.36"
+    "lerna": "2.0.0-beta.36",
+    "lerna-wizard": "^1.0.6"
   }
 }
