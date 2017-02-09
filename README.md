@@ -2,16 +2,17 @@
 The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
 ## Lerna
-This project uses [Lerna](https://github.com/lerna/lerna) to manage the server and front end `packages` (in `--independant` mode). You'll need to install it so you can `lerna bootstrap` which will install the dependencies.
+This project uses [Lerna](https://github.com/lerna/lerna) to manage the server and front end `packages` (in `--independant` mode). If you want to develop anything, you'll need to install Lerna so you can `lerna bootstrap` which will install all of the dependencies for each repo.
 
     npm install --global lerna
 
-
 ## Pull Requests Accepted!
-* I'm very open to changes/fixes/additions, please feel free to submit pull requests.
+* Please feel free to submit pull requests.
 * This project is meant to be a sandbox for learning various things, so expect things to change.
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 
+## Using the server
+The server package resides in `/packages/pzgps-server/` and it has a thorough README.md that you should read.
 
 ## Using the Front End Packages
 
