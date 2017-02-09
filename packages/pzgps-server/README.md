@@ -1,14 +1,9 @@
-# pzgps
+# pzgps-server
 The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
 
 We'll use [NodeJS](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) and [node-gpsd](https://github.com/eelcocramer/node-gpsd) to read and process the data, make it available via  [ws](https://www.npmjs.com/package/ws), and render in the UI with the help of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
 
 That data, along with user defined information, can then be saved to a [PouchDB database](https://pouchdb.com/guides/databases.html) on your browser/device that syncs to a CouchDB database on your [#pizero](https://www.raspberrypi.org/products/pi-zero/).
-
-## Pull Requests Accepted!
-* I'm very open to changes/fixes/additions, please feel free to submit pull requests.
-* This project is meant to be a sandbox for learning various things, so expect things to change.
-* If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 
 ## Assumptions
 You...
@@ -17,11 +12,10 @@ You...
 * Have [Raspbian Jessie](https://www.raspberrypi.org/downloads/raspbian/) installed.
 * Have [Connected your Adafruit GPS Breakout](https://learn.adafruit.com/adafruit-ultimate-gps-on-the-raspberry-pi/using-uart-instead-of-usb)
 
-## Project Structure
-* At the root of the repo is an `index.js` file, which is a NodeJS application that reads the GPS data and provides it over a WebSocket (on port 9001).
-* Sample web apps are in the `front-ends` directory, each with it's own `package.json` file.
+## Package Structure
+* At the root of this package is an `index.js` file, which is a NodeJS application that reads the GPS data and provides it over a WebSocket (on port 9001).
+* Sample web apps are in the `/packages/` directory, each with it's own `package.json` file.
   - Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
-  - Run `npm install` to install the dependencies ('deps') for each part of the project that you want to use.
   - You'll run each part of the project by running `npm start` where the `package.json` is located.
   - All front end web apps run on port 9001.
 * If you want to persist data to a database, then install CouchDB on your pizero (see below) which will run on port 5984 (the Futon UI would then be at http://yourhostname:5984/_utils/index.html).
@@ -135,40 +129,3 @@ Your entry in `rc.local` will look something like this...
     /usr/local/bin/node /home/pi/Projects/pzgps/index.js --port 9000 &
 
 Change the port number as needed.
-
-## Using the WebSocket from a Front End
-
-### Preact
-Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
-
-Install the deps by running `npm install` and run the webserver with `npm start`. There is also code linting configured using eslint which you can run with `npm run lint`.
-
-Note the `front-ends/preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
-* `raspi-config`
-* Go to `Advanced Options`
-* Go to `Hostname`
-* Type in a new hostname then hit `Ok`
-
-### AngularJS
-In the `angular1` directory, install the deps by running `npm install` then run `npm start` to start the [webserver](https://github.com/johnpapa/lite-server). Using your web browser, navigate to your pizero's IP address on port 9001 (the default). The default port of the webserver can be changed in the `angular1/bs-config.json` file.
-
-Assuming the millions of things above went right, you'll see some GPS data in your web browser.
-
-### ReactJS
-In the `reactjs` directory, install the deps by running `npm install` then run `npm start` to start the webserver. This project uses [webpack](https://webpack.github.io/) and will auto-reload your browser for you.
-
-## Enabling a MapQuest staticmap
-One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module from the NodeJS application that includes that key.
-
-* [Register for a developer account for free](https://developer.mapquest.com/).
-* Go to your new profile, and click the "Create a New Key" button.
-* You can always find your Consumer Key on the "Keys &amp; Reporting" page after creating one.
-* Make a file in the `/lib` directory named `mqkey.js` and format it like the example below.
-
-    module.exports = {
-      'consumerKey': 'PASTE YOUR CONSUMER KEY HERE'
-    };
-
-On the command line you can now start the server using the `--mq` flag. An NPM command is provided in `package.json` that will start with the MapQuest module included (eg, `npm run withMapquest` will execute `node index.js --port 9000 --mq`).
-
-Assuming all of the above is in place, the MapQuest component in the UI will receive the key over the WebSocket and use it to formulate the URL to get the static map. Because the client is receiving updates from the server continually, the map will update if the coordinates change.
