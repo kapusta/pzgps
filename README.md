@@ -1,5 +1,5 @@
 # pzgps
-The goal of this project is to collect data from the a GPS unit and stream that data out to a web front end via a WebSocket.
+The goal of this project is to collect data from a GPS unit connected to a Raspberry Pi Zero and stream that data out to a web front end via a WebSocket.
 
 ## Lerna
 This project uses [Lerna](https://github.com/lerna/lerna) to manage the server and front end `packages` (in `--independant` mode). If you want to develop anything, you'll need to install Lerna so you can `lerna bootstrap` which will install all of the dependencies for each repo.
@@ -19,7 +19,7 @@ The server package resides in `/packages/pzgps-server/` and it has a thorough RE
 ### Preact
 Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
 
-Run the webserver with `npm start`. There is also code linting configured using eslint which you can run with `npm run lint`.
+Run the webserver with `npm start`.
 
 Note the `packages/pzgps-preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
 * `raspi-config`
