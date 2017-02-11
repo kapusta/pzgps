@@ -33,9 +33,10 @@ This is a full web server nicely suited to your project. Any time you make chang
 
 This will build the prod assets and put them into the `build` directory.
 
-## Lint
 
-There is code linting configured using eslint which you can run with `npm run lint`.
+## There is code linting configured using eslint
+
+    npm run lint
 
 
 ## Testing with `mocha`, `karma`, `chai`, `sinon` via `phantomjs`
