@@ -12,7 +12,7 @@ This project uses [Lerna](https://github.com/lerna/lerna) to manage the server a
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 
 ## Using the server
-The server package resides in `/packages/pzgps-server/` and it has a thorough README.md that you should read.
+The server package, that provides the GPS data over the WebSocket, resides in `/packages/pzgps-server/` and has a thorough README.md that you should read.
 
 ## Using the Front End Packages
 
