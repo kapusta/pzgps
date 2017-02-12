@@ -12,12 +12,12 @@ This project uses [Lerna](https://github.com/lerna/lerna) to manage the server a
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 
 ## Using the server
-The server package, that provides the GPS data over the WebSocket, resides in `/packages/pzgps-server/` and has a thorough README.md that you should read.
+The server package, that provides the GPS data over the WebSocket, resides in [`/packages/pzgps-server/`](https://github.com/kapusta/pzgps/tree/master/packages/pzgps-server) and has [a thorough README.md that you should read](https://github.com/kapusta/pzgps/blob/master/packages/pzgps-server/README.md).
 
 ## Using the Front End Packages
 
 ### Preact
-Currently the [Preact](https://preactjs.com/) version of the front end has the most code/features/effort.
+Currently [the Preact version](https://github.com/kapusta/pzgps/tree/master/packages/pzgps-preact) of the front end has the most code/features/effort.
 
 Run the webserver with `npm start`.
 
