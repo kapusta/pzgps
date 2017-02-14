@@ -24,6 +24,7 @@
     }
   },
   "dependencies": {
+    "haversine": "^1.0.2",
     "lodash": "^4.17.2",
     "node-gpsd": "^0.2.6",
     "ws": "^1.1.1",
