@@ -3,6 +3,7 @@
 let argv = require('yargs').argv;
 let Server = require('ws').Server;
 let merge = require('lodash/merge');
+let haversine = require('haversine');
 
 let daemon = require('./lib/daemon.js');
 
@@ -32,6 +33,10 @@ const dmon = daemon.init({
 dmon.start();
 const listener = daemon.listen({});
 
+const distance = (from, to) => {
+  return haversine(from, to);
+};
+
 // set up server listener
 wss.on('connection', socket => {
   console.log('new websocket connection, (', wss.clients.length, ' total)');
@@ -45,24 +50,15 @@ wss.on('connection', socket => {
     let parsedData = JSON.parse(data);
 
     // there is room for more structure around recieving messages with
-    // different actions, probably starts to look like a router of some sort,
+    // different actions, probably starts to look like a router of some sort
     if (parsedData.action === 'pzgps.get.consumerKey' && mqkey.consumerKey) {
       socket.send(JSON.stringify(mqkey));
     }
 
-    if (parsedData.action === 'newRoute') {
-      let route = merge(
-        {},
-        {timestamp: new Date()},
-        {location: location.current},
-        {route: parsedData.route}
-      );
-      console.log('saving new route', route);
-      // at this point, you could PUT/POST data into a database (eg, CouchDB)
-      // then report that back out to the consuming client. the schema for that
-      // message out to the client is up to you, the format below is naive at best.
-      socket.send(JSON.stringify(merge(route, {
-        event: 'pzgps.put.route'
+    if (parsedData.action === 'pzgps.get.distance') {
+      var d = distance(parsedData.from, parsedData.to);
+      socket.send(JSON.stringify(merge(d, {
+        event: 'pzgps.get.distance'
       })));
     }
   });
