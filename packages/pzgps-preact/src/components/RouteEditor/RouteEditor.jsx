@@ -319,7 +319,12 @@ class RouteEditor extends Component {
           <br/><br/>
         </div>
 
-        <ListRoutes removeRoute={this.removeRoute} routeList={this.state.routeList}/>
+        <ListRoutes
+          lat={this.props.gpsData.lat}
+          lon={this.props.gpsData.lon}
+          removeRoute={this.removeRoute}
+          routeList={this.state.routeList}
+        />
 
       </div>
     );
