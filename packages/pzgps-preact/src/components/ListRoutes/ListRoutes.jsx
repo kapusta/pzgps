@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
+import haversine from 'haversine';
 import styles from './listroutes.css';
 import classNames from 'classnames/bind';
 import DeleteButton from './DeleteButton/DeleteButton.jsx';
@@ -15,6 +16,10 @@ class ListRoutes extends Component {
     this.setState({
       gettingRoutes: false
     });
+  }
+  distance = (from, to) => {
+    var d = haversine(from, to, { unit: 'mile' });
+    return parseInt(d, 10);
   }
   render() {
     let cn = classNames.bind(styles);
@@ -38,6 +43,7 @@ class ListRoutes extends Component {
               <th>Rating</th>
               <th>Pitches</th>
               <th>Lat/Lon</th>
+              <th>Distance</th>
               <th className={trash}><i className="fa fa-trash" aria-hidden="true"></i></th>
             </tr>
           </thead>
@@ -62,6 +68,15 @@ class ListRoutes extends Component {
                   >
                     {route.lat}<br/>{route.lon}
                   </a>
+                </td>
+                <td className={cell}>
+                  {this.distance({
+                    latitude: this.props.lat,
+                    longitude: this.props.lon
+                  }, {
+                    latitude: route.lat,
+                    longitude: route.lon
+                  })} miles
                 </td>
                 <td className={cell}>
                   <DeleteButton
