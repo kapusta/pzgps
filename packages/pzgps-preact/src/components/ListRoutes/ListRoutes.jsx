@@ -18,8 +18,13 @@ class ListRoutes extends Component {
     });
   }
   distance = (from, to) => {
-    var d = haversine(from, to, { unit: 'mile' });
-    return parseInt(d, 10);
+    let unit = 'mile';
+    let d = haversine(from, to, { unit });
+    if (d <= 1) {
+      unit = 'meter';
+      d = haversine(from, to, { unit });
+    }
+    return parseFloat(d).toFixed(2) + ' ' + unit + 's';
   }
   render() {
     let cn = classNames.bind(styles);
@@ -76,7 +81,7 @@ class ListRoutes extends Component {
                   }, {
                     latitude: route.lat,
                     longitude: route.lon
-                  })} miles
+                  })}
                 </td>
                 <td className={cell}>
                   <DeleteButton
