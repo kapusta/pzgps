@@ -1,6 +1,6 @@
-var gpsd = require('node-gpsd');
+let gpsd = require('node-gpsd');
 
-var init = opt => {
+let init = opt => {
   return new gpsd.Daemon({
     program: 'gpsd',
     port: (opt.port) ? opt.port : 2947,
@@ -20,13 +20,13 @@ var init = opt => {
   });
 };
 
-var startDaemon = daemon => {
+let startDaemon = daemon => {
   daemon.start(function (arg) {
     console.log('GPSD start', arg);
   });
 };
 
-var stopDaemon = daemon => {
+let stopDaemon = daemon => {
   // why doesn't stop() work (gpsd exiting when run via .spawn())
   // since it exits, gpsd.js sets it to undefined, but somehow the daemon is still running!
   // see: https://github.com/eelcocramer/node-gpsd/blob/master/lib/gpsd.js#L205
@@ -35,7 +35,7 @@ var stopDaemon = daemon => {
   });
 };
 
-var listen = opt => {
+let listen = opt => {
   return new gpsd.Listener({
     port: (opt.port) ? opt.port : 2947,
     hostname: 'localhost',
