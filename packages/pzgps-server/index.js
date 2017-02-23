@@ -56,7 +56,7 @@ wss.on('connection', socket => {
     }
 
     if (parsedData.action === 'pzgps.get.distance') {
-      var d = distance(parsedData.from, parsedData.to);
+      let d = distance(parsedData.from, parsedData.to);
       socket.send(JSON.stringify(merge(d, {
         event: 'pzgps.get.distance'
       })));
