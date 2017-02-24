@@ -31,8 +31,9 @@ Note the `packages/pzgps-preact/src/lib/conf.js` file, which should be modified 
 One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/staticmap/) if you have a "Consumer Key" and provide a module from the NodeJS application that includes that key.
 
 * [Register for a developer account for free](https://developer.mapquest.com/).
-* Go to your new profile, and click the "Create a New Key" button.
-* You can always find your Consumer Key on the "Keys &amp; Reporting" page after creating one.
+* Go to your new profile, and click the "Manage Keys" on the left side menu.
+* Click the "Create a New Key" button and provide a name (callback url is not needed for this project).
+* You can always find your Consumer Key on the "Manage Keys" page after creating one.
 * Make a file in the `/packages/pzgps-server/lib` directory named `mqkey.js` and format it like the example below.
 
     module.exports = {
