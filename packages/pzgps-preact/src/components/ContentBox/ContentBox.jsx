@@ -28,7 +28,7 @@ class ContentBox extends Component {
       );
     case 'RouteEditor':
       return (
-        <div>
+        <div className="container">
           <Content
             gpsData={this.props.gpsData}
             routesDb={this.props.databases['routes-local']}
@@ -39,7 +39,7 @@ class ContentBox extends Component {
       );
     default:
       return (
-        <div>
+        <div className="container">
           <Content
             gpsData={this.props.gpsData}
           >

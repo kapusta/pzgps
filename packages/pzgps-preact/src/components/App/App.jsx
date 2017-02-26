@@ -3,6 +3,7 @@ import sckt from '../../lib/sckt.js';
 import conf from '../../lib/conf.js';
 import NavBar from '../NavBar/NavBar.jsx';
 import ContentBox from '../ContentBox/ContentBox.jsx';
+import AppFooter from '../AppFooter/AppFooter.jsx';
 import db from '../../lib/db.js';
 
 require('offline-plugin/runtime').install();
@@ -46,6 +47,8 @@ class App extends Component {
           content={this.state.componentName}
           databases={db.databases}
         />
+
+        <AppFooter />
       </div>
     );
   }
