@@ -27,7 +27,20 @@ class AppFooter extends Component {
     return (
       <footer className={footerShell}>
         <div className="container">
-          footer content here
+          <div class="row">
+            <div className="col-3">
+              <i className="fa fa-home" aria-hidden="true"></i> Home
+            </div>
+            <div className="col-3">
+              <i className="fa fa-map-marker" aria-hidden="true"></i> GPS Data
+            </div>
+            <div className="col-3">
+              <i class="fa fa-list-alt" aria-hidden="true"></i> Routes
+            </div>
+            <div className="col-3">
+              <i className="fa fa-map" aria-hidden="true"></i> Location
+            </div>
+          </div>
         </div>
       </footer>
     );
