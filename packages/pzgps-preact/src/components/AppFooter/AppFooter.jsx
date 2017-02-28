@@ -24,21 +24,24 @@ class AppFooter extends Component {
     let footerShell = cn('footer', {
       'footer-shell': true
     });
+    let footerIcon = cn('col-3', {
+      'footer-icon': true
+    });
     return (
       <footer className={footerShell}>
         <div className="container">
           <div class="row">
-            <div className="col-3">
-              <i className="fa fa-home" aria-hidden="true"></i> Home
+            <div className={footerIcon}>
+              <big><i className="fa fa-home" aria-hidden="true"></i></big>
             </div>
-            <div className="col-3">
-              <i className="fa fa-map-marker" aria-hidden="true"></i> GPS Data
+            <div className={footerIcon}>
+              <big><i className="fa fa-map-marker" aria-hidden="true"></i></big>
             </div>
-            <div className="col-3">
-              <i class="fa fa-list-alt" aria-hidden="true"></i> Routes
+            <div className={footerIcon}>
+              <big><i class="fa fa-list-alt" aria-hidden="true"></i></big>
             </div>
-            <div className="col-3">
-              <i className="fa fa-map" aria-hidden="true"></i> Location
+            <div className={footerIcon}>
+              <big><i className="fa fa-map" aria-hidden="true"></i></big>
             </div>
           </div>
         </div>
