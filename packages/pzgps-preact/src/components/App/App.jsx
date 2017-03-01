@@ -40,19 +40,11 @@ class App extends Component {
           gpsData={Object.keys(this.state.gpsData).length ? true : false}
           componentName={this.state.componentName}
         />
-
         <ContentBox
           gpsData={this.state.gpsData}
           consumerKey={(this.state.consumerKey) ? this.state.consumerKey : null}
           content={this.state.componentName}
           databases={db.databases}
-        />
-
-        <AppFooter
-          handleClick={this.handleClick}
-          consumerKey={this.state.consumerKey ? true : false}
-          gpsData={Object.keys(this.state.gpsData).length ? true : false}
-          componentName={this.state.componentName}
         />
       </div>
     );
