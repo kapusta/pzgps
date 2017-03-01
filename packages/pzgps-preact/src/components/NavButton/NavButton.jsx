@@ -14,15 +14,14 @@ class Navbutton extends Component {
   }
   render() {
     let cx = classNames.bind(styles);
-    let buttonStyles = cx('btn btn-sm', {
-      'button': true,
-      'btn-primary': this.props.isActive
+    let buttonStyles = cx('btn', {
+      'btn-info': this.props.isActive
     });
     return (
-      <button
+      <a
         className={buttonStyles}
         onClick={this.handleClick}
-      >{this.props.children}</button>
+      >{this.props.children}</a>
     );
   }
 }
