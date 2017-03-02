@@ -20,17 +20,16 @@ class MapQuest extends Component {
   }
   render() {
     let cn = classNames.bind(styles);
-    let mapStyles = cn({
-      'staticmap': true
-    });
     let divStyles = cn('card card-block', {
       'mapdiv': true
     });
 
     return (
-      <div>
-        <h4 className="card-title">MapQuest Staticmap</h4>
-        <div className={divStyles} style={{backgroundImage: 'url('+this.state.mapUrl+')'}}></div>
+      <div className="row">
+        <div className="col-12">
+          <h4 className="card-title">MapQuest Staticmap</h4>
+          <div className={divStyles} style={{backgroundImage: 'url('+this.state.mapUrl+')'}}></div>
+        </div>
       </div>
     );
   }

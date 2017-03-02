@@ -22,7 +22,7 @@ class ContentBox extends Component {
     switch (this.props.content) {
     case 'MapQuest':
       return (
-        <div>
+        <div className="container">
           <Content {...this.props}>{this.props.children}</Content>
         </div>
       );
