@@ -36,9 +36,11 @@ One of the views can load a [Mapquest "staticmap"](http://www.mapquestapi.com/st
 * You can always find your Consumer Key on the "Manage Keys" page after creating one.
 * Make a file in the `/packages/pzgps-server/lib` directory named `mqkey.js` and format it like the example below.
 
+
     module.exports = {
       'consumerKey': 'PASTE YOUR CONSUMER KEY HERE'
     };
+
 
 When starting the server use the `--mq` flag. An NPM command is provided in `/packages/pzgps-server/package.json` that will start with the MapQuest module included (eg, `npm run withMapquest` will execute `node index.js --port 9000 --mq`).
 

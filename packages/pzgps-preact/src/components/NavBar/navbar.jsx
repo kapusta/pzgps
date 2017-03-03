@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
-import navbarStyles from './navbar.css';
+import classNames from 'classnames/bind';
+import styles from './navbar.css';
 import NavButton from '../NavButton/NavButton.jsx';
 
 class Navbar extends Component {
@@ -7,40 +8,50 @@ class Navbar extends Component {
     super(props);
   }
   render() {
+    let cn = classNames.bind(styles);
+    let navIcon = cn('col-3', {
+      'nav-icon': true
+    });
     return (
-      <div>
-        <div className={navbarStyles.navbar}>
+      <nav class="navbar fixed-top navbar-light bg-faded">
+        <div className="container">
+          <div class="row">
+            <div className={navIcon}>
+              <NavButton
+                handleClick={this.props.handleClick}
+                section="About"
+                isActive={this.props.componentName === 'About'}
+                ><big><i className="fa fa-home" aria-hidden="true"></i></big>
+              </NavButton>
+            </div>
 
-          <NavButton
-            handleClick={this.props.handleClick}
-            section="About"
-            isActive={this.props.componentName === 'About'}
-            ><i className="fa fa-home" aria-hidden="true"></i> Home
-          </NavButton>
-
-          {(this.props.gpsData) ? <NavButton
-            handleClick={this.props.handleClick}
-            section="GpsData"
-            isActive={this.props.componentName === 'GpsData'}
-            ><i className="fa fa-map-marker" aria-hidden="true"></i> GPS Data</NavButton> : ''
-          }
-
-          {(this.props.gpsData) ? <NavButton
-            handleClick={this.props.handleClick}
-            section="RouteEditor"
-            isActive={this.props.componentName === 'RouteEditor'}
-            ><i class="fa fa-list-alt" aria-hidden="true"></i> My Routes</NavButton> : ''
-          }
-
-          {(this.props.gpsData && this.props.consumerKey) ? <NavButton
-            handleClick={this.props.handleClick}
-            section="MapQuest"
-            isActive={this.props.componentName === 'MapQuest'}
-            ><i className="fa fa-map" aria-hidden="true"></i> Current Location</NavButton> : ''
-          }
-
+            <div className={navIcon}>
+              {(this.props.gpsData) ? <NavButton
+                handleClick={this.props.handleClick}
+                section="GpsData"
+                isActive={this.props.componentName === 'GpsData'}
+                ><big><i className="fa fa-map-marker" aria-hidden="true"></i></big></NavButton> : ''
+              }
+            </div>
+            <div className={navIcon}>
+              {(this.props.gpsData) ? <NavButton
+                handleClick={this.props.handleClick}
+                section="RouteEditor"
+                isActive={this.props.componentName === 'RouteEditor'}
+                ><big><i class="fa fa-list-alt" aria-hidden="true"></i></big></NavButton> : ''
+              }
+            </div>
+            <div className={navIcon}>
+              {(this.props.gpsData && this.props.consumerKey) ? <NavButton
+                handleClick={this.props.handleClick}
+                section="MapQuest"
+                isActive={this.props.componentName === 'MapQuest'}
+                ><big><i className="fa fa-map" aria-hidden="true"></i></big></NavButton> : ''
+              }
+            </div>
+          </div>
         </div>
-      </div>
+      </nav>
     );
   }
 }
