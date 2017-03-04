@@ -1,4 +1,6 @@
-# Based on [Preact Boilerplate / Starter Kit](https://github.com/developit/preact-boilerplate)
+# pzgps-preact
+
+This [Preact based](https://github.com/developit/preact-boilerplate) UI is intended to be used with [pzgps-server](https://github.com/kapusta/pzgps/tree/master/packages/pzgps-server). Please see that package's [README](https://github.com/kapusta/pzgps/blob/master/packages/pzgps-server/README.md) for more information.
 
 ---
 
@@ -6,10 +8,13 @@
 # Quick-Start Guide
 
 - [Installation](#installation)
-- [Development Workflow](#development-workflow)
-- [Structure](#structure)
+- [Development Workflow](#development)
+- [Production Build](#production-build)
+- [Lint Your Code](#lint-your-code)
+- [Testing](#testing)
 - [CSS Modules](#css-modules)
 - [Handling URLS](#handling-urls)
+- [License](#license)
 
 
 ## Installation
@@ -17,34 +22,17 @@
     npm install
 
 
-## Development Workflow
+## Development
 
-Start a live-reload development server:**
+Start a live-reload development server
 
     npm start
 
 
 This is a full web server nicely suited to your project. Any time you make changes within the `src` directory, it will rebuild and even refresh your browser.
 
-## Production build
 
-    npm build
-
-
-This will build the prod assets and put them into the `build` directory.
-
-
-## There is code linting configured using eslint
-
-    npm run lint
-
-
-## Testing with `mocha`, `karma`, `chai`, `sinon` via `phantomjs`
-
-    npm test
-
-
-## Generate a production build in `./build`
+## Production Build
 
     npm run build
 
@@ -52,29 +40,14 @@ This will build the prod assets and put them into the `build` directory.
 You can now deploy the contents of the `build` directory to production!
 
 
-## Start local production server with `superstatic`
+## Lint Your Code
 
-    npm run prod
-
----
+    npm run lint
 
 
-## Structure
+## Testing
 
-Apps are built up from simple units of functionality called Components. A Component is responsible for rendering a small part of an application, given some input data called `props`, generally passed in as attributes in JSX. A component can be as simple as:
-
-```js
-class Link extends Component {
-  render({ to, children }) {
-    return <a href={ to }>{ children }</a>;
-  }
-}
-// usage:
-<Link to="/">Home</Link>
-```
-
-
----
+    npm test
 
 
 ## CSS Modules
@@ -102,9 +75,6 @@ console.log(styles);
 Note that the suffix for local classNames is generated based on an md5 hash of the file. Changing the file changes the hash.
 
 
----
-
-
 ## Handling URLS
 
 :information_desk_person: This project contains a basic two-page app with [URL routing](http://git.io/preact-router).
@@ -127,8 +97,4 @@ Defining what component(s) to load for a given URL is easy and declarative. You 
 
 ## License
 
-MIT
-
-
-[Preact]: https://developit.github.io/preact
-[webpack]: https://webpack.github.io
+Apache 2.0
