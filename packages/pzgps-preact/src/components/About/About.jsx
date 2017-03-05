@@ -21,9 +21,9 @@ class About extends Component {
         </div>
 
         <div className="col-lg-6">
-          <h4 className="card-title">Title</h4>
+          <h4 className="card-title">Settings</h4>
           <div className="card card-block">
-            More content here.
+            Add a Crag (stub)
           </div>
         </div>
       </div>

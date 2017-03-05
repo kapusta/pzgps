@@ -24,11 +24,19 @@ let queries = {
         map: function (doc) { emit(doc.name); }.toString()
       }
     }
+  },
+  crags: {
+    _id: '_design/crags',
+    views: {
+      by_name: {
+        map: function (doc) { emit(doc.name); }.toString()
+      }
+    }
   }
 };
 
 const init = () => {
-  ['routes', 'boulders'].forEach(name => {
+  ['routes', 'boulders', 'crags'].forEach(name => {
     console.log('Initializing ' + name + ' database...');
     databases[name + '-local'] = new PouchDB(name);
     databases[name + '-remote'] = new PouchDB(conf.couchdb + '/' + name);
