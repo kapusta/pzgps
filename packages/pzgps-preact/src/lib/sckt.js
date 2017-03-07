@@ -33,7 +33,7 @@ const init = (serverUrl, Component) => {
       console.error('The WebSocket connection closed', e);
       console.log('Trying to reconnect...');
       window.setTimeout(() => {
-        init(Component);
+        init(serverUrl, Component);
       }, 5000);
     };
 
@@ -55,7 +55,7 @@ const init = (serverUrl, Component) => {
     console.error('could not connect to WebSocket server', err);
     console.log('Trying to reconnect...');
     setTimeout(() => {
-      init(Component);
+      init(serverUrl, Component);
     }, 5000);
   });
 
