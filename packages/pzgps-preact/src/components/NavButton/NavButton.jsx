@@ -12,7 +12,7 @@ class Navbutton extends Component {
     //console.log('button click event', e);
     this.props.handleClick(this.props.section);
   }
-  render() {
+  render({children}) {
     let cx = classNames.bind(styles);
     let buttonStyles = cx('btn', {
       'btn-info': this.props.isActive,
@@ -22,7 +22,7 @@ class Navbutton extends Component {
       <a
         className={buttonStyles}
         onClick={this.handleClick}
-      >{this.props.children}</a>
+      >{children}</a>
     );
   }
 }
