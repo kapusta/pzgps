@@ -11,7 +11,7 @@ This project uses [Lerna](https://github.com/lerna/lerna) to manage the server a
 * This project is meant to be a sandbox for learning various things, so expect things to change.
 * If this info turns out to be useful to you, [please let me know](https://twitter.com/dankapusta)!
 
-## Using the server
+## Using the Server Package
 The server package, that provides the GPS data over the WebSocket, resides in [`/packages/pzgps-server/`](https://github.com/kapusta/pzgps/tree/master/packages/pzgps-server) and has [a thorough README.md that you should read](https://github.com/kapusta/pzgps/blob/master/packages/pzgps-server/README.md).
 
 ## Using the Front End Packages
@@ -21,7 +21,7 @@ Currently [the Preact version](https://github.com/kapusta/pzgps/tree/master/pack
 
 Run the webserver with `npm start`.
 
-Note the `packages/pzgps-preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change your pizro's name by logging into the pizero, then...
+Note the `packages/pzgps-preact/src/lib/conf.js` file, which should be modified to match your pizero's name on your network. You can change the name by logging into the pizero, then...
 * `raspi-config`
 * Go to `Advanced Options`
 * Go to `Hostname`
