@@ -27,13 +27,13 @@ If you want to compile node from scratch on your [#pizero](https://www.raspberry
 
 If you want to make things a bit easier, then [download Node](https://nodejs.org/en/download/) using `wget` and install it directly. In this case we'll download the latest version (as of this writing) for ARM on the 6.x branch. Log in to your pi and remain in your home directory...
 
-    wget https://nodejs.org/dist/v6.9.5/node-v6.9.5-linux-armv6l.tar.xz
+    wget https://nodejs.org/dist/v6.10.0/node-v6.10.0-linux-armv6l.tar.xz
     cd /usr/local
-    sudo tar --strip-components 1 -xvf ~/node-v6.9.5-linux-armv6l.tar.xz
-    cd && rm node-v6.9.5-linux-armv6l.tar.xz
+    sudo tar --strip-components 1 -xvf ~/node-v6.10.0-linux-armv6l.tar.xz
+    cd && rm node-v6.10.0-linux-armv6l.tar.xz
 
 Node is installed now, along with npm.
-* `node -v` should yield `v6.9.5`
+* `node -v` should yield `v6.10.0`
 * `npm -v` should yield `3.10.10`
 
 Your `/usr/local` dir has a few files left over from the install (ie, CHANGELOG.md, LICENSE, README.md). You can safely remove those.
