@@ -15,7 +15,8 @@ class Navbutton extends Component {
   render() {
     let cx = classNames.bind(styles);
     let buttonStyles = cx('btn', {
-      'btn-info': this.props.isActive
+      'btn-info': this.props.isActive,
+      'button': true
     });
     return (
       <a
