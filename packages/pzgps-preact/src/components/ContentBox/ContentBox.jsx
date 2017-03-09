@@ -17,23 +17,23 @@ class ContentBox extends Component {
   constructor(props) {
     super(props);
   }
-  render() {
-    let Content = contentComponents[this.props.content];
-    switch (this.props.content) {
+  render({children, content, gpsData, databases}) {
+    let Content = contentComponents[content];
+    switch (content) {
     case 'MapQuest':
       return (
         <div className="container">
-          <Content {...this.props}>{this.props.children}</Content>
+          <Content {...this.props}>{children}</Content>
         </div>
       );
     case 'RouteEditor':
       return (
         <div className="container">
           <Content
-            gpsData={this.props.gpsData}
-            routesDb={this.props.databases['routes-local']}
+            gpsData={gpsData}
+            routesDb={databases['routes-local']}
           >
-            {this.props.children}
+            {children}
           </Content>
         </div>
       );
@@ -41,9 +41,9 @@ class ContentBox extends Component {
       return (
         <div className="container">
           <Content
-            gpsData={this.props.gpsData}
+            gpsData={gpsData}
           >
-            {this.props.children}
+            {children}
           </Content>
         </div>
       );
