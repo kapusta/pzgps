@@ -52,9 +52,9 @@ class RouteEditor extends Component {
       route
     });
   }
-  handleChange = evt => {
+  handleChange = (evt, data) => {
     if (evt.keyCode === 13) { // return
-      this.search();
+      this.search(data);
     }
     let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
     this.setState({
@@ -70,14 +70,14 @@ class RouteEditor extends Component {
   logState = () => {
     console.log(this.state);
   }
-  search = () => {
-    if (this.state.route.name.length) {
+  search = ({category, name}) => {
+    if (name.length) {
       this.setState({
         searching: true
       });
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
-      this.props.routesDb.get(this.state.route.name)
+      this.props.routesDb.get(name)
       .then(doc => {
         let route = merge({}, {
           name: doc.name,
@@ -94,7 +94,7 @@ class RouteEditor extends Component {
         this.setState({
           searching: false
         });
-        console.error('searched for', this.state.route.name, 'but no route found', err);
+        console.error('searched for', name, 'but no route found', err);
       });
     }
   }
@@ -226,11 +226,17 @@ class RouteEditor extends Component {
                       type="text"
                       className="form-control"
                       value={this.state.route.name}
-                      onKeyUp={this.handleChange}
+                      onKeyUp={(evt) => this.handleChange(evt, {
+                        category: 'route',
+                        name: this.state.route.name
+                      })}
                     /><span className={inputGroupAddon}>
                       <i
                         className={searchButtonStyles}
-                        onClick={this.search}
+                        onClick={() => this.search({
+                          category: 'route',
+                          name: this.state.route.name
+                        })}
                       ></i>
                     </span>
                   </div>
