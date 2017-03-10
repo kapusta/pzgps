@@ -32,6 +32,7 @@ class ContentBox extends Component {
           <Content
             gpsData={gpsData}
             routesDb={databases['routes-local']}
+            cragsDb={databases['crags-local']}
           >
             {children}
           </Content>
