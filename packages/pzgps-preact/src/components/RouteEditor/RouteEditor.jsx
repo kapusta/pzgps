@@ -15,6 +15,9 @@ class RouteEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      crag: {
+        name: ''
+      },
       saving: false, // is the page saving data?
       searching: false, // is the page searching for data?
       updateLocation: false,
@@ -52,14 +55,25 @@ class RouteEditor extends Component {
       route
     });
   }
-  handleChange = (evt, data) => {
+  handleRouteChange = (evt, data) => {
     if (evt.keyCode === 13) { // return
       this.search(data);
     }
-    let route = merge({}, this.state.route, {[evt.target.id]: evt.target.value});
+    let route = merge({}, this.state.route, {name: evt.target.value});
     this.setState({
       doc: null, // kill the doc in state if/when the user changes the name
       route
+    });
+  }
+  handleCragChange = (evt, data) => {
+    console.log(data);
+    if (evt.keyCode === 13) { // return
+      this.search(data);
+    }
+    let crag = merge({}, this.state.crag, {name: evt.target.value});
+    this.setState({
+      doc: null, // kill the doc in state if/when the user changes the name
+      crag
     });
   }
   handleCheckbox = evt => {
@@ -70,14 +84,14 @@ class RouteEditor extends Component {
   logState = () => {
     console.log(this.state);
   }
-  search = ({category, name}) => {
+  search = ({db, name}) => {
     if (name.length) {
       this.setState({
         searching: true
       });
       // get data based on the name, if found, use the data to
       // prepopulate the rest of the form
-      this.props.routesDb.get(name)
+      this.props[db].get(name)
       .then(doc => {
         let route = merge({}, {
           name: doc.name,
@@ -216,25 +230,53 @@ class RouteEditor extends Component {
             <form>
 
               <div className={rowStyles}>
-                <label for="route" className={labelStyles}>Route</label>
+                <label for="route" className={labelStyles}>Crag</label>
                 <div className="col-lg-8">
-
                   <div className="input-group">
                     <input
-                      id="name"
+                      id="crag-name"
+                      placeholder="Name of the Crag"
+                      type="text"
+                      className="form-control"
+                      value={this.state.crag.name}
+                      onKeyUp={(evt) => this.handleCragChange(evt, {
+                        db: 'cragsDb',
+                        name: this.state.crag.name
+                      })}
+                    /><span className={inputGroupAddon}>
+                      <i
+                        className={searchButtonStyles}
+                        onClick={() => this.search({
+                          db: 'cragsDb',
+                          name: this.state.crag.name
+                        })}
+                      ></i>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <div className={rowStyles}>
+                <label for="route" className={labelStyles}>Route</label>
+                <div className="col-lg-8">
+                  <div className="input-group">
+                    <input
+                      id="route-name"
                       placeholder="Name of the Route"
                       type="text"
                       className="form-control"
                       value={this.state.route.name}
-                      onKeyUp={(evt) => this.handleChange(evt, {
-                        category: 'route',
+                      onKeyUp={(evt) => this.handleRouteChange(evt, {
+                        db: 'routesDb',
                         name: this.state.route.name
                       })}
                     /><span className={inputGroupAddon}>
                       <i
                         className={searchButtonStyles}
                         onClick={() => this.search({
-                          category: 'route',
+                          db: 'routesDb',
                           name: this.state.route.name
                         })}
                       ></i>
