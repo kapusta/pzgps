@@ -11,6 +11,7 @@ import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 import CragInput from './CragInput.jsx';
+import KeyValuePair from '../KeyValuePair/KeyValuePair.jsx';
 
 class RouteEditor extends Component {
   constructor(props) {
@@ -286,26 +287,20 @@ class RouteEditor extends Component {
                 </div>
               </div>
 
-              <div className={rowStyles}>
-                <label className={labelStyles}>Latitude</label>
-                <div className={valueStyles}>
-                  {this.props.gpsData.lat}
-                </div>
-              </div>
+              <KeyValuePair
+                label="Latitude"
+                value={this.props.gpsData.lat}
+              />
 
-              <div className={rowStyles}>
-                <label className={labelStyles}>Longitude</label>
-                <div className={valueStyles}>
-                  {this.props.gpsData.lon}
-                </div>
-              </div>
+              <KeyValuePair
+                label="Longitude"
+                value={this.props.gpsData.lon}
+              />
 
-              <div className={rowStyles}>
-                <label className={labelStyles}>Altitude</label>
-                <div className={valueStyles}>
-                  {this.props.gpsData.alt} meters
-                </div>
-              </div>
+              <KeyValuePair
+                label="Altitude"
+                value={this.props.gpsData.alt + ' meters'}
+              />
 
             </form>
           </div>
