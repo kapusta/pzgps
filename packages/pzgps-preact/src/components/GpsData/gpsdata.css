@@ -1,11 +1,3 @@
-.keyname {
-  display: inline-block;
-  width: 80px;
-  font-weight: bold;
-}
-.header {
-  margin-top: 0px;
-}
 .rawdata {
   max-height: 300px;
   overflow: auto;
