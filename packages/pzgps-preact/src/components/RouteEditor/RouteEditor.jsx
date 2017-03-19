@@ -16,14 +16,12 @@ class RouteEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      crag: {
-        name: ''
-      },
       saving: false, // is the page saving data?
       searching: false, // is the page searching for data?
       updateLocation: false,
       routeList: [],
       route: {
+        crag: '',
         name: '',
         pitches: null,
         rating: null
@@ -67,8 +65,9 @@ class RouteEditor extends Component {
     });
   }
   handleCragChange = crag => {
+    let route = merge({}, this.state.route, {crag: crag});
     this.setState({
-      crag
+      route
     });
   }
   handleCheckbox = evt => {
