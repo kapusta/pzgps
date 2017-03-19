@@ -47,7 +47,6 @@ class ListRoutes extends Component {
               <th>Route</th>
               <th>Rating</th>
               <th>Pitches</th>
-              <th>Lat/Lon</th>
               <th>Distance</th>
               <th className={trash}><i className="fa fa-trash" aria-hidden="true"></i></th>
             </tr>
@@ -63,17 +62,15 @@ class ListRoutes extends Component {
           {this.props.routeList.map((route) => {
             return (
               <tr key={shortid.generate()}>
-                <td className={cell}>{route.name}</td>
-                <td className={cell}>{route.rating}</td>
-                <td className={cell}>{route.pitches}</td>
                 <td className={cell}>
                   <a
                     target="googmap"
                     href={'https://www.google.com/maps/@'+ route.lat +','+route.lon+',16z'}
-                  >
-                    {route.lat}<br/>{route.lon}
-                  </a>
+                    title={route.lat + '\n' +route.lon}
+                  >{route.name}</a>
                 </td>
+                <td className={cell}>{route.rating}</td>
+                <td className={cell}>{route.pitches}</td>
                 <td className={cell}>
                   {this.distance({
                     latitude: this.props.lat,
