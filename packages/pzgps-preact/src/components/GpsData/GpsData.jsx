@@ -1,9 +1,10 @@
 import { h, Component } from 'preact';
 import RouteEditor from '../RouteEditor/RouteEditor.jsx';
 import shortid from 'shortid';
-import classNames from 'classnames/bind';
+import classnames from 'classnames/bind';
 import styles from './gpsdata.css';
 import Select from 'react-select';
+import KeyValuePair from '../KeyValuePair/KeyValuePair.jsx';
 
 class GpsData extends Component {
   constructor(props) {
@@ -20,13 +21,7 @@ class GpsData extends Component {
     });
   }
   render() {
-    let cn = classNames.bind(styles);
-    let labelStyles = cn('col-lg-2 col-form-label', {
-      'label': true
-    });
-    let loggerStyles = cn('btn', {
-      'btn-logger': true
-    });
+    let cn = classnames.bind(styles);
     let rawdata = cn('card card-block', {
       'rawdata': true
     });
@@ -35,9 +30,18 @@ class GpsData extends Component {
         <div className="col-lg-6">
           <h4 className="card-title">GPS Data</h4>
           <div className="card card-block">
-            <span className={styles.keyname}>Latitude</span> {this.props.gpsData.lat}<br/>
-            <span className={styles.keyname}>Longitude</span> {this.props.gpsData.lon}<br/>
-            <span className={styles.keyname}>Altitude</span> {this.props.gpsData.alt} meters<br/>
+            <KeyValuePair
+              label="Latitude"
+              value={this.props.gpsData.lat}
+            />
+            <KeyValuePair
+              label="Longitude"
+              value={this.props.gpsData.lon}
+            />
+            <KeyValuePair
+              label="Altitude"
+              value={this.props.gpsData.alt = ' meters'}
+            />
           </div>
           <br/>
         </div>
@@ -48,7 +52,11 @@ class GpsData extends Component {
             <div>
               {Object.keys(this.props.gpsData).map((val) => {
                 return (
-                  <li key={shortid.generate()}>{val} - {this.props.gpsData[val]}</li>
+                  <KeyValuePair
+                    key={shortid.generate()}
+                    label={val}
+                    value={this.props.gpsData[val]}
+                  />
                 );
               })}
             </div>
