@@ -10,6 +10,7 @@ import styles from './RouteEditor.css';
 import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
+import CragInput from './CragInput.jsx';
 
 class RouteEditor extends Component {
   constructor(props) {
@@ -65,14 +66,8 @@ class RouteEditor extends Component {
       route
     });
   }
-  handleCragChange = (evt, data) => {
-    console.log(data);
-    if (evt.keyCode === 13) { // return
-      this.search(data);
-    }
-    let crag = merge({}, this.state.crag, {name: evt.target.value});
+  handleCragChange = crag => {
     this.setState({
-      doc: null, // kill the doc in state if/when the user changes the name
       crag
     });
   }
@@ -229,34 +224,7 @@ class RouteEditor extends Component {
           <div className="card card-block">
             <form>
 
-              <div className={rowStyles}>
-                <label for="route" className={labelStyles}>Crag</label>
-                <div className="col-lg-8">
-                  <div className="input-group">
-                    <input
-                      id="crag-name"
-                      placeholder="Name of the Crag"
-                      type="text"
-                      className="form-control"
-                      value={this.state.crag.name}
-                      onKeyUp={(evt) => this.handleCragChange(evt, {
-                        db: 'cragsDb',
-                        name: this.state.crag.name
-                      })}
-                    /><span className={inputGroupAddon}>
-                      <i
-                        className={searchButtonStyles}
-                        onClick={() => this.search({
-                          db: 'cragsDb',
-                          name: this.state.crag.name
-                        })}
-                      ></i>
-                    </span>
-                  </div>
-
-                </div>
-              </div>
-
+              <CragInput label="Crag" db={this.props.cragsDb} handleCragChange={this.handleCragChange}/>
 
               <div className={rowStyles}>
                 <label for="route" className={labelStyles}>Route</label>
