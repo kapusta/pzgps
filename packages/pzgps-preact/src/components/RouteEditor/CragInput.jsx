@@ -7,6 +7,9 @@ import styles from './RouteEditor.css';
 class CragInput extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cragName: ''
+    }
   }
   handleInputChange = evt => {
     if (evt.keyCode === 13) { // return
@@ -18,6 +21,7 @@ class CragInput extends Component {
     this.setState({
       cragName: evt.target.value
     });
+    this.props.handleCragChange(this.state.cragName);
   }
   search = ({db, name}) => {
     if (name.length) {
@@ -34,7 +38,7 @@ class CragInput extends Component {
         this.setState({
           searching: false,
         });
-        this.props.handleCragChange(crag.name);
+        this.props.handleCragChange(this.state.cragName);
       })
       .catch(err => {
         this.setState({
