@@ -35,12 +35,7 @@ class RouteEditor extends Component {
     });
   }
   componentDidMount = () => {
-    this.getRoutesByIndex();
-    // this.getRoutes().then(routeList => {
-    //   this.setState({
-    //     routeList
-    //   });
-    // });
+    this.getRoutes();
   }
   handleRatingChange = val => {
     let route = merge({}, this.state.route, {rating: val.value});
@@ -111,7 +106,7 @@ class RouteEditor extends Component {
     this.props.routesDb.get(route._id).then(doc => {
       return this.props.routesDb.remove(doc);
     }).then(response => {
-      this.getRoutesByIndex();
+      this.getRoutes();
     }).catch(err => {
       console.error('failed to delete a route', err);
     });
@@ -126,7 +121,7 @@ class RouteEditor extends Component {
       this.props.gpsData
     );
     this.props.routesDb.put(newRoute).then(response => {
-      this.getRoutesByIndex();
+      this.getRoutes();
       this.setState({
         saving: false,
         doc: null,
@@ -153,7 +148,7 @@ class RouteEditor extends Component {
 
     this.props.routesDb.put(routeData)
     .then(response => {
-      this.getRoutesByIndex();
+      this.getRoutes();
       this.setState({
         saving: false,
         doc: null,
@@ -167,7 +162,7 @@ class RouteEditor extends Component {
       });
     });
   }
-  getRoutesByIndex = () => {
+  getRoutes = () => {
     function getRoutes(doc) {
       emit(doc.name);
     }
