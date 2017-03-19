@@ -34,7 +34,7 @@ class CragInput extends Component {
         this.setState({
           searching: false,
         });
-        this.props.handleCragChange(crag);
+        this.props.handleCragChange(crag.name);
       })
       .catch(err => {
         this.setState({
