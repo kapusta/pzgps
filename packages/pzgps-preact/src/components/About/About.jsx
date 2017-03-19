@@ -23,7 +23,11 @@ class About extends Component {
         <div className="col-lg-6">
           <h4 className="card-title">Settings</h4>
           <div className="card card-block">
-            Add a Crag (stub)
+            <ul>
+              <li>setting a</li>
+              <li>setting b</li>
+              <li>setting c</li>
+            </ul>
           </div>
         </div>
       </div>
