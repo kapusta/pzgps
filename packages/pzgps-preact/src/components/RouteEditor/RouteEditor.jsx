@@ -88,6 +88,7 @@ class RouteEditor extends Component {
       this.props[db].get(name)
       .then(doc => {
         let route = merge({}, {
+          crag: (doc.crag) ? doc.crag : this.state.route.crag,
           name: doc.name,
           pitches: doc.pitches,
           rating: doc.rating
