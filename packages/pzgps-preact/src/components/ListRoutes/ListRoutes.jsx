@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 import shortid from 'shortid';
 import haversine from 'haversine';
-import styles from './listroutes.css';
 import classNames from 'classnames/bind';
+import styles from './ListRoutes.css';
 import DeleteButton from './DeleteButton/DeleteButton.jsx';
 
 class ListRoutes extends Component {

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import proptypes from 'proptypes';
 import classNames from 'classnames/bind';
-import styles from './deletebutton.css';
+import styles from './DeleteButton.css';
 
 class DeleteButton extends Component {
   constructor(props) {

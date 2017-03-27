@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import classNames from 'classnames/bind';
-import styles from './navbar.css';
+import styles from './NavBar.css';
 import NavButton from '../NavButton/NavButton.jsx';
 
 class Navbar extends Component {

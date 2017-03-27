@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import RouteEditor from '../RouteEditor/RouteEditor.jsx';
 import shortid from 'shortid';
 import classnames from 'classnames/bind';
-import styles from './gpsdata.css';
+import styles from './GpsData.css';
 import Select from 'react-select';
 import KeyValuePair from '../KeyValuePair/KeyValuePair.jsx';
 

@@ -6,9 +6,9 @@
 import { h, Component } from 'preact';
 import Select from 'react-select';
 import classNames from 'classnames/bind';
-import styles from './RouteEditor.css';
-import { yds } from '../../lib/ratings.js';
 import merge from 'lodash/merge';
+import { yds } from '../../lib/ratings.js';
+import styles from './RouteEditor.css';
 import ListRoutes from '../ListRoutes/ListRoutes.jsx';
 import CragInput from './CragInput.jsx';
 import KeyValuePair from '../KeyValuePair/KeyValuePair.jsx';

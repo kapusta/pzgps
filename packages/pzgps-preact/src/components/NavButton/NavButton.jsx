@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import proptypes from 'proptypes';
 import classNames from 'classnames/bind';
-import styles from './navbutton.css';
+import styles from './NavButton.css';
 
 class Navbutton extends Component {
   constructor(props) {

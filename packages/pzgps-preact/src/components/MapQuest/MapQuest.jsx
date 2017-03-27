@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import classNames from 'classnames/bind';
-import styles from './mapquest.css';
+import styles from './MapQuest.css';
 
 class MapQuest extends Component {
   constructor(props) {
