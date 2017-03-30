@@ -9,7 +9,7 @@ class CragInput extends Component {
     super(props);
     this.state = {
       cragName: ''
-    }
+    };
   }
   handleInputChange = evt => {
     if (evt.keyCode === 13) { // return
@@ -36,7 +36,7 @@ class CragInput extends Component {
           name: doc.name
         });
         this.setState({
-          searching: false,
+          searching: false
         });
         this.props.handleCragChange(this.state.cragName);
       })

@@ -61,7 +61,7 @@ class RouteEditor extends Component {
     });
   }
   handleCragChange = crag => {
-    let route = merge({}, this.state.route, {crag: crag});
+    let route = merge({}, this.state.route, {crag});
     this.setState({
       route
     });
