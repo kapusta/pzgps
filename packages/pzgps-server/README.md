@@ -61,18 +61,17 @@ When starting `gpsd` you might see an error like this...
 
     gpsd:ERROR: can't bind to local socket /var/run/gpsd.sock
 
-You can confirm data is coming to your [#pizero](https://www.raspberrypi.org/products/pi-zero/) with `cat /dev/ttyAMA0` which should show a stream of data. If you see data coming thru but the commands to start `gpsd` failed with an error about not being able to connect, then you might have to disable terminal over serial.
+
+You can confirm data is coming to your [#pizero](https://www.raspberrypi.org/products/pi-zero/) with `cat /dev/ttyAMA0` which should show a stream of data. If there is no data from that device, try to `cat /dev/ttyS0` and see if data is streaming from that device, if so, use that device instead wherever you provide the name of a device in a config.
+
+If you see data coming thru but the command to start `gpsd` failed with an error about not being able to connect, then you might have to disable terminal over serial.
 
 ### How disable terminal over serial
-These didn't work, not sure why...
 
-    sudo systemctl stop serial-getty@ttyAMA0.service
-    sudo systemctl disable serial-getty@ttyAMA0.service
-
-What did work was...
 * `sudo raspi-config`
 * go to `Advanced Options`
-* then `serial` and turn it off
+* go to `Interfacing Options`
+* go to `P6 Serial` and and choose `no`
 * `sudo reboot`
 
 The Adafruit guide mentioned above says you can do this from `/etc/inittab` but that file doesn't exist in Raspbian Jessie (it did in Wheezy). Raspbian Jessie has moved everything to services and there is no `/etc/inittab` file at all, so it's best to use the `raspi-config` command.
