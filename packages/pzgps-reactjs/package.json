@@ -21,7 +21,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
-    "node-sass": "^3.10.1",
+    "node-sass": "^4.14.1",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "react-router": "^3.0.0",
